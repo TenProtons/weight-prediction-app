@@ -1,6 +1,6 @@
 <template>
   <div class="main-view">
-    <h1>{{ t("appTitle") }}</h1>
+    <h1>{{ t('appTitle') }}</h1>
     <div v-if="weightData.length">
       <WeightChart :weight-data="weightData" />
       <p>{{ hintMessage }}</p>
@@ -10,19 +10,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import { useI18n } from "vue-i18n"; // Import useI18n
-import UserInputForm from "@/components/UserInputForm.vue";
-import WeightChart from "@/components/WeightChart.vue";
-import {
-  UserData,
-  calculateCalorieAdjustment,
-  predictWeightOverTime,
-} from "@/utils/calculator";
-import { saveData, loadData } from "@/services/storage";
+import { defineComponent, ref } from 'vue';
+import { useI18n } from 'vue-i18n'; // Import useI18n
+import UserInputForm from '@/components/UserInputForm.vue';
+import WeightChart from '@/components/WeightChart.vue';
+import { UserData, calculateCalorieAdjustment, predictWeightOverTime } from '@/utils/calculator';
+import { saveData, loadData } from '@/services/storage';
 
 export default defineComponent({
-  name: "MainView",
+  name: 'MainView',
   components: {
     UserInputForm,
     WeightChart,
@@ -31,14 +27,14 @@ export default defineComponent({
     const { t } = useI18n(); // Extract t from useI18n
 
     const weightData = ref<Array<{ day: number; weight: number }>>([]);
-    const hintMessage = ref("");
+    const hintMessage = ref('');
 
     const handleCalculate = (userData: UserData) => {
       // Save user data to localStorage
-      saveData("userData", userData);
+      saveData('userData', userData);
 
       const calorieAdjustment = Math.abs(calculateCalorieAdjustment(userData));
-      hintMessage.value = t("weightChangeHint", {
+      hintMessage.value = t('weightChangeHint', {
         calories: calorieAdjustment.toFixed(2),
       });
 
@@ -46,7 +42,7 @@ export default defineComponent({
     };
 
     // Load user data on component mount
-    const savedUserData = loadData("userData");
+    const savedUserData = loadData('userData');
     if (savedUserData) {
       handleCalculate(savedUserData);
     }

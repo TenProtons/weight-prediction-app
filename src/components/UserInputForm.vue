@@ -1,27 +1,23 @@
 <template>
   <form @submit.prevent="onSubmit">
     <div>
-      <label>{{ $t("currentWeight") }} (kg):</label>
+      <label>{{ $t('currentWeight') }} (kg):</label>
       <input v-model.number="userData.weight" type="number" required />
     </div>
     <div>
-      <label>{{ $t("targetWeight") }} (kg):</label>
+      <label>{{ $t('targetWeight') }} (kg):</label>
       <input v-model.number="userData.targetWeight" type="number" required />
     </div>
     <div>
-      <label>{{ $t("timeFrame") }} (days):</label>
+      <label>{{ $t('timeFrame') }} (days):</label>
       <input v-model.number="userData.timeFrame" type="number" required />
     </div>
     <div>
-      <label>{{ $t("calorieIntake") }} (kcal):</label>
-      <input
-        v-model.number="userData.currentCalorieIntake"
-        type="number"
-        required
-      />
+      <label>{{ $t('calorieIntake') }} (kcal):</label>
+      <input v-model.number="userData.currentCalorieIntake" type="number" required />
     </div>
     <div>
-      <label>{{ $t("height") }} (cm):</label>
+      <label>{{ $t('height') }} (cm):</label>
       <input v-model.number="userData.height" type="number" required />
     </div>
     <div>
@@ -36,48 +32,48 @@
       </select>
     </div>
     <div>
-      <label>{{ $t("activityLevel") }}:</label>
+      <label>{{ $t('activityLevel') }}:</label>
       <select v-model="userData.activityLevel" required>
         <option value="sedentary">
-          {{ $t("Sedentary (little or no exercise)") }}
+          {{ $t('Sedentary (little or no exercise)') }}
         </option>
         <option value="light">
-          {{ $t("Lightly active (1-3 days/week)") }}
+          {{ $t('Lightly active (1-3 days/week)') }}
         </option>
         <option value="moderate">
-          {{ $t("Moderately active (3-5 days/week)") }}
+          {{ $t('Moderately active (3-5 days/week)') }}
         </option>
-        <option value="active">{{ $t("Very active (6-7 days/week)") }}</option>
+        <option value="active">{{ $t('Very active (6-7 days/week)') }}</option>
         <option value="veryActive">
-          {{ $t("Extra active (very hard exercise & physical job)") }}
+          {{ $t('Extra active (very hard exercise & physical job)') }}
         </option>
       </select>
     </div>
-    <button type="submit">{{ $t("calculate") }}</button>
+    <button type="submit">{{ $t('calculate') }}</button>
   </form>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue";
-import { UserData } from "@/utils/calculator";
+import { defineComponent, ref } from 'vue';
+import { UserData } from '@/utils/calculator';
 
 export default defineComponent({
-  name: "UserInputForm",
-  emits: ["calculate"],
+  name: 'UserInputForm',
+  emits: ['calculate'],
   setup(props, { emit }) {
     const userData = ref<UserData>({
       weight: 70,
       targetWeight: 65,
       height: 170,
       age: 30,
-      gender: "male",
-      activityLevel: "moderate",
+      gender: 'male',
+      activityLevel: 'moderate',
       currentCalorieIntake: 2000,
       timeFrame: 30,
     });
 
     const onSubmit = () => {
-      emit("calculate", userData.value);
+      emit('calculate', userData.value);
     };
 
     return {

@@ -1,16 +1,16 @@
 // main.ts
-import { createApp } from "vue";
-import App from "./App.vue";
-import router from "./router";
-import { createI18n } from "vue-i18n";
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import { createI18n } from 'vue-i18n';
 
 // Import locale messages
-import en from "./locales/en.json";
-import uk from "./locales/uk.json";
+import en from './locales/en.json';
+import uk from './locales/uk.json';
 
 const i18n = createI18n({
-  locale: "uk", // Set default locale to Ukrainian
-  fallbackLocale: "en",
+  locale: 'uk', // Set default locale to Ukrainian
+  fallbackLocale: 'en',
   messages: {
     en,
     uk,
@@ -26,4 +26,4 @@ app.use(i18n);
 app.config.globalProperties.$t = i18n.global.t;
 
 // Mount the app
-app.mount("#app");
+app.mount('#app');

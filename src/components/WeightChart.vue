@@ -5,19 +5,11 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  onMounted,
-  onBeforeUnmount,
-  ref,
-  shallowRef,
-  watch,
-  PropType,
-} from "vue";
-import Chart from "chart.js/auto";
+import { defineComponent, onMounted, onBeforeUnmount, ref, shallowRef, watch, PropType } from 'vue';
+import Chart from 'chart.js/auto';
 
 export default defineComponent({
-  name: "WeightChart",
+  name: 'WeightChart',
   props: {
     weightData: {
       type: Array as PropType<Array<{ day: number; weight: number }>>,
@@ -30,20 +22,18 @@ export default defineComponent({
 
     const createChart = () => {
       if (chartCanvas.value) {
-        const ctx = chartCanvas.value.getContext("2d");
+        const ctx = chartCanvas.value.getContext('2d');
         if (ctx) {
           chartInstance.value = new Chart(ctx, {
-            type: "line",
+            type: 'line',
             data: {
               labels: props.weightData.map((data) => `Day ${data.day}`),
               datasets: [
                 {
-                  label: "Predicted Weight",
-                  data: props.weightData.map((data) =>
-                    Number(data.weight.toFixed(2))
-                  ),
+                  label: 'Predicted Weight',
+                  data: props.weightData.map((data) => Number(data.weight.toFixed(2))),
                   fill: false,
-                  borderColor: "rgba(75,192,192,1)",
+                  borderColor: 'rgba(75,192,192,1)',
                   tension: 0.1,
                 },
               ],
@@ -55,27 +45,27 @@ export default defineComponent({
                 x: {
                   title: {
                     display: true,
-                    text: "Day",
+                    text: 'Day',
                   },
                 },
                 y: {
                   title: {
                     display: true,
-                    text: "Weight (kg)",
+                    text: 'Weight (kg)',
                   },
                 },
               },
               plugins: {
                 title: {
                   display: true,
-                  text: "Predicted Weight Over Time",
+                  text: 'Predicted Weight Over Time',
                 },
                 tooltip: {
                   enabled: true,
                 },
                 legend: {
                   display: true,
-                  position: "top",
+                  position: 'top',
                 },
               },
             },
@@ -88,9 +78,7 @@ export default defineComponent({
       if (chartInstance.value) {
         // Create new arrays to avoid mutating reactive data
         const labels = props.weightData.map((data) => `Day ${data.day}`);
-        const dataPoints = props.weightData.map((data) =>
-          parseFloat(data.weight.toFixed(2))
-        );
+        const dataPoints = props.weightData.map((data) => parseFloat(data.weight.toFixed(2)));
 
         chartInstance.value.data.labels = labels;
         chartInstance.value.data.datasets[0].data = dataPoints;
