@@ -45,17 +45,19 @@ export const predictWeightOverTime = (
   userData: UserData
 ): Array<{ day: number; weight: number }> => {
   const dailyCalorieAdjustment = calculateCalorieAdjustment(userData);
+  const tdee = calculateTDEE(userData);
+  const netCalories = userData.currentCalorieIntake - tdee;
   const days = userData.timeFrame;
   const result = [];
 
   let currentWeight = userData.weight;
-  const dailyWeightChange = dailyCalorieAdjustment / oneKgBodyWeightKcal; // kg/day
 
   for (let day = 1; day <= days; day++) {
+    const dailyWeightChange =
+      (netCalories + dailyCalorieAdjustment) / oneKgBodyWeightKcal;
     currentWeight += dailyWeightChange;
     result.push({ day, weight: currentWeight });
   }
 
-  console.log("result", result);
   return result;
 };
