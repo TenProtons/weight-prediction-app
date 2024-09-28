@@ -25,8 +25,8 @@ export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Main",
   components: {
-    // UserInputForm,
-    // WeightChart,
+    UserInputForm,
+    WeightChart,
   },
   setup() {
     const { t } = useI18n(); // Extract t from useI18n
