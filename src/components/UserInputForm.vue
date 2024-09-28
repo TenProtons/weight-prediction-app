@@ -2,38 +2,38 @@
   <form @submit.prevent="onSubmit">
     <div>
       <label>{{ $t('currentWeight') }} (kg):</label>
-      <input v-model.number="userData.weight" type="number" required />
+      <input v-model.number="formData.weight" type="number" required />
     </div>
     <div>
       <label>{{ $t('targetWeight') }} (kg):</label>
-      <input v-model.number="userData.targetWeight" type="number" required />
+      <input v-model.number="formData.targetWeight" type="number" required />
     </div>
     <div>
       <label>{{ $t('timeFrame') }} (days):</label>
-      <input v-model.number="userData.timeFrame" type="number" required />
+      <input v-model.number="formData.timeFrame" type="number" required />
     </div>
     <div>
       <label>{{ $t('calorieIntake') }} (kcal):</label>
-      <input v-model.number="userData.currentCalorieIntake" type="number" required />
+      <input v-model.number="formData.currentCalorieIntake" type="number" required />
     </div>
     <div>
       <label>{{ $t('height') }} (cm):</label>
-      <input v-model.number="userData.height" type="number" required />
+      <input v-model.number="formData.height" type="number" required />
     </div>
     <div>
       <label>Age (years):</label>
-      <input v-model.number="userData.age" type="number" required />
+      <input v-model.number="formData.age" type="number" required />
     </div>
     <div>
       <label>Gender:</label>
-      <select v-model="userData.gender" required>
+      <select v-model="formData.gender" required>
         <option value="male">Male</option>
         <option value="female">Female</option>
       </select>
     </div>
     <div>
       <label>{{ $t('activityLevel') }}:</label>
-      <select v-model="userData.activityLevel" required>
+      <select v-model="formData.activityLevel" required>
         <option value="sedentary">
           {{ $t('Sedentary (little or no exercise)') }}
         </option>
@@ -54,30 +54,45 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { UserData } from '@/utils/calculator';
+import { defaultUserData } from '@/utils/defaultData';
 
 export default defineComponent({
   name: 'UserInputForm',
+  props: {
+    initialUserData: {
+      type: Object as () => UserData | null,
+      default: null,
+    },
+  },
   emits: ['calculate'],
   setup(props, { emit }) {
-    const userData = ref<UserData>({
-      weight: 70,
-      targetWeight: 65,
-      height: 170,
-      age: 30,
-      gender: 'male',
-      activityLevel: 'moderate',
-      currentCalorieIntake: 2000,
-      timeFrame: 30,
-    });
+    const { t } = useI18n();
+
+    const formData = ref<UserData>({ ...defaultUserData });
+
+    // Watch for changes in initialUserData and update formData
+    watch(
+      () => props.initialUserData,
+      (newVal) => {
+        if (newVal) {
+          formData.value = { ...newVal };
+        } else {
+          formData.value = { ...defaultUserData };
+        }
+      },
+      { immediate: true }
+    );
 
     const onSubmit = () => {
-      emit('calculate', userData.value);
+      emit('calculate', { ...formData.value });
     };
 
     return {
-      userData,
+      t,
+      formData,
       onSubmit,
     };
   },

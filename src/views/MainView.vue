@@ -5,7 +5,7 @@
       <WeightChart :weight-data="weightData" />
       <p>{{ hintMessage }}</p>
     </div>
-    <UserInputForm @calculate="handleCalculate" />
+    <UserInputForm :initial-user-data="userData" @calculate="handleCalculate" />
   </div>
 </template>
 
@@ -16,6 +16,7 @@ import UserInputForm from '@/components/UserInputForm.vue';
 import WeightChart from '@/components/WeightChart.vue';
 import { UserData, calculateCalorieAdjustment, predictWeightOverTime } from '@/utils/calculator';
 import { saveData, loadData } from '@/services/storage';
+import { defaultUserData } from '@/utils/defaultData'; // Import default data
 
 export default defineComponent({
   name: 'MainView',
@@ -28,17 +29,21 @@ export default defineComponent({
 
     const weightData = ref<Array<{ day: number; weight: number }>>([]);
     const hintMessage = ref('');
+    const userData = ref<UserData | null>(null);
 
-    const handleCalculate = (userData: UserData) => {
+    const handleCalculate = (inputUserData: UserData) => {
       // Save user data to localStorage
-      saveData('userData', userData);
+      saveData('userData', inputUserData);
 
-      const calorieAdjustment = Math.abs(calculateCalorieAdjustment(userData));
+      // Update userData
+      userData.value = inputUserData;
+
+      const calorieAdjustment = Math.abs(calculateCalorieAdjustment(inputUserData));
       hintMessage.value = t('weightChangeHint', {
         calories: calorieAdjustment.toFixed(2),
       });
 
-      weightData.value = predictWeightOverTime(userData);
+      weightData.value = predictWeightOverTime(inputUserData);
     };
 
     // Use the onMounted hook to load user data when the component is mounted
@@ -47,7 +52,12 @@ export default defineComponent({
       console.log('Loaded savedUserData:', savedUserData);
 
       if (savedUserData) {
+        userData.value = savedUserData;
         handleCalculate(savedUserData);
+      } else {
+        // Use default data when no saved data is found
+        userData.value = defaultUserData;
+        handleCalculate(defaultUserData);
       }
     });
 
@@ -56,6 +66,7 @@ export default defineComponent({
       hintMessage,
       handleCalculate,
       t,
+      userData, // Expose userData to the template
     };
   },
 });
