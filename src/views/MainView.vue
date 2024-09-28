@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="main-view">
     <h1>{{ t("appTitle") }}</h1>
     <div v-if="weightData.length">
       <WeightChart :weight-data="weightData" />
@@ -22,8 +22,7 @@ import {
 import { saveData, loadData } from "@/services/storage";
 
 export default defineComponent({
-  // eslint-disable-next-line vue/multi-word-component-names
-  name: "Main",
+  name: "MainView",
   components: {
     UserInputForm,
     WeightChart,
@@ -62,9 +61,8 @@ export default defineComponent({
 });
 </script>
 
-<style>
-/* Global styles */
-#app {
+<style lang="scss" scoped>
+.main-view {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;

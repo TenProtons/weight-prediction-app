@@ -123,7 +123,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 div {
   position: relative;
   height: 400px;
