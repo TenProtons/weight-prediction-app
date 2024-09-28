@@ -1,12 +1,12 @@
 import { UserData } from './calculator';
 
 export const defaultUserData: UserData = {
-  weight: 70,
-  targetWeight: 65,
-  height: 170,
+  weight: 55,
+  targetWeight: 50,
+  height: 165,
   age: 30,
-  gender: 'male',
+  gender: 'female',
   activityLevel: 'moderate',
-  currentCalorieIntake: 2500,
+  currentCalorieIntake: 1900,
   timeFrame: 30,
 };

@@ -57,7 +57,6 @@
 import { defineComponent, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { UserData } from '@/utils/calculator';
-import { defaultUserData } from '@/utils/defaultData';
 
 export default defineComponent({
   name: 'UserInputForm',
@@ -71,7 +70,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const { t } = useI18n();
 
-    const formData = ref<UserData>({ ...defaultUserData });
+    const formData = ref<UserData>({} as UserData);
 
     // Watch for changes in initialUserData and update formData
     watch(
@@ -79,8 +78,6 @@ export default defineComponent({
       (newVal) => {
         if (newVal) {
           formData.value = { ...newVal };
-        } else {
-          formData.value = { ...defaultUserData };
         }
       },
       { immediate: true }
