@@ -10,6 +10,7 @@ import {
   onMounted,
   onBeforeUnmount,
   ref,
+  shallowRef,
   watch,
   PropType,
 } from "vue";
@@ -24,7 +25,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const chartInstance = ref<Chart | null>(null);
+    const chartInstance = shallowRef<Chart | null>(null); // Use shallowRef
     const chartCanvas = ref<HTMLCanvasElement | null>(null);
 
     const createChart = () => {
@@ -83,12 +84,15 @@ export default defineComponent({
 
     const updateChart = () => {
       if (chartInstance.value) {
-        chartInstance.value.data.labels = props.weightData.map(
-          (data) => `Day ${data.day}`
+        // Create new arrays to avoid mutating reactive data
+        const labels = props.weightData.map((data) => `Day ${data.day}`);
+        const dataPoints = props.weightData.map((data) =>
+          parseFloat(data.weight.toFixed(2))
         );
-        chartInstance.value.data.datasets[0].data = props.weightData.map(
-          (data) => data.weight.toFixed(2)
-        );
+
+        chartInstance.value.data.labels = labels;
+        chartInstance.value.data.datasets[0].data = dataPoints;
+
         chartInstance.value.update();
       }
     };
@@ -107,8 +111,7 @@ export default defineComponent({
       () => props.weightData,
       () => {
         updateChart();
-      },
-      { deep: true }
+      }
     );
 
     return {
