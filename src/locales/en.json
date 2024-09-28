@@ -1,0 +1,12 @@
+{
+  "appTitle": "Weight Prediction App",
+  "currentWeight": "Current Weight",
+  "targetWeight": "Target Weight",
+  "timeFrame": "Time Frame",
+  "calorieIntake": "Daily Calorie Intake",
+  "height": "Height",
+  "lifestyle": "Lifestyle",
+  "activityLevel": "Activity Level",
+  "calculate": "Calculate",
+  "weightChangeHint": "You need to adjust your daily calorie intake by {calories} calories to reach your target weight."
+}
