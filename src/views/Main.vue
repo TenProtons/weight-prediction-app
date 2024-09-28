@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <h1>{{ t("appTitle") }}</h1>
-    <UserInputForm @calculate="handleCalculate" />
     <div v-if="weightData.length">
-      <p>{{ hintMessage }}</p>
       <WeightChart :weight-data="weightData" />
+      <p>{{ hintMessage }}</p>
     </div>
+    <UserInputForm @calculate="handleCalculate" />
   </div>
 </template>
 
