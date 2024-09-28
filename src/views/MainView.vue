@@ -10,8 +10,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { useI18n } from 'vue-i18n'; // Import useI18n
+import { defineComponent, ref, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import UserInputForm from '@/components/UserInputForm.vue';
 import WeightChart from '@/components/WeightChart.vue';
 import { UserData, calculateCalorieAdjustment, predictWeightOverTime } from '@/utils/calculator';
@@ -24,7 +24,7 @@ export default defineComponent({
     WeightChart,
   },
   setup() {
-    const { t } = useI18n(); // Extract t from useI18n
+    const { t } = useI18n();
 
     const weightData = ref<Array<{ day: number; weight: number }>>([]);
     const hintMessage = ref('');
@@ -41,17 +41,21 @@ export default defineComponent({
       weightData.value = predictWeightOverTime(userData);
     };
 
-    // Load user data on component mount
-    const savedUserData = loadData('userData');
-    if (savedUserData) {
-      handleCalculate(savedUserData);
-    }
+    // Use the onMounted hook to load user data when the component is mounted
+    onMounted(() => {
+      const savedUserData = loadData('userData');
+      console.log('Loaded savedUserData:', savedUserData);
+
+      if (savedUserData) {
+        handleCalculate(savedUserData);
+      }
+    });
 
     return {
       weightData,
       hintMessage,
       handleCalculate,
-      t, // Expose t to the template
+      t,
     };
   },
 });
