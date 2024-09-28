@@ -17,6 +17,8 @@ export const activityFactor = {
   veryActive: 1.9,
 };
 
+const oneKgBodyWeightKcal = 7700;
+
 export const calculateBMR = (userData: UserData): number => {
   const { weight, height, age, gender } = userData;
   if (gender === "male") {
@@ -34,7 +36,7 @@ export const calculateTDEE = (userData: UserData): number => {
 
 export const calculateCalorieAdjustment = (userData: UserData): number => {
   const weightDifference = userData.targetWeight - userData.weight; // kg
-  const totalCaloriesNeeded = weightDifference * 7700; // kcal
+  const totalCaloriesNeeded = weightDifference * oneKgBodyWeightKcal; // kcal
   const dailyCalorieAdjustment = totalCaloriesNeeded / userData.timeFrame; // kcal/day
   return dailyCalorieAdjustment;
 };
@@ -43,20 +45,17 @@ export const predictWeightOverTime = (
   userData: UserData
 ): Array<{ day: number; weight: number }> => {
   const dailyCalorieAdjustment = calculateCalorieAdjustment(userData);
-  const tdee = calculateTDEE(userData);
-  const netCalories = userData.currentCalorieIntake - tdee;
   const days = userData.timeFrame;
   const result = [];
 
   let currentWeight = userData.weight;
+  const dailyWeightChange = dailyCalorieAdjustment / oneKgBodyWeightKcal; // kg/day
 
   for (let day = 1; day <= days; day++) {
-    const dailyWeightChange = (netCalories + dailyCalorieAdjustment) / 7700;
     currentWeight += dailyWeightChange;
     result.push({ day, weight: currentWeight });
   }
 
   console.log("result", result);
-
   return result;
 };
