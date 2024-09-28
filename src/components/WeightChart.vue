@@ -25,7 +25,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const chartInstance = shallowRef<Chart | null>(null); // Use shallowRef
+    const chartInstance = shallowRef<Chart | null>(null);
     const chartCanvas = ref<HTMLCanvasElement | null>(null);
 
     const createChart = () => {
@@ -39,7 +39,9 @@ export default defineComponent({
               datasets: [
                 {
                   label: "Predicted Weight",
-                  data: props.weightData.map((data) => data.weight.toFixed(2)),
+                  data: props.weightData.map((data) =>
+                    Number(data.weight.toFixed(2))
+                  ),
                   fill: false,
                   borderColor: "rgba(75,192,192,1)",
                   tension: 0.1,

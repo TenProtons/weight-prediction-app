@@ -38,7 +38,7 @@ export default defineComponent({
       // Save user data to localStorage
       saveData("userData", userData);
 
-      const calorieAdjustment = calculateCalorieAdjustment(userData);
+      const calorieAdjustment = Math.abs(calculateCalorieAdjustment(userData));
       hintMessage.value = t("weightChangeHint", {
         calories: calorieAdjustment.toFixed(2),
       });
