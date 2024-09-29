@@ -27,7 +27,7 @@ export default defineComponent({
           chartInstance.value = new Chart(ctx, {
             type: 'line',
             data: {
-              labels: props.weightData.map((data) => `Day ${data.day}`),
+              labels: props.weightData.map((data) => data.day),
               datasets: [
                 {
                   label: 'Predicted Weight',
@@ -64,7 +64,7 @@ export default defineComponent({
                   enabled: true,
                 },
                 legend: {
-                  display: true,
+                  display: false,
                   position: 'top',
                 },
               },
@@ -77,7 +77,7 @@ export default defineComponent({
     const updateChart = () => {
       if (chartInstance.value) {
         // Create new arrays to avoid mutating reactive data
-        const labels = props.weightData.map((data) => `Day ${data.day}`);
+        const labels = props.weightData.map((data) => data.day);
         const dataPoints = props.weightData.map((data) => parseFloat(data.weight.toFixed(2)));
 
         chartInstance.value.data.labels = labels;

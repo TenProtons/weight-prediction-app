@@ -16,8 +16,8 @@ import UserInputForm from '@/components/UserInputForm.vue';
 import WeightChart from '@/components/WeightChart.vue';
 import { calculateCalorieAdjustment, predictWeightOverTime } from '@/utils/calculator';
 import { saveData, loadData } from '@/services/storage';
-import { defaultUserData } from '@/utils/defaultData'; // Import default data
 import { UserData } from '@/interfaces/UserData';
+import { defaultUserData } from '@/constants';
 
 export default defineComponent({
   name: 'MainView',
