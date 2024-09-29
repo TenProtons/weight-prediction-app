@@ -1,4 +1,4 @@
-import { UserData } from './calculator';
+import { UserData } from '@/interfaces/UserData';
 
 export const defaultUserData: UserData = {
   weight: 55,

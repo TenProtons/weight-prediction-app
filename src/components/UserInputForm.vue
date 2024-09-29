@@ -54,9 +54,9 @@
 </template>
 
 <script lang="ts">
+import { UserData } from '@/interfaces/UserData';
 import { defineComponent, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { UserData } from '@/utils/calculator';
 
 export default defineComponent({
   name: 'UserInputForm',
