@@ -8,5 +8,5 @@ export const defaultUserData: UserData = {
   gender: 'female',
   activityLevel: 'moderate',
   currentCalorieIntake: 1900,
-  timeFrame: 30,
+  timeFrame: 90,
 };
