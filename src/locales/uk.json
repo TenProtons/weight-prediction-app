@@ -18,6 +18,7 @@
   "veryActive": "Дуже активна",
   "currentCalorieIntake": "Поточне споживання калорій",
   "timeFrame": "Часовий проміжок",
+  "calorieIntake": "Денне споживання калорій",
   "adjustCalorieHint": "Вам потрібно {action} щоденне споживання з {currentCalories} ккал до {adjustedCalories} ккал, щоб досягти бажаної ваги.",
   "increase": "збільшити",
   "decrease": "зменшити",

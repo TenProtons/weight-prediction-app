@@ -18,6 +18,7 @@
   "veryActive": "Very Active",
   "currentCalorieIntake": "Current Calorie Intake",
   "timeFrame": "Time Frame",
+  "calorieIntake": "Daily Calorie Intake",
   "adjustCalorieHint": "You need to {action} your daily intake from {currentCalories} kcal to {adjustedCalories} kcal to reach your desired weight.",
   "increase": "increase",
   "decrease": "decrease",
