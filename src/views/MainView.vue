@@ -4,13 +4,14 @@
     <div v-if="weightData.length">
       <WeightChart :weight-data="weightData" />
       <p :class="{ warning: isWarning }">{{ hintMessage }}</p>
+      <p>{{ isWarning }}</p>
     </div>
     <UserInputForm :initial-user-data="userData" @calculate="handleCalculate" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue';
+import { defineComponent, ref, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import UserInputForm from '@/components/UserInputForm.vue';
 import WeightChart from '@/components/WeightChart.vue';
@@ -26,8 +27,7 @@ export default defineComponent({
     WeightChart,
   },
   setup() {
-    const { t } = useI18n();
-
+    const { t, locale } = useI18n();
     const weightData = ref<Array<{ day: number; weight: number }>>([]);
     const userData = ref<UserData | null>(null);
     const hintMessage = ref('');
@@ -74,6 +74,12 @@ export default defineComponent({
 
       weightData.value = predictWeightOverTime(inputUserData);
     };
+
+    watch(locale, () => {
+      if (userData.value) {
+        handleCalculate(userData.value);
+      }
+    });
 
     onMounted(() => {
       const savedUserData = loadData('userData');
