@@ -10,14 +10,8 @@ module.exports = {
     sourceType: 'module',
   },
   plugins: ['vue', '@typescript-eslint', 'prettier'],
-  extends: [
-    'eslint:recommended',
-    'plugin:vue/vue3-recommended', // Use 'plugin:vue/recommended' if you're using Vue 2
-    'plugin:@typescript-eslint/recommended',
-    'prettier',
-  ],
+  extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
-    // Add any custom rules here
   },
 };

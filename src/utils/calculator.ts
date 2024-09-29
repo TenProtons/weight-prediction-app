@@ -25,24 +25,32 @@ export const calculateTDEE = (userData: UserData): number => {
   return bmr * factor;
 };
 
-export const calculateCalorieAdjustment = (userData: UserData): number => {
+export const calculateRequiredDailyIntake = (userData: UserData): number => {
   const weightDifference = userData.targetWeight - userData.weight; // kg
   const totalCaloriesNeeded = weightDifference * oneKgBodyWeightKcal; // kcal
-  const dailyCalorieAdjustment = totalCaloriesNeeded / userData.timeFrame; // kcal/day
-  return dailyCalorieAdjustment;
+  const dailyCalorieDeficit = totalCaloriesNeeded / userData.timeFrame; // kcal/day
+  const tdee = calculateTDEE(userData); // kcal/day
+  const requiredDailyIntake = tdee + dailyCalorieDeficit; // kcal/day
+  return requiredDailyIntake;
+};
+
+export const calculateCalorieAdjustment = (userData: UserData): number => {
+  const requiredDailyIntake = calculateRequiredDailyIntake(userData);
+  const calorieAdjustment = requiredDailyIntake - userData.currentCalorieIntake;
+  return calorieAdjustment;
 };
 
 export const predictWeightOverTime = (userData: UserData): Array<{ day: number; weight: number }> => {
-  const dailyCalorieAdjustment = calculateCalorieAdjustment(userData);
+  const requiredDailyIntake = calculateRequiredDailyIntake(userData);
   const tdee = calculateTDEE(userData);
-  const netCalories = userData.currentCalorieIntake - tdee;
   const days = userData.timeFrame;
   const result = [];
 
   let currentWeight = userData.weight;
 
   for (let day = 1; day <= days; day++) {
-    const dailyWeightChange = (netCalories + dailyCalorieAdjustment) / oneKgBodyWeightKcal;
+    const netCalories = requiredDailyIntake - tdee;
+    const dailyWeightChange = netCalories / oneKgBodyWeightKcal;
     currentWeight += dailyWeightChange;
     result.push({ day, weight: currentWeight });
   }

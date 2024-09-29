@@ -91,18 +91,18 @@ export default defineComponent({
     const calorieIntakeLabel = computed(() => `${t('calorieIntake')} (kcal)`);
     const heightLabel = computed(() => `${t('height')} (cm)`);
     const ageLabel = computed(() => `${t('age')} (years)`);
-    const genderOptions = [
+    const genderOptions = computed(() => [
       { value: 'male', label: t('male') },
       { value: 'female', label: t('female') },
-    ];
+    ]);
 
-    const activityLevelOptions = [
+    const activityLevelOptions = computed(() => [
       { value: 'sedentary', label: t('sedentary') },
       { value: 'light', label: t('light') },
       { value: 'moderate', label: t('moderate') },
       { value: 'active', label: t('active') },
       { value: 'veryActive', label: t('veryActive') },
-    ];
+    ]);
 
     watch(
       () => props.initialUserData,
