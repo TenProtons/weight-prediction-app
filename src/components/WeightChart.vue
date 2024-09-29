@@ -39,6 +39,10 @@ export default defineComponent({
               ],
             },
             options: {
+              interaction: {
+                intersect: false,
+                mode: 'index',
+              },
               responsive: true,
               maintainAspectRatio: false,
               scales: {
@@ -53,6 +57,7 @@ export default defineComponent({
                     display: true,
                     text: 'Weight (kg)',
                   },
+                  grace: '10%',
                 },
               },
               plugins: {
