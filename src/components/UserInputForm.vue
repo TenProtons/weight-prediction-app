@@ -1,56 +1,59 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <div>
-      <label>{{ $t('currentWeight') }} (kg):</label>
-      <input v-model.number="formData.weight" type="number" required />
-      <p v-if="validationErrors.weight" class="error">{{ validationErrors.weight }}</p>
-    </div>
-    <div>
-      <label>{{ $t('targetWeight') }} (kg):</label>
-      <input v-model.number="formData.targetWeight" type="number" required />
-      <p v-if="validationErrors.targetWeight" class="error">{{ validationErrors.targetWeight }}</p>
-      <p v-if="validationErrors.weightDifference" class="error">{{ validationErrors.weightDifference }}</p>
-    </div>
-    <div>
-      <label>{{ $t('timeFrame') }} (days):</label>
-      <input v-model.number="formData.timeFrame" type="number" required />
-      <p v-if="validationErrors.timeFrame" class="error">{{ validationErrors.timeFrame }}</p>
-    </div>
-    <div>
-      <label>{{ $t('calorieIntake') }} (kcal):</label>
-      <input v-model.number="formData.currentCalorieIntake" type="number" required />
-      <p v-if="validationErrors.currentCalorieIntake" class="error">
-        {{ validationErrors.currentCalorieIntake }}
-      </p>
-    </div>
-    <div>
-      <label>{{ $t('height') }} (cm):</label>
-      <input v-model.number="formData.height" type="number" required />
-      <p v-if="validationErrors.height" class="error">{{ validationErrors.height }}</p>
-    </div>
-    <div>
-      <label>{{ $t('age') }} (years):</label>
-      <input v-model.number="formData.age" type="number" required />
-      <p v-if="validationErrors.age" class="error">{{ validationErrors.age }}</p>
-    </div>
-    <div>
-      <label>{{ $t('gender') }}:</label>
-      <select v-model="formData.gender" required>
-        <option value="male">{{ $t('male') }}</option>
-        <option value="female">{{ $t('female') }}</option>
-      </select>
-    </div>
-    <div>
-      <label>{{ $t('activityLevel') }}:</label>
-      <select v-model="formData.activityLevel" required>
-        <option value="sedentary">{{ $t('sedentary') }}</option>
-        <option value="light">{{ $t('light') }}</option>
-        <option value="moderate">{{ $t('moderate') }}</option>
-        <option value="active">{{ $t('active') }}</option>
-        <option value="veryActive">{{ $t('veryActive') }}</option>
-      </select>
-    </div>
-    <button type="submit" :disabled="!isFormValid">{{ $t('calculate') }}</button>
+    <InputField
+      v-model="formData.weight"
+      type="number"
+      :label="currentWeightLabel"
+      :error="validationErrors.weight"
+      required
+    />
+
+    <InputField
+      v-model="formData.targetWeight"
+      type="number"
+      :label="targetWeightLabel"
+      :error="validationErrors.targetWeight || validationErrors.weightDifference"
+      required
+    />
+
+    <InputField
+      v-model="formData.timeFrame"
+      type="number"
+      :label="timeFrameLabel"
+      :error="validationErrors.timeFrame"
+      required
+    />
+
+    <InputField
+      v-model="formData.currentCalorieIntake"
+      type="number"
+      :label="calorieIntakeLabel"
+      :error="validationErrors.currentCalorieIntake"
+      required
+    />
+
+    <InputField
+      v-model="formData.height"
+      type="number"
+      :label="heightLabel"
+      :error="validationErrors.height"
+      required
+    />
+
+    <InputField v-model="formData.age" :label="ageLabel" type="number" :error="validationErrors.age" required />
+
+    <SelectField v-model="formData.gender" :label="t('gender')" :options="genderOptions" required />
+
+    <SelectField
+      v-model="formData.activityLevel"
+      :label="t('activityLevel')"
+      :options="activityLevelOptions"
+      required
+    />
+
+    <button type="submit" :disabled="!isFormValid">
+      {{ t('calculate') }}
+    </button>
   </form>
 </template>
 
@@ -58,9 +61,15 @@
 import { UserData } from '@/interfaces/UserData';
 import { defineComponent, ref, watch, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import InputField from '@/components/InputField.vue';
+import SelectField from '@/components/SelectField.vue';
 
 export default defineComponent({
   name: 'UserInputForm',
+  components: {
+    InputField,
+    SelectField,
+  },
   props: {
     initialUserData: {
       type: Object as () => UserData | null,
@@ -76,6 +85,24 @@ export default defineComponent({
     const isFormValid = computed(() => {
       return Object.keys(validationErrors.value).length === 0;
     });
+    const currentWeightLabel = computed(() => `${t('currentWeight')} (kg)`);
+    const targetWeightLabel = computed(() => `${t('targetWeight')} (kg)`);
+    const timeFrameLabel = computed(() => `${t('timeFrame')} (days)`);
+    const calorieIntakeLabel = computed(() => `${t('calorieIntake')} (kcal)`);
+    const heightLabel = computed(() => `${t('height')} (cm)`);
+    const ageLabel = computed(() => `${t('age')} (years)`);
+    const genderOptions = [
+      { value: 'male', label: t('male') },
+      { value: 'female', label: t('female') },
+    ];
+
+    const activityLevelOptions = [
+      { value: 'sedentary', label: t('sedentary') },
+      { value: 'light', label: t('light') },
+      { value: 'moderate', label: t('moderate') },
+      { value: 'active', label: t('active') },
+      { value: 'veryActive', label: t('veryActive') },
+    ];
 
     watch(
       () => props.initialUserData,
@@ -217,6 +244,14 @@ export default defineComponent({
       validationErrors,
       isFormValid,
       onSubmit,
+      genderOptions,
+      activityLevelOptions,
+      currentWeightLabel,
+      targetWeightLabel,
+      timeFrameLabel,
+      calorieIntakeLabel,
+      heightLabel,
+      ageLabel,
     };
   },
 });

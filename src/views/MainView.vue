@@ -3,7 +3,7 @@
     <h1>{{ t('appTitle') }}</h1>
     <div v-if="weightData.length">
       <WeightChart :weight-data="weightData" />
-      <p :class="{ warning: isWarning }" :key="warningKey">{{ hintMessage }}</p>
+      <p :key="warningKey" :class="{ warning: isWarning }">{{ hintMessage }}</p>
       <p>{{ isWarning }}</p>
     </div>
     <UserInputForm :initial-user-data="userData" @calculate="handleCalculate" />
