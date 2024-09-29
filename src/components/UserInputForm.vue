@@ -224,6 +224,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 form div {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 10px;
 }
 
@@ -233,7 +235,7 @@ label {
 
 input,
 select {
-  width: 100%;
+  display: flex;
 }
 
 .error {
