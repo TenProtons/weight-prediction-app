@@ -10,14 +10,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, watch, nextTick } from 'vue';
-import { useI18n } from 'vue-i18n';
 import UserInputForm from '@/components/UserInputForm.vue';
 import WeightChart from '@/components/WeightChart.vue';
-import { calculateCalorieAdjustment, predictWeightOverTime } from '@/utils/calculator';
-import { saveData, loadData } from '@/services/storage';
-import { UserData } from '@/interfaces/UserData';
 import { defaultUserData } from '@/constants';
+import { UserData } from '@/interfaces/UserData';
+import { loadData, saveData } from '@/services/storage';
+import { calculateCalorieAdjustment, predictWeightOverTime } from '@/utils/calculator';
+import { defineComponent, onMounted, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   name: 'MainView',
