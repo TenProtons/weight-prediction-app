@@ -23,6 +23,7 @@ export default defineComponent({
 
     const changeLanguage = (lang: string) => {
       locale.value = lang;
+      localStorage.setItem('Weight Prediction App language', lang);
     };
 
     return {

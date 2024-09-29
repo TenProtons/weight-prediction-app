@@ -8,13 +8,17 @@ import { createI18n } from 'vue-i18n';
 import en from './locales/en.json';
 import uk from './locales/uk.json';
 
+const messages = {
+  en,
+  uk,
+};
+
+const savedLanguage = localStorage.getItem('Weight Prediction App language') || 'en';
+
 const i18n = createI18n({
-  locale: 'uk', // Set default locale to Ukrainian
-  fallbackLocale: 'en',
-  messages: {
-    en,
-    uk,
-  },
+  legacy: false,
+  locale: savedLanguage,
+  messages,
 });
 
 const app = createApp(App);
