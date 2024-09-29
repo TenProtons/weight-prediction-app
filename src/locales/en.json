@@ -23,5 +23,12 @@
   "decrease": "decrease",
   "warningMessage": "⚠️ Warning: Your calculated caloric intake is {consumptionLevel} and may be harmful. Please consider adjusting your target weight or increasing your time frame.",
   "tooLow": "too low",
-  "tooHigh": "too high"
+  "tooHigh": "too high",
+  "invalidWeight": "Weight must be between 40 kg and 250 kg.",
+  "invalidTargetWeight": "Target weight must be between 40 kg and 250 kg.",
+  "invalidWeightDifference": "The difference between current and target weight must be no more than 80 kg.",
+  "invalidTimeFrame": "Time frame must be between 14 and 365 days.",
+  "invalidCalorieIntake": "Calorie intake must be between 800 and 8000 kcal.",
+  "invalidHeight": "Height must be between 100 cm and 250 cm.",
+  "invalidAge": "Age must be between 10 and 120 years."
 }
