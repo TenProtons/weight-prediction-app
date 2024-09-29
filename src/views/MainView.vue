@@ -4,7 +4,6 @@
     <div v-if="weightData.length">
       <WeightChart :weight-data="weightData" />
       <p :key="warningKey" :class="{ warning: isWarning }">{{ hintMessage }}</p>
-      <p>{{ isWarning }}</p>
     </div>
     <UserInputForm :initial-user-data="userData" @calculate="handleCalculate" />
   </div>
