@@ -3,34 +3,35 @@
     <div>
       <label>{{ $t('currentWeight') }} (kg):</label>
       <input v-model.number="formData.weight" type="number" required />
-      <small v-if="validationErrors.weight" class="error">{{ validationErrors.weight }}</small>
+      <p v-if="validationErrors.weight" class="error">{{ validationErrors.weight }}</p>
     </div>
     <div>
       <label>{{ $t('targetWeight') }} (kg):</label>
       <input v-model.number="formData.targetWeight" type="number" required />
-      <small v-if="validationErrors.targetWeight" class="error">{{ validationErrors.targetWeight }}</small>
+      <p v-if="validationErrors.targetWeight" class="error">{{ validationErrors.targetWeight }}</p>
+      <p v-if="validationErrors.weightDifference" class="error">{{ validationErrors.weightDifference }}</p>
     </div>
     <div>
       <label>{{ $t('timeFrame') }} (days):</label>
       <input v-model.number="formData.timeFrame" type="number" required />
-      <small v-if="validationErrors.timeFrame" class="error">{{ validationErrors.timeFrame }}</small>
+      <p v-if="validationErrors.timeFrame" class="error">{{ validationErrors.timeFrame }}</p>
     </div>
     <div>
       <label>{{ $t('calorieIntake') }} (kcal):</label>
       <input v-model.number="formData.currentCalorieIntake" type="number" required />
-      <small v-if="validationErrors.currentCalorieIntake" class="error">
+      <p v-if="validationErrors.currentCalorieIntake" class="error">
         {{ validationErrors.currentCalorieIntake }}
-      </small>
+      </p>
     </div>
     <div>
       <label>{{ $t('height') }} (cm):</label>
       <input v-model.number="formData.height" type="number" required />
-      <small v-if="validationErrors.height" class="error">{{ validationErrors.height }}</small>
+      <p v-if="validationErrors.height" class="error">{{ validationErrors.height }}</p>
     </div>
     <div>
       <label>{{ $t('age') }} (years):</label>
       <input v-model.number="formData.age" type="number" required />
-      <small v-if="validationErrors.age" class="error">{{ validationErrors.age }}</small>
+      <p v-if="validationErrors.age" class="error">{{ validationErrors.age }}</p>
     </div>
     <div>
       <label>{{ $t('gender') }}:</label>
@@ -154,7 +155,9 @@ export default defineComponent({
       if (formData.value.targetWeight < 40 || formData.value.targetWeight > 250) {
         validationErrors.value.targetWeight = t('invalidTargetWeight');
       } else {
-        delete validationErrors.value.targetWeight;
+        if (validationErrors.value.targetWeight === t('invalidTargetWeight')) {
+          delete validationErrors.value.targetWeight;
+        }
       }
     };
 
@@ -163,7 +166,9 @@ export default defineComponent({
       if (weightDiff > 80) {
         validationErrors.value.weightDifference = t('invalidWeightDifference');
       } else {
-        delete validationErrors.value.weightDifference;
+        if (validationErrors.value.weightDifference === t('invalidWeightDifference')) {
+          delete validationErrors.value.weightDifference;
+        }
       }
     };
 
@@ -232,7 +237,8 @@ select {
 }
 
 .error {
+  margin: 0;
   color: red;
-  font-size: 0.9em;
+  font-size: 0.8em;
 }
 </style>
