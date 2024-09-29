@@ -3,7 +3,7 @@
     <h1>{{ t('appTitle') }}</h1>
     <div v-if="weightData.length">
       <WeightChart :weight-data="weightData" />
-      <p :class="{ warning: isWarning }">{{ hintMessage }}</p>
+      <p :class="{ warning: isWarning }" :key="warningKey">{{ hintMessage }}</p>
       <p>{{ isWarning }}</p>
     </div>
     <UserInputForm :initial-user-data="userData" @calculate="handleCalculate" />
@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, watch } from 'vue';
+import { defineComponent, ref, onMounted, watch, nextTick } from 'vue';
 import { useI18n } from 'vue-i18n';
 import UserInputForm from '@/components/UserInputForm.vue';
 import WeightChart from '@/components/WeightChart.vue';
@@ -32,6 +32,7 @@ export default defineComponent({
     const userData = ref<UserData | null>(null);
     const hintMessage = ref('');
     const isWarning = ref(false);
+    const warningKey = ref(0);
 
     const handleCalculate = (inputUserData: UserData) => {
       saveData('userData', inputUserData);
@@ -53,11 +54,13 @@ export default defineComponent({
         const consumptionLevel = t('tooLow');
         hintMessage.value = t('warningMessage', { consumptionLevel });
         isWarning.value = true;
+        warningKey.value += 1;
       } else if (adjustedCaloricIntake > upperThreshold) {
         // Caloric intake is too high
         const consumptionLevel = t('tooHigh');
         hintMessage.value = t('warningMessage', { consumptionLevel });
         isWarning.value = true;
+        warningKey.value += 1;
       } else {
         // Determine the action word
         const actionKey = calorieAdjustment > 0 ? 'increase' : 'decrease';
@@ -100,6 +103,7 @@ export default defineComponent({
       t,
       userData,
       isWarning,
+      warningKey,
     };
   },
 });
