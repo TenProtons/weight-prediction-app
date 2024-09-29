@@ -35,6 +35,17 @@ export default defineComponent({
                   fill: false,
                   borderColor: 'rgba(75,192,192,1)',
                   tension: 0.1,
+                  pointRadius: function (context) {
+                    const index = context.dataIndex;
+                    const xScale = context.chart.scales.x;
+                    const displayedTicks = xScale.ticks;
+
+                    // Create a set of displayed tick indices for efficient lookup
+                    const displayedTickIndices = new Set(displayedTicks.map((tick) => tick.value));
+
+                    // Show point if its index is in the set of displayed tick indices
+                    return displayedTickIndices.has(index) ? 3 : 0;
+                  },
                 },
               ],
             },
@@ -50,6 +61,10 @@ export default defineComponent({
                   title: {
                     display: true,
                     text: 'Day',
+                  },
+                  ticks: {
+                    maxTicksLimit: 20,
+                    autoSkip: true,
                   },
                 },
                 y: {

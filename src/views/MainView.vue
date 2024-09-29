@@ -33,10 +33,7 @@ export default defineComponent({
     const userData = ref<UserData | null>(null);
 
     const handleCalculate = (inputUserData: UserData) => {
-      // Save user data to localStorage
       saveData('userData', inputUserData);
-
-      // Update userData
       userData.value = inputUserData;
 
       const calorieAdjustment = Math.abs(calculateCalorieAdjustment(inputUserData));
@@ -47,16 +44,13 @@ export default defineComponent({
       weightData.value = predictWeightOverTime(inputUserData);
     };
 
-    // Use the onMounted hook to load user data when the component is mounted
     onMounted(() => {
       const savedUserData = loadData('userData');
-      console.log('Loaded savedUserData:', savedUserData);
 
       if (savedUserData) {
         userData.value = savedUserData;
         handleCalculate(savedUserData);
       } else {
-        // Use default data when no saved data is found
         userData.value = defaultUserData;
         handleCalculate(defaultUserData);
       }
@@ -67,7 +61,7 @@ export default defineComponent({
       hintMessage,
       handleCalculate,
       t,
-      userData, // Expose userData to the template
+      userData,
     };
   },
 });
