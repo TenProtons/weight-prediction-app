@@ -36,16 +36,38 @@ export default defineComponent({
     const handleCalculate = (inputUserData: UserData) => {
       saveData('userData', inputUserData);
       userData.value = inputUserData;
-      const calorieAdjustment = Number(Math.abs(calculateCalorieAdjustment(inputUserData)).toFixed(2));
 
-      if (calorieAdjustment > inputUserData.currentCalorieIntake / 2) {
-        // Display warning message
-        hintMessage.value = t('warningMessage');
+      // Calculate the calorie adjustment
+      const calorieAdjustment = Number(calculateCalorieAdjustment(inputUserData).toFixed());
+
+      // Calculate the adjusted caloric intake
+      const adjustedCaloricIntake = Number((inputUserData.currentCalorieIntake + calorieAdjustment).toFixed());
+
+      // Define thresholds for warnings
+      const lowerThreshold = inputUserData.currentCalorieIntake / 2;
+      const upperThreshold = inputUserData.currentCalorieIntake * 1.5;
+
+      // Check if a warning is needed
+      if (adjustedCaloricIntake < lowerThreshold) {
+        // Caloric intake is too low
+        const consumptionLevel = t('tooLow');
+        hintMessage.value = t('warningMessage', { consumptionLevel });
+        isWarning.value = true;
+      } else if (adjustedCaloricIntake > upperThreshold) {
+        // Caloric intake is too high
+        const consumptionLevel = t('tooHigh');
+        hintMessage.value = t('warningMessage', { consumptionLevel });
         isWarning.value = true;
       } else {
-        // Display regular hint message
-        hintMessage.value = t('weightChangeHint', {
-          calories: calorieAdjustment,
+        // Determine the action word
+        const actionKey = calorieAdjustment > 0 ? 'increase' : 'decrease';
+        const action = t(actionKey);
+
+        // Use the consolidated hint message
+        hintMessage.value = t('adjustCalorieHint', {
+          action,
+          currentCalories: inputUserData.currentCalorieIntake,
+          adjustedCalories: adjustedCaloricIntake,
         });
         isWarning.value = false;
       }

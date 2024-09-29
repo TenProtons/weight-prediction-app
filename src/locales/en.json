@@ -9,5 +9,10 @@
   "activityLevel": "Activity Level",
   "calculate": "Calculate",
   "weightChangeHint": "You need to reduce your daily calorie intake by {calories} calories to reach your target weight.",
-  "warningMessage": "⚠️ Warning: Your calculated caloric intake is too low and may be harmful. Please consider adjusting your target weight or increasing your time frame."
+  "adjustCalorieHint": "You need to {action} your daily intake from {currentCalories} kcal to {adjustedCalories} kcal to reach your desired weight.",
+  "increase": "increase",
+  "decrease": "decrease",
+  "warningMessage": "⚠️ Warning: Your calculated caloric intake is {consumptionLevel} and may be harmful. Please consider adjusting your target weight or increasing your time frame.",
+  "tooLow": "too low",
+  "tooHigh": "too high"
 }
