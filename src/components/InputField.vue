@@ -100,6 +100,7 @@ export default defineComponent({
 
   label {
     margin-bottom: var(--6);
+    font-size: 0.9em;
     text-align: start;
   }
 
