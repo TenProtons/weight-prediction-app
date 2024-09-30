@@ -45,7 +45,7 @@ export default defineComponent({
 
       // Define thresholds for warnings
       const lowerThreshold = inputUserData.currentCalorieIntake / 2;
-      const upperThreshold = inputUserData.currentCalorieIntake * 1.5;
+      const upperThreshold = inputUserData.currentCalorieIntake * 3;
 
       // Check if a warning is needed
       if (adjustedCaloricIntake < lowerThreshold) {
