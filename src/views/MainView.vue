@@ -116,7 +116,7 @@ export default defineComponent({
   width: 100%;
   max-width: 725px;
   margin: 0 auto;
-  padding: var(--20);
+  padding: 0 var(--20) var(--20) var(--20);
 
   &__calculated-info {
     margin-block: var(--24);
