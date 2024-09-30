@@ -68,6 +68,7 @@ export default defineComponent({
                   ticks: {
                     maxTicksLimit: 20,
                     autoSkip: true,
+                    maxRotation: 0,
                     color: getCSSVariable('--chart-font-color'),
                   },
                   grid: {
@@ -115,7 +116,6 @@ export default defineComponent({
                     },
                   },
                 },
-
                 legend: {
                   display: false,
                   position: 'top',
@@ -277,7 +277,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .chart-container {
   position: relative;
-  height: 400px;
+  height: 350px;
   width: 100%;
   background-color: var(--background-color);
   color: var(--text-color);
