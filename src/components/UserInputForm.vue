@@ -292,5 +292,18 @@ export default defineComponent({
 button {
   background-color: var(--button-background);
   color: var(--button-text-color);
+  padding: var(--8) var(--16);
+  border: none;
+  cursor: pointer;
+
+  &:disabled {
+    background-color: var(--button-background-disabled);
+    color: var(--button-text-color-disabled);
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
+    background-color: var(--button-background-hover);
+  }
 }
 </style>
