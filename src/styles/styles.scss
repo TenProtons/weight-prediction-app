@@ -12,6 +12,10 @@
   --button-background-disabled: #cccccc;
   --button-text-color-disabled: #888888;
   --button-background-hover: #e0e0e0;
+  --chart-line-color: #4b9cc5;
+  --chart-grid-color: rgba(0, 0, 0, 0.1); 
+  --chart-font-color: #2c3e50; 
+  --chart-tooltip-bg: #ffffff; 
   --4: 4px;
   --8: 8px;
   --12: 12px;
@@ -34,6 +38,10 @@
   --button-background-disabled: #555555;
   --button-text-color-disabled: #888888;
   --button-background-hover: #4a5a6a;
+  --chart-line-color: #9bd1ff;
+  --chart-grid-color: rgba(255, 255, 255, 0.2);
+  --chart-font-color: #ffffff;
+  --chart-tooltip-bg: #2c3e50;
 }
 
 /* Light mode variables */
