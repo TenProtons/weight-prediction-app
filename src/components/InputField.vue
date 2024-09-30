@@ -57,19 +57,13 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .input-field {
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
-}
 
-label {
-  margin-bottom: 5px;
-}
-
-.error {
-  color: red;
-  font-size: 0.8em;
+  label {
+    margin-bottom: 5px;
+  }
 }
 </style>

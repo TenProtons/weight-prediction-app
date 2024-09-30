@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSubmit">
+  <form class="form-container" @submit.prevent="onSubmit">
     <InputField
       v-model="formData.weight"
       type="number"
@@ -258,24 +258,21 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-form div {
+.form-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
-}
-
-label {
-  display: block;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 input,
 select {
-  display: flex;
+  background-color: var(--input-background);
+  color: var(--input-text-color);
 }
 
-.error {
-  margin: 0;
-  color: red;
-  font-size: 0.8em;
+button {
+  background-color: var(--button-background);
+  color: var(--button-text-color);
 }
 </style>

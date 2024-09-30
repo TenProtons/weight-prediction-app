@@ -39,7 +39,6 @@ export default defineComponent({
 
       // Calculate the calorie adjustment
       const calorieAdjustment = Number(calculateCalorieAdjustment(inputUserData).toFixed());
-      console.log('calorieAdjustment', calorieAdjustment);
 
       // Calculate the adjusted caloric intake
       const adjustedCaloricIntake = Number((inputUserData.currentCalorieIntake + calorieAdjustment).toFixed());
