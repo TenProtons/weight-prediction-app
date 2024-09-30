@@ -32,6 +32,6 @@
   "invalidCalorieIntake": "Calorie intake must be between 800 and 8000 kcal.",
   "invalidHeight": "Height must be between 100 cm and 250 cm.",
   "invalidAge": "Age must be between 10 and 120 years.",
-  "darkMode": "Dark Mode",
-  "lightMode": "Light Mode"
+  "darkMode": "Dark",
+  "lightMode": "Light"
 }

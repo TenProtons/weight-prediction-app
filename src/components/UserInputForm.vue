@@ -2,6 +2,7 @@
   <form class="form-container" @submit.prevent="onSubmit">
     <InputField
       v-model="formData.weight"
+      class="form-container__input"
       type="number"
       :label="currentWeightLabel"
       :error="validationErrors.weight"
@@ -10,6 +11,7 @@
 
     <InputField
       v-model="formData.targetWeight"
+      class="form-container__input"
       type="number"
       :label="targetWeightLabel"
       :error="validationErrors.targetWeight || validationErrors.weightDifference"
@@ -18,6 +20,7 @@
 
     <InputField
       v-model="formData.timeFrame"
+      class="form-container__input"
       type="number"
       :label="timeFrameLabel"
       :error="validationErrors.timeFrame"
@@ -26,6 +29,7 @@
 
     <InputField
       v-model="formData.currentCalorieIntake"
+      class="form-container__input"
       type="number"
       :label="calorieIntakeLabel"
       :error="validationErrors.currentCalorieIntake"
@@ -34,18 +38,33 @@
 
     <InputField
       v-model="formData.height"
+      class="form-container__input"
       type="number"
       :label="heightLabel"
       :error="validationErrors.height"
       required
     />
 
-    <InputField v-model="formData.age" :label="ageLabel" type="number" :error="validationErrors.age" required />
+    <InputField
+      v-model="formData.age"
+      class="form-container__input"
+      :label="ageLabel"
+      type="number"
+      :error="validationErrors.age"
+      required
+    />
 
-    <SelectField v-model="formData.gender" :label="t('gender')" :options="genderOptions" required />
+    <SelectField
+      v-model="formData.gender"
+      class="form-container__select"
+      :label="t('gender')"
+      :options="genderOptions"
+      required
+    />
 
     <SelectField
       v-model="formData.activityLevel"
+      class="form-container__select"
       :label="t('activityLevel')"
       :options="activityLevelOptions"
       required
@@ -263,12 +282,11 @@ export default defineComponent({
   flex-direction: column;
   background-color: var(--background-color);
   color: var(--text-color);
-}
 
-input,
-select {
-  background-color: var(--input-background);
-  color: var(--input-text-color);
+  &__input,
+  &__select {
+    margin-bottom: var(--20);
+  }
 }
 
 button {
