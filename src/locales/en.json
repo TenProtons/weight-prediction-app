@@ -32,6 +32,15 @@
   "invalidCalorieIntake": "Calorie intake must be between 800 and 8000 kcal.",
   "invalidHeight": "Height must be between 100 cm and 250 cm.",
   "invalidAge": "Age must be between 10 and 120 years.",
+  "predictedWeight": "Predicted Weight",
+  "chartTitle": "Predicted Weight Over Time",
+  "day": "Day",
+  "weight": "Weight",
+  "kg": "kg",
+  "days": "days",
+  "kcal": "kcal",
+  "cm": "cm",
+  "years": "years",
   "darkMode": "Dark",
   "lightMode": "Light"
 }

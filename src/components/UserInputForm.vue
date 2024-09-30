@@ -114,12 +114,12 @@ export default defineComponent({
     const isFormValid = computed(() => {
       return Object.keys(validationErrors.value).length === 0;
     });
-    const currentWeightLabel = computed(() => `${t('currentWeight')} (kg)`);
-    const targetWeightLabel = computed(() => `${t('targetWeight')} (kg)`);
-    const timeFrameLabel = computed(() => `${t('timeFrame')} (days)`);
-    const calorieIntakeLabel = computed(() => `${t('calorieIntake')} (kcal)`);
-    const heightLabel = computed(() => `${t('height')} (cm)`);
-    const ageLabel = computed(() => `${t('age')} (years)`);
+    const currentWeightLabel = computed(() => `${t('currentWeight')} (${t('kg')})`);
+    const targetWeightLabel = computed(() => `${t('targetWeight')} (${t('kg')})`);
+    const timeFrameLabel = computed(() => `${t('timeFrame')} (${t('days')})`);
+    const calorieIntakeLabel = computed(() => `${t('calorieIntake')} (${t('kcal')})`);
+    const heightLabel = computed(() => `${t('height')} (${t('cm')})`);
+    const ageLabel = computed(() => `${t('age')} (${t('years')})`);
     const genderOptions = computed(() => [
       { value: 'male', label: t('male') },
       { value: 'female', label: t('female') },

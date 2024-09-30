@@ -7,6 +7,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, onBeforeUnmount, ref, shallowRef, watch, PropType } from 'vue';
 import Chart, { ChartOptions, DefaultDataPoint } from 'chart.js/auto';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   name: 'WeightChart',
@@ -17,6 +18,7 @@ export default defineComponent({
     },
   },
   setup(props) {
+    const { t, locale } = useI18n();
     const chartInstance = shallowRef<Chart<'line', DefaultDataPoint<'line'>> | null>(null);
     const chartCanvas = ref<HTMLCanvasElement | null>(null);
 
@@ -32,7 +34,7 @@ export default defineComponent({
               labels: props.weightData.map((data) => data.day),
               datasets: [
                 {
-                  label: 'Predicted Weight',
+                  label: t('predictedWeight'),
                   data: props.weightData.map((data) => Number(data.weight.toFixed(2))),
                   fill: false,
                   borderColor: getCSSVariable('--chart-line-color'),
@@ -60,7 +62,7 @@ export default defineComponent({
                 x: {
                   title: {
                     display: true,
-                    text: 'Day',
+                    text: t('day'),
                     color: getCSSVariable('--chart-font-color'),
                   },
                   ticks: {
@@ -75,7 +77,7 @@ export default defineComponent({
                 y: {
                   title: {
                     display: true,
-                    text: 'Weight (kg)',
+                    text: `${t('weight')} (${t('kg')})`,
                     color: getCSSVariable('--chart-font-color'),
                   },
                   ticks: {
@@ -90,7 +92,7 @@ export default defineComponent({
               plugins: {
                 title: {
                   display: true,
-                  text: 'Predicted Weight Over Time',
+                  text: t('chartTitle'),
                   color: getCSSVariable('--chart-font-color'),
                 },
                 tooltip: {
