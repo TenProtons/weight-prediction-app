@@ -80,7 +80,7 @@
       required
     />
 
-    <button type="submit" :disabled="!isFormValid">
+    <button class="form-container__submit-button" type="submit" :disabled="!isFormValid">
       {{ t('calculate') }}
     </button>
   </form>
@@ -290,30 +290,28 @@ export default defineComponent({
 .form-container {
   display: flex;
   flex-direction: column;
+  gap: var(--20);
   background-color: var(--background-color);
   color: var(--text-color);
 
-  &__input,
-  &__select {
-    margin-bottom: var(--20);
-  }
-}
+  &__submit-button {
+    margin: var(--16) auto 0;
+    max-width: 200px;
+    padding: var(--8) var(--16);
+    background-color: var(--button-background);
+    color: var(--button-text-color);
+    border: none;
+    cursor: pointer;
 
-button {
-  background-color: var(--button-background);
-  color: var(--button-text-color);
-  padding: var(--8) var(--16);
-  border: none;
-  cursor: pointer;
+    &:disabled {
+      background-color: var(--button-background-disabled);
+      color: var(--button-text-color-disabled);
+      cursor: not-allowed;
+    }
 
-  &:disabled {
-    background-color: var(--button-background-disabled);
-    color: var(--button-text-color-disabled);
-    cursor: not-allowed;
-  }
-
-  &:not(:disabled):hover {
-    background-color: var(--button-background-hover);
+    &:not(:disabled):hover {
+      background-color: var(--button-background-hover);
+    }
   }
 }
 </style>

@@ -110,7 +110,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .main-view {
-  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  max-width: 725px;
   margin: 0 auto;
   padding: var(--20);
 }

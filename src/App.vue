@@ -2,8 +2,9 @@
   <div :class="['app', theme]">
     <div class="top-bar">
       <div class="language-switcher">
-        <button @click="changeLanguage('uk')">Українська</button>
-        <button @click="changeLanguage('en')">English</button>
+        <button @click="changeLanguage">
+          {{ locale === 'en' ? 'Українська' : 'English' }}
+        </button>
       </div>
       <div class="theme-switcher">
         <button @click="toggleTheme">
@@ -30,9 +31,9 @@ export default defineComponent({
     const { locale, t } = useI18n();
     const theme = ref('light-mode');
 
-    const changeLanguage = (lang: string) => {
-      locale.value = lang;
-      localStorage.setItem('Weight Prediction App language', lang);
+    const changeLanguage = () => {
+      locale.value = locale.value === 'en' ? 'uk' : 'en';
+      localStorage.setItem('Weight Prediction App language', locale.value);
     };
 
     const toggleTheme = () => {
@@ -66,6 +67,7 @@ export default defineComponent({
       changeLanguage,
       toggleTheme,
       theme,
+      locale,
       t,
     };
   },
@@ -74,6 +76,10 @@ export default defineComponent({
 
 <style lang="scss">
 .app {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-bottom: var(--16);
   font-family: Avenir, Helvetica, Arial, sans-serif;
   text-align: center;
   color: var(--text-color);
@@ -85,11 +91,6 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   padding: var(--20);
-}
-
-.language-switcher {
-  display: flex;
-  gap: var(--8);
 }
 
 nav {
@@ -107,9 +108,8 @@ nav {
 
 .version {
   display: block;
-  margin: auto;
   max-width: 800px;
-  padding-bottom: var(--8);
+  padding-inline: var(--20);
   text-align: left;
   font-size: 0.7em;
   color: var(--text-color);

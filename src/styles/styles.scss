@@ -52,11 +52,21 @@
 }
 
 /* Global styles */
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
   background-color: var(--background-color);
   color: var(--text-color);
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 button {
@@ -73,10 +83,10 @@ button {
 
 input,
 select {
+  padding: var(--8);
   background-color: var(--input-background);
   color: var(--input-text-color);
   border: 1px solid #ccc;
-  padding: var(--8);
 
   &:focus {
     outline: 2px solid var(--active-link-color);
