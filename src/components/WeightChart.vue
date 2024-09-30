@@ -6,8 +6,8 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, onBeforeUnmount, ref, shallowRef, watch, PropType } from 'vue';
-import Chart, { ChartOptions, DefaultDataPoint } from 'chart.js/auto';
 import { useI18n } from 'vue-i18n';
+import Chart, { ChartOptions, DefaultDataPoint } from 'chart.js/auto';
 
 export default defineComponent({
   name: 'WeightChart',
@@ -136,9 +136,6 @@ export default defineComponent({
 
     const updateChartColors = () => {
       if (chartInstance.value) {
-        const getCSSVariable = (name: string) =>
-          getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-
         const options = chartInstance.value.options as ChartOptions<'line'>;
         const dataset = chartInstance.value.data.datasets[0];
 
@@ -147,20 +144,30 @@ export default defineComponent({
         dataset.pointBackgroundColor = getCSSVariable('--chart-line-color');
 
         // Update scales and grid colors
-        if (options.scales && options.scales.x && options.scales.y) {
-          const xScale = options.scales.x;
-          const yScale = options.scales.y;
-
-          if (xScale) {
-            xScale.title!.color = getCSSVariable('--chart-font-color');
-            xScale.ticks!.color = getCSSVariable('--chart-font-color');
-            xScale.grid!.color = getCSSVariable('--chart-grid-color');
+        if (options.scales) {
+          if (options.scales['x']) {
+            const xScale = options.scales['x'];
+            if (xScale.title) {
+              xScale.title.color = getCSSVariable('--chart-font-color');
+            }
+            if (xScale.ticks) {
+              xScale.ticks.color = getCSSVariable('--chart-font-color');
+            }
+            if (xScale.grid) {
+              xScale.grid.color = getCSSVariable('--chart-grid-color');
+            }
           }
-
-          if (yScale) {
-            yScale.title!.color = getCSSVariable('--chart-font-color');
-            yScale.ticks!.color = getCSSVariable('--chart-font-color');
-            yScale.grid!.color = getCSSVariable('--chart-grid-color');
+          if (options.scales['y']) {
+            const yScale = options.scales['y'];
+            if (yScale.title) {
+              yScale.title.color = getCSSVariable('--chart-font-color');
+            }
+            if (yScale.ticks) {
+              yScale.ticks.color = getCSSVariable('--chart-font-color');
+            }
+            if (yScale.grid) {
+              yScale.grid.color = getCSSVariable('--chart-grid-color');
+            }
           }
         }
 
@@ -182,6 +189,33 @@ export default defineComponent({
           }
         }
 
+        chartInstance.value.update();
+      }
+    };
+
+    const updateChartTranslations = () => {
+      if (chartInstance.value) {
+        const dataset = chartInstance.value.data.datasets[0];
+        dataset.label = t('predictedWeight');
+
+        const options = chartInstance.value.options as ChartOptions<'line'>;
+
+        // Update scales titles
+        if (options.scales) {
+          if (options.scales['x'] && options.scales['x'].title) {
+            options.scales['x'].title.text = t('day');
+          }
+          if (options.scales['y'] && options.scales['y'].title) {
+            options.scales['y'].title.text = `${t('weight')} (${t('kg')})`;
+          }
+        }
+
+        // Update chart title
+        if (options.plugins && options.plugins.title) {
+          options.plugins.title.text = t('chartTitle');
+        }
+
+        // Update the chart to reflect the changes
         chartInstance.value.update();
       }
     };
@@ -210,6 +244,13 @@ export default defineComponent({
       () => props.weightData,
       () => {
         updateChart();
+      }
+    );
+
+    watch(
+      () => locale.value,
+      () => {
+        updateChartTranslations();
       }
     );
 
