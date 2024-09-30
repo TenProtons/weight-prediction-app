@@ -4,6 +4,9 @@
       v-model="formData.weight"
       class="form-container__input"
       type="number"
+      :min="40"
+      :max="250"
+      :maxlength="3"
       :label="currentWeightLabel"
       :error="validationErrors.weight"
       required
@@ -13,6 +16,9 @@
       v-model="formData.targetWeight"
       class="form-container__input"
       type="number"
+      :min="40"
+      :max="250"
+      :maxlength="3"
       :label="targetWeightLabel"
       :error="validationErrors.targetWeight || validationErrors.weightDifference"
       required
@@ -22,6 +28,7 @@
       v-model="formData.timeFrame"
       class="form-container__input"
       type="number"
+      :maxlength="3"
       :label="timeFrameLabel"
       :error="validationErrors.timeFrame"
       required
@@ -31,6 +38,7 @@
       v-model="formData.currentCalorieIntake"
       class="form-container__input"
       type="number"
+      :maxlength="5"
       :label="calorieIntakeLabel"
       :error="validationErrors.currentCalorieIntake"
       required
@@ -40,6 +48,7 @@
       v-model="formData.height"
       class="form-container__input"
       type="number"
+      :maxlength="3"
       :label="heightLabel"
       :error="validationErrors.height"
       required
@@ -48,8 +57,9 @@
     <InputField
       v-model="formData.age"
       class="form-container__input"
-      :label="ageLabel"
       type="number"
+      :maxlength="3"
+      :label="ageLabel"
       :error="validationErrors.age"
       required
     />
