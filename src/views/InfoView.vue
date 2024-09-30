@@ -1,11 +1,11 @@
 <template>
-  <div class="about-view">
-    <h1>This is an about page</h1>
+  <div class="info-view">
+    <h1>Help information will soon be available on this page.</h1>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.about-view {
+.info-view {
   display: flex;
   flex-direction: column;
   flex: 1;

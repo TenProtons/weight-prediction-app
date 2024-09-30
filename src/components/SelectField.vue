@@ -66,7 +66,8 @@ export default defineComponent({
   flex-direction: column;
 
   label {
-    margin-bottom: 5px;
+    margin-bottom: var(--6);
+    text-align: start;
   }
 }
 </style>

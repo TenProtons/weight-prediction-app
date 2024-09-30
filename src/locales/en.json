@@ -1,6 +1,6 @@
 {
   "main": "Main",
-  "about": "About",
+  "info": "Info",
   "appTitle": "Weight Prediction App",
   "calculate": "Calculate",
   "currentWeight": "Current Weight",

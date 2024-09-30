@@ -99,7 +99,8 @@ export default defineComponent({
   flex-direction: column;
 
   label {
-    margin-bottom: var(--4);
+    margin-bottom: var(--6);
+    text-align: start;
   }
 
   /* Hide spinners in WebKit browsers (Chrome, Safari, Edge, Opera) */

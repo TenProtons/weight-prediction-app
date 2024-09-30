@@ -15,7 +15,7 @@
     <router-view />
     <nav>
       <router-link to="/">{{ t('main') }}</router-link> |
-      <router-link to="/about">{{ t('about') }}</router-link>
+      <router-link to="/info">{{ t('info') }}</router-link>
     </nav>
     <span class="version">By Maksym Bondarenko v1.0</span>
   </div>

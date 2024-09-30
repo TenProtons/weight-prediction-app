@@ -3,7 +3,7 @@
     <h1>{{ t('appTitle') }}</h1>
     <div v-if="weightData.length">
       <WeightChart :weight-data="weightData" />
-      <p :key="warningKey" :class="{ warning: isWarning }">{{ hintMessage }}</p>
+      <p :key="warningKey" class="main-view__calculated-info" :class="{ warning: isWarning }">{{ hintMessage }}</p>
     </div>
     <UserInputForm :initial-user-data="userData" @calculate="handleCalculate" />
   </div>
@@ -117,6 +117,13 @@ export default defineComponent({
   max-width: 725px;
   margin: 0 auto;
   padding: var(--20);
+
+  &__calculated-info {
+    margin-block: var(--24);
+    padding: var(--4);
+    border: var(--calculated-info-border);
+    border-radius: var(--border-radius-4);
+  }
 }
 
 .warning {
