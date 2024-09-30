@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkweight_prediction_app"]=self["webpackChunkweight_prediction_app"]||[]).push([[594],{5609:function(n,t,e){e.r(t),e.d(t,{default:function(){return p}});var u=e(6768);const a={class:"about"};function i(n,t){return(0,u.uX)(),(0,u.CE)("div",a,t[0]||(t[0]=[(0,u.Lk)("h1",null,"This is an about page",-1)]))}var r=e(1241);const c={},s=(0,r.A)(c,[["render",i]]);var p=s}}]);
-//# sourceMappingURL=about.48c54292.js.map
