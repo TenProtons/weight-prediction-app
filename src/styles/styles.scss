@@ -1,0 +1,95 @@
+/* Define default variables for light mode */
+:root {
+  --background-color: #ffffff;
+  --text-color: #2c3e50;
+  --link-color: #2c3e50;
+  --error-color: red;
+  --error-background-color: rgba(255, 0, 0, 0.3);
+  --active-link-color: #42b983;
+  --button-background: #f0f0f0;
+  --button-text-color: #2c3e50;
+  --input-background: #ffffff;
+  --input-text-color: #2c3e50;
+  --button-background-disabled: #cccccc;
+  --button-text-color-disabled: #888888;
+  --button-background-hover: #e0e0e0;
+  --chart-line-color: #4b9cc5;
+  --chart-grid-color: rgba(0, 0, 0, 0.1); 
+  --chart-font-color: #2c3e50; 
+  --chart-tooltip-bg: #ffffff; 
+  --4: 4px;
+  --8: 8px;
+  --12: 12px;
+  --16: 16px;
+  --20: 20px;
+  --24: 24px;
+}
+
+/* Dark mode variables */
+.dark-mode {
+  --background-color: #2c3e50;
+  --text-color: #ffffff;
+  --link-color: #ffffff;
+  --error-color: rgb(255 136 136);
+  --error-background-color: rgba(255, 42, 42, 0.45);
+  --active-link-color: #42b983;
+  --button-background: #3e4a59;
+  --button-text-color: #ffffff;
+  --input-background: #3e4a59;
+  --input-text-color: #ffffff;
+  --button-background-disabled: #555555;
+  --button-text-color-disabled: #888888;
+  --button-background-hover: #4a5a6a;
+  --chart-line-color: #9bd1ff;
+  --chart-grid-color: rgba(255, 255, 255, 0.2);
+  --chart-font-color: #ffffff;
+  --chart-tooltip-bg: #2c3e50;
+}
+
+/* Light mode variables */
+.light-mode {
+  /* Variables are already defined in :root */
+}
+
+/* Global styles */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+button {
+  padding: var(--8) var(--16);
+  background-color: var(--button-background);
+  color: var(--button-text-color);
+  border: none;
+  cursor: pointer;
+
+  &:focus {
+    outline: 2px solid var(--active-link-color);
+  }
+}
+
+input,
+select {
+  background-color: var(--input-background);
+  color: var(--input-text-color);
+  border: 1px solid #ccc;
+  padding: var(--8);
+
+  &:focus {
+    outline: 2px solid var(--active-link-color);
+  }
+}
+
+.error {
+  margin: var(--8) 0 0 0;
+  color: var(--error-color);
+  font-size: 0.8em;
+}
+
+/* Ensure transitions apply to all elements */
+* {
+  transition: background-color 0.1s, color 0.1s;
+}

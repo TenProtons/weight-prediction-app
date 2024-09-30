@@ -1,7 +1,7 @@
 <template>
   <div class="input-field">
     <label :for="id">{{ label }}</label>
-    <input :id="id" v-model="inputValue" :type="type" v-bind="inputProps" />
+    <input :id="id" v-model="inputValue" v-bind="inputProps" @input="handleInput" />
     <p v-if="error" class="error">{{ error }}</p>
   </div>
 </template>
@@ -30,6 +30,18 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    min: {
+      type: [String, Number],
+      default: null,
+    },
+    max: {
+      type: [String, Number],
+      default: null,
+    },
+    maxlength: {
+      type: [String, Number],
+      default: null,
+    },
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
@@ -38,38 +50,68 @@ export default defineComponent({
         return props.modelValue;
       },
       set(value) {
-        const newValue = props.type === 'number' ? Number(value) : value;
+        const newValue = props.type === 'number' ? (value === '' ? '' : Number(value)) : value;
         emit('update:modelValue', newValue);
       },
     });
 
     const inputProps = computed(() => {
-      return {
+      const attrs: Record<string, any> = {
         required: props.required,
+        type: props.type,
       };
+
+      if (props.min !== null && props.min !== undefined) {
+        attrs.min = props.min;
+      }
+
+      if (props.max !== null && props.max !== undefined) {
+        attrs.max = props.max;
+      }
+
+      if (props.maxlength !== null && props.maxlength !== undefined) {
+        attrs.maxlength = props.maxlength;
+      }
+
+      return attrs;
     });
+
+    const handleInput = (event: Event) => {
+      const input = event.target as HTMLInputElement;
+      if (props.maxlength && input.value.length > Number(props.maxlength)) {
+        input.value = input.value.slice(0, Number(props.maxlength));
+        inputValue.value = input.value;
+      }
+    };
 
     return {
       inputValue,
       inputProps,
+      handleInput,
     };
   },
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .input-field {
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
-}
 
-label {
-  margin-bottom: 5px;
-}
+  label {
+    margin-bottom: var(--4);
+  }
 
-.error {
-  color: red;
-  font-size: 0.8em;
+  /* Hide spinners in WebKit browsers (Chrome, Safari, Edge, Opera) */
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Hide spinners in Firefox */
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
 }
 </style>

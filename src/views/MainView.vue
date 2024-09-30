@@ -39,7 +39,6 @@ export default defineComponent({
 
       // Calculate the calorie adjustment
       const calorieAdjustment = Number(calculateCalorieAdjustment(inputUserData).toFixed());
-      console.log('calorieAdjustment', calorieAdjustment);
 
       // Calculate the adjusted caloric intake
       const adjustedCaloricIntake = Number((inputUserData.currentCalorieIntake + calorieAdjustment).toFixed());
@@ -113,7 +112,7 @@ export default defineComponent({
 .main-view {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: var(--20);
 }
 
 .warning {
@@ -130,7 +129,7 @@ export default defineComponent({
   }
 
   50% {
-    background-color: rgba(255, 0, 0, 0.3);
+    background-color: var(--error-background-color);
   }
 }
 </style>

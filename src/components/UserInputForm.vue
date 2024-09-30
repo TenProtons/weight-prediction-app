@@ -1,8 +1,12 @@
 <template>
-  <form @submit.prevent="onSubmit">
+  <form class="form-container" @submit.prevent="onSubmit">
     <InputField
       v-model="formData.weight"
+      class="form-container__input"
       type="number"
+      :min="40"
+      :max="250"
+      :maxlength="3"
       :label="currentWeightLabel"
       :error="validationErrors.weight"
       required
@@ -10,7 +14,11 @@
 
     <InputField
       v-model="formData.targetWeight"
+      class="form-container__input"
       type="number"
+      :min="40"
+      :max="250"
+      :maxlength="3"
       :label="targetWeightLabel"
       :error="validationErrors.targetWeight || validationErrors.weightDifference"
       required
@@ -18,7 +26,9 @@
 
     <InputField
       v-model="formData.timeFrame"
+      class="form-container__input"
       type="number"
+      :maxlength="3"
       :label="timeFrameLabel"
       :error="validationErrors.timeFrame"
       required
@@ -26,7 +36,9 @@
 
     <InputField
       v-model="formData.currentCalorieIntake"
+      class="form-container__input"
       type="number"
+      :maxlength="5"
       :label="calorieIntakeLabel"
       :error="validationErrors.currentCalorieIntake"
       required
@@ -34,18 +46,35 @@
 
     <InputField
       v-model="formData.height"
+      class="form-container__input"
       type="number"
+      :maxlength="3"
       :label="heightLabel"
       :error="validationErrors.height"
       required
     />
 
-    <InputField v-model="formData.age" :label="ageLabel" type="number" :error="validationErrors.age" required />
+    <InputField
+      v-model="formData.age"
+      class="form-container__input"
+      type="number"
+      :maxlength="3"
+      :label="ageLabel"
+      :error="validationErrors.age"
+      required
+    />
 
-    <SelectField v-model="formData.gender" :label="t('gender')" :options="genderOptions" required />
+    <SelectField
+      v-model="formData.gender"
+      class="form-container__select"
+      :label="t('gender')"
+      :options="genderOptions"
+      required
+    />
 
     <SelectField
       v-model="formData.activityLevel"
+      class="form-container__select"
       :label="t('activityLevel')"
       :options="activityLevelOptions"
       required
@@ -85,12 +114,12 @@ export default defineComponent({
     const isFormValid = computed(() => {
       return Object.keys(validationErrors.value).length === 0;
     });
-    const currentWeightLabel = computed(() => `${t('currentWeight')} (kg)`);
-    const targetWeightLabel = computed(() => `${t('targetWeight')} (kg)`);
-    const timeFrameLabel = computed(() => `${t('timeFrame')} (days)`);
-    const calorieIntakeLabel = computed(() => `${t('calorieIntake')} (kcal)`);
-    const heightLabel = computed(() => `${t('height')} (cm)`);
-    const ageLabel = computed(() => `${t('age')} (years)`);
+    const currentWeightLabel = computed(() => `${t('currentWeight')} (${t('kg')})`);
+    const targetWeightLabel = computed(() => `${t('targetWeight')} (${t('kg')})`);
+    const timeFrameLabel = computed(() => `${t('timeFrame')} (${t('days')})`);
+    const calorieIntakeLabel = computed(() => `${t('calorieIntake')} (${t('kcal')})`);
+    const heightLabel = computed(() => `${t('height')} (${t('cm')})`);
+    const ageLabel = computed(() => `${t('age')} (${t('years')})`);
     const genderOptions = computed(() => [
       { value: 'male', label: t('male') },
       { value: 'female', label: t('female') },
@@ -258,24 +287,33 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-form div {
+.form-container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 10px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+
+  &__input,
+  &__select {
+    margin-bottom: var(--20);
+  }
 }
 
-label {
-  display: block;
-}
+button {
+  background-color: var(--button-background);
+  color: var(--button-text-color);
+  padding: var(--8) var(--16);
+  border: none;
+  cursor: pointer;
 
-input,
-select {
-  display: flex;
-}
+  &:disabled {
+    background-color: var(--button-background-disabled);
+    color: var(--button-text-color-disabled);
+    cursor: not-allowed;
+  }
 
-.error {
-  margin: 0;
-  color: red;
-  font-size: 0.8em;
+  &:not(:disabled):hover {
+    background-color: var(--button-background-hover);
+  }
 }
 </style>
