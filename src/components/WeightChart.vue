@@ -97,12 +97,25 @@ export default defineComponent({
                 },
                 tooltip: {
                   enabled: true,
+                  displayColors: false,
                   backgroundColor: getCSSVariable('--chart-tooltip-bg'),
                   titleColor: getCSSVariable('--chart-font-color'),
                   bodyColor: getCSSVariable('--chart-font-color'),
                   borderColor: getCSSVariable('--chart-line-color'),
                   borderWidth: 1,
+                  callbacks: {
+                    title: (tooltipItems) => {
+                      const item = tooltipItems[0];
+                      const day = item.label;
+                      return `${t('day')}: ${day}`;
+                    },
+                    label: (tooltipItem) => {
+                      const value = tooltipItem.formattedValue;
+                      return `${t('weight')}: ${value} ${t('kg')}`;
+                    },
+                  },
                 },
+
                 legend: {
                   display: false,
                   position: 'top',
