@@ -16,6 +16,7 @@
       <router-link to="/">{{ t('main') }}</router-link> |
       <router-link to="/about">{{ t('about') }}</router-link>
     </nav>
+    <span class="version">By Maksym Bondarenko v1.0</span>
   </div>
 </template>
 
@@ -92,7 +93,7 @@ export default defineComponent({
 }
 
 nav {
-  padding: 30px;
+  padding: var(--24);
 
   a {
     font-weight: bold;
@@ -102,5 +103,15 @@ nav {
       color: var(--active-link-color);
     }
   }
+}
+
+.version {
+  display: block;
+  margin: auto;
+  max-width: 800px;
+  padding-bottom: var(--8);
+  text-align: left;
+  font-size: 0.7em;
+  color: var(--text-color);
 }
 </style>
