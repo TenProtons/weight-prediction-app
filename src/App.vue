@@ -83,12 +83,12 @@ export default defineComponent({
 .top-bar {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
+  padding: var(--20);
 }
 
-.language-switcher button,
-.theme-switcher button {
-  margin: 0 5px;
+.language-switcher {
+  display: flex;
+  gap: var(--8);
 }
 
 nav {

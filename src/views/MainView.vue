@@ -112,7 +112,7 @@ export default defineComponent({
 .main-view {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: var(--20);
 }
 
 .warning {
