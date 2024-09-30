@@ -129,7 +129,7 @@ export default defineComponent({
   }
 
   50% {
-    background-color: rgba(255, 0, 0, 0.3);
+    background-color: var(--error-background-color);
   }
 }
 </style>
