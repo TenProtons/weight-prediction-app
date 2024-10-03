@@ -10,8 +10,6 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/info',
     name: 'info',
-    // this generates a separate chunk (info.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "info" */ '../views/InfoView.vue'),
   },
 ];
