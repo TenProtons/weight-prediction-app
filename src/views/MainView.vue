@@ -2,7 +2,17 @@
   <div class="main-view">
     <h1>{{ t('appTitle') }}</h1>
     <div v-if="weightData.length">
-      <WeightChart :weight-data="weightData" />
+      <div class="charts-wrapper">
+        <WeightChart :weight-data="weightData" />
+
+        <DoughnutChart
+          :labels="macronutrientLabels"
+          :data="macronutrientCalories"
+          :grams="macronutrientGrams"
+          :background-colors="macronutrientColors"
+          :adjusted-caloric-intake="adjustedCaloricIntake"
+        />
+      </div>
       <p :key="warningKey" class="main-view__calculated-info" :class="{ warning: isWarning }">{{ hintMessage }}</p>
     </div>
     <UserInputForm :initial-user-data="userData" @calculate="handleCalculate" />
@@ -10,6 +20,7 @@
 </template>
 
 <script lang="ts">
+import DoughnutChart from '@/components/DoughnutChart.vue';
 import UserInputForm from '@/components/UserInputForm.vue';
 import WeightChart from '@/components/WeightChart.vue';
 import { defaultUserData } from '@/constants';
@@ -24,6 +35,7 @@ export default defineComponent({
   components: {
     UserInputForm,
     WeightChart,
+    DoughnutChart,
   },
   setup() {
     const { t, locale } = useI18n();
@@ -33,6 +45,36 @@ export default defineComponent({
     const isWarning = ref(false);
     const warningKey = ref(0);
 
+    // Reactive variables for charts
+    const macronutrientLabels = ref<string[]>([]);
+    const macronutrientCalories = ref<number[]>([]);
+    const macronutrientGrams = ref<number[]>([]);
+    const macronutrientColors = ref<string[]>([]);
+    const adjustedCaloricIntake = ref<number>(0);
+
+    // Define macronutrient ratios based on evidence-based guidelines
+    const proteinRatio = 0.3;
+    const fatRatio = 0.25;
+    const carbRatio = 0.45;
+
+    // Define calories per gram for each macronutrient
+    const caloriesPerGram = {
+      protein: 4,
+      fat: 9,
+      carbs: 4,
+    };
+
+    // Define colors for each macronutrient (can be customized)
+    const macroColors = {
+      protein: getCSSVariable('--protein-color'),
+      fat: getCSSVariable('--fat-color'),
+      carbs: getCSSVariable('--carb-color'),
+    };
+
+    function getCSSVariable(name: string) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
     const handleCalculate = (inputUserData: UserData) => {
       saveData('userData', inputUserData);
       userData.value = inputUserData;
@@ -41,20 +83,20 @@ export default defineComponent({
       const calorieAdjustment = Number(calculateCalorieAdjustment(inputUserData).toFixed());
 
       // Calculate the adjusted caloric intake
-      const adjustedCaloricIntake = Number((inputUserData.currentCalorieIntake + calorieAdjustment).toFixed());
+      adjustedCaloricIntake.value = Number((inputUserData.currentCalorieIntake + calorieAdjustment).toFixed());
 
       // Define thresholds for warnings
       const lowerThreshold = inputUserData.currentCalorieIntake / 2;
       const upperThreshold = inputUserData.currentCalorieIntake * 3;
 
       // Check if a warning is needed
-      if (adjustedCaloricIntake < lowerThreshold) {
+      if (adjustedCaloricIntake.value < lowerThreshold) {
         // Caloric intake is too low
         const consumptionLevel = t('tooLow');
         hintMessage.value = t('warningMessage', { consumptionLevel });
         isWarning.value = true;
         warningKey.value += 1;
-      } else if (adjustedCaloricIntake > upperThreshold) {
+      } else if (adjustedCaloricIntake.value > upperThreshold) {
         // Caloric intake is too high
         const consumptionLevel = t('tooHigh');
         hintMessage.value = t('warningMessage', { consumptionLevel });
@@ -69,14 +111,43 @@ export default defineComponent({
         hintMessage.value = t('adjustCalorieHint', {
           action,
           currentCalories: inputUserData.currentCalorieIntake,
-          adjustedCalories: adjustedCaloricIntake,
+          adjustedCalories: adjustedCaloricIntake.value,
         });
         isWarning.value = false;
       }
 
+      // Predict weight over time
       weightData.value = predictWeightOverTime(inputUserData);
+
+      // Calculate macronutrient distribution
+      const proteinCalories = adjustedCaloricIntake.value * proteinRatio;
+      const fatCalories = adjustedCaloricIntake.value * fatRatio;
+      let carbCalories = adjustedCaloricIntake.value * carbRatio;
+
+      // Calculate grams for each macronutrient
+      const proteinGrams = proteinCalories / caloriesPerGram.protein;
+      const fatGrams = fatCalories / caloriesPerGram.fat;
+      let carbGrams = carbCalories / caloriesPerGram.carbs;
+
+      // Ensure that total calories sum up correctly
+      const totalCalories = Math.round(proteinCalories) + Math.round(fatCalories) + Math.round(carbCalories);
+
+      // Adjust for any rounding discrepancies
+      const discrepancy = adjustedCaloricIntake.value - totalCalories;
+      if (discrepancy !== 0) {
+        // Adjust carbs to account for discrepancy
+        carbCalories += discrepancy;
+        carbGrams = carbCalories / caloriesPerGram.carbs;
+      }
+
+      // Prepare data for Doughnut Chart
+      macronutrientLabels.value = [t('protein'), t('fat'), t('carbohydrates')];
+      macronutrientCalories.value = [proteinCalories, fatCalories, carbCalories];
+      macronutrientGrams.value = [proteinGrams, fatGrams, carbGrams];
+      macronutrientColors.value = [macroColors.protein, macroColors.fat, macroColors.carbs];
     };
 
+    // Watch for locale changes to re-calculate translations
     watch(locale, () => {
       if (userData.value) {
         handleCalculate(userData.value);
@@ -103,6 +174,12 @@ export default defineComponent({
       userData,
       isWarning,
       warningKey,
+      // Chart data for DoughnutChart
+      macronutrientLabels,
+      macronutrientCalories,
+      macronutrientGrams,
+      macronutrientColors,
+      adjustedCaloricIntake,
     };
   },
 });

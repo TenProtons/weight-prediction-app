@@ -42,5 +42,10 @@
   "cm": "cm",
   "years": "years",
   "darkMode": "Dark",
-  "lightMode": "Light"
+  "lightMode": "Light",
+
+  "macronutrientDistribution": "Macronutrient Distribution",
+  "protein": "Protein",
+  "fats": "Fats",
+  "carbohydrates": "Carbohydrates"
 }

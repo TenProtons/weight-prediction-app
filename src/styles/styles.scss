@@ -18,6 +18,17 @@
   --chart-font-color: #2c3e50; 
   --chart-tooltip-bg: #ffffff; 
   --calculated-info-border: 2px solid #414141;
+  --background-color: #ffffff;
+  --text-color: #2c3e50;
+  --chart-font-color: #2c3e50;
+  --chart-grid-color: rgba(0, 0, 0, 0.1);
+  --chart-line-color: #4b9cc5;
+  --chart-tooltip-bg: #ffffff;
+
+  /* Macronutrient colors */
+  --protein-color: #ff6384;     /* Red */
+  --fat-color: #ffcd56;         /* Yellow */
+  --carb-color: #36a2eb;        /* Blue */
   --4: 4px;
   --6: 6px;
   --8: 8px;
@@ -33,7 +44,7 @@
 /* Dark mode variables */
 .dark-mode {
   --background-color: #2c3e50;
-  --text-color: #ffffff;
+  --text-color: #ecf0f1;
   --link-color: #ffffff;
   --error-color: rgb(255 136 136);
   --error-background-color: rgba(255, 42, 42, 0.45);
@@ -50,6 +61,11 @@
   --chart-font-color: #ffffff;
   --chart-tooltip-bg: #2c3e50;
   --calculated-info-border: 2px solid #cacaca;
+
+  /* Macronutrient colors for dark mode (optional) */
+  --protein-color: #ff6384;     /* Red */
+  --fat-color: #ffcd56;         /* Yellow */
+  --carb-color: #36a2eb;        /* Blue */
 }
 
 /* Light mode variables */
