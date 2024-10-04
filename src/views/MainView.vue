@@ -69,10 +69,10 @@ export default defineComponent({
       userData.value = inputUserData;
 
       // Calculate the calorie adjustment
-      const calorieAdjustment = Number(calculateCalorieAdjustment(inputUserData).toFixed());
+      const calorieAdjustment = Math.round(calculateCalorieAdjustment(inputUserData));
 
       // Calculate the adjusted caloric intake
-      adjustedCaloricIntake.value = Number((inputUserData.currentCalorieIntake + calorieAdjustment).toFixed());
+      adjustedCaloricIntake.value = Math.round(inputUserData.currentCalorieIntake + calorieAdjustment);
 
       // Define thresholds for warnings
       const lowerThreshold = inputUserData.currentCalorieIntake / 2;
