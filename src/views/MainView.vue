@@ -64,17 +64,6 @@ export default defineComponent({
       carbs: 4,
     };
 
-    // Define colors for each macronutrient (can be customized)
-    const macroColors = {
-      protein: getCSSVariable('--protein-color'),
-      fat: getCSSVariable('--fat-color'),
-      carbs: getCSSVariable('--carb-color'),
-    };
-
-    function getCSSVariable(name: string) {
-      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-    }
-
     const handleCalculate = (inputUserData: UserData) => {
       saveData('userData', inputUserData);
       userData.value = inputUserData;
@@ -120,31 +109,20 @@ export default defineComponent({
       weightData.value = predictWeightOverTime(inputUserData);
 
       // Calculate macronutrient distribution
-      const proteinCalories = adjustedCaloricIntake.value * proteinRatio;
-      const fatCalories = adjustedCaloricIntake.value * fatRatio;
-      let carbCalories = adjustedCaloricIntake.value * carbRatio;
+      const proteinCalories = Math.round(adjustedCaloricIntake.value * proteinRatio);
+      const fatCalories = Math.round(adjustedCaloricIntake.value * fatRatio);
+      let carbCalories = Math.round(adjustedCaloricIntake.value * carbRatio);
 
       // Calculate grams for each macronutrient
-      const proteinGrams = proteinCalories / caloriesPerGram.protein;
-      const fatGrams = fatCalories / caloriesPerGram.fat;
-      let carbGrams = carbCalories / caloriesPerGram.carbs;
-
-      // Ensure that total calories sum up correctly
-      const totalCalories = Math.round(proteinCalories) + Math.round(fatCalories) + Math.round(carbCalories);
-
-      // Adjust for any rounding discrepancies
-      const discrepancy = adjustedCaloricIntake.value - totalCalories;
-      if (discrepancy !== 0) {
-        // Adjust carbs to account for discrepancy
-        carbCalories += discrepancy;
-        carbGrams = carbCalories / caloriesPerGram.carbs;
-      }
+      const proteinGrams = Math.round(proteinCalories / caloriesPerGram.protein);
+      const fatGrams = Math.round(fatCalories / caloriesPerGram.fat);
+      const carbGrams = Math.round(carbCalories / caloriesPerGram.carbs);
 
       // Prepare data for Doughnut Chart
       macronutrientLabels.value = [t('protein'), t('fats'), t('carbohydrates')];
       macronutrientCalories.value = [proteinCalories, fatCalories, carbCalories];
       macronutrientGrams.value = [proteinGrams, fatGrams, carbGrams];
-      macronutrientColors.value = [macroColors.protein, macroColors.fat, macroColors.carbs];
+      macronutrientColors.value = ['--protein-color', '--fat-color', '--carb-color'];
     };
 
     // Watch for locale changes to re-calculate translations

@@ -39,14 +39,13 @@ export default defineComponent({
     const chartInstance = shallowRef<Chart<'doughnut'> | null>(null);
 
     const getCSSVariable = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-
     const getChartOptions = (): ChartOptions<'doughnut'> => ({
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
         tooltip: {
           enabled: true,
-          displayColors: false,
+          displayColors: false, // Removes the colored square
           backgroundColor: getCSSVariable('--chart-tooltip-bg'),
           titleColor: getCSSVariable('--chart-font-color'),
           bodyColor: getCSSVariable('--chart-font-color'),
@@ -85,8 +84,8 @@ export default defineComponent({
               datasets: [
                 {
                   data: props.data,
-                  backgroundColor: props.backgroundColors,
-                  hoverBackgroundColor: props.backgroundColors,
+                  backgroundColor: props.backgroundColors.map((color) => getCSSVariable(color)),
+                  hoverBackgroundColor: props.backgroundColors.map((color) => getCSSVariable(color)),
                 },
               ],
             },
@@ -100,7 +99,9 @@ export default defineComponent({
       if (chartInstance.value) {
         chartInstance.value.data.labels = props.labels;
         chartInstance.value.data.datasets[0].data = props.data;
-        chartInstance.value.data.datasets[0].backgroundColor = props.backgroundColors;
+        chartInstance.value.data.datasets[0].backgroundColor = props.backgroundColors.map((color) =>
+          getCSSVariable(color)
+        );
         chartInstance.value.update();
       }
     };
@@ -131,18 +132,56 @@ export default defineComponent({
       }
     };
 
+    const updateChartColors = () => {
+      if (chartInstance.value) {
+        const options = chartInstance.value.options as ChartOptions<'doughnut'>;
+        const dataset = chartInstance.value.data.datasets[0];
+
+        // Update dataset colors
+        dataset.backgroundColor = props.backgroundColors.map((color) => getCSSVariable(color));
+        dataset.hoverBackgroundColor = props.backgroundColors.map((color) => getCSSVariable(color));
+
+        // Update chart title color
+        if (options.plugins?.title) {
+          options.plugins.title.color = getCSSVariable('--chart-font-color');
+        }
+
+        // Update tooltip colors
+        if (options.plugins?.tooltip) {
+          options.plugins.tooltip.backgroundColor = getCSSVariable('--chart-tooltip-bg');
+          options.plugins.tooltip.titleColor = getCSSVariable('--chart-font-color');
+          options.plugins.tooltip.bodyColor = getCSSVariable('--chart-font-color');
+          options.plugins.tooltip.borderColor = getCSSVariable('--chart-line-color');
+        }
+
+        chartInstance.value.update();
+      }
+    };
+
+    // Initialize and observe theme changes
+    const themeObserver = new MutationObserver(() => {
+      updateChartColors();
+    });
+
     onMounted(() => {
       createChart();
+
+      themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
     });
 
     onBeforeUnmount(() => {
       if (chartInstance.value) {
         chartInstance.value.destroy();
       }
+
+      themeObserver.disconnect();
     });
 
     watch(
-      () => [props.labels, props.data, props.grams, props.backgroundColors],
+      () => props.data,
       () => {
         updateChart();
       }
