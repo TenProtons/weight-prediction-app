@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import Chart, { ChartOptions, TooltipItem } from 'chart.js/auto';
-import { defineComponent, onBeforeUnmount, onMounted, PropType, ref, watch } from 'vue';
+import { defineComponent, onBeforeUnmount, onMounted, PropType, ref, shallowRef, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
@@ -36,7 +36,7 @@ export default defineComponent({
   setup(props) {
     const { t, locale } = useI18n();
     const doughnutCanvas = ref<HTMLCanvasElement | null>(null);
-    const chartInstance = ref<Chart<'doughnut'> | null>(null);
+    const chartInstance = shallowRef<Chart<'doughnut'> | null>(null);
 
     const getCSSVariable = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
@@ -46,7 +46,7 @@ export default defineComponent({
       plugins: {
         tooltip: {
           enabled: true,
-          displayColors: false, // Removes the colored square
+          displayColors: false,
           backgroundColor: getCSSVariable('--chart-tooltip-bg'),
           titleColor: getCSSVariable('--chart-font-color'),
           bodyColor: getCSSVariable('--chart-font-color'),
@@ -63,26 +63,15 @@ export default defineComponent({
           },
         },
         legend: {
-          display: true,
-          position: 'bottom',
-          labels: {
-            color: getCSSVariable('--chart-font-color'),
-            font: {
-              family: getComputedStyle(document.body).getPropertyValue('font-family').trim(),
-            },
-          },
+          display: false,
         },
         title: {
           display: true,
           text: t('macronutrientDistribution'),
           color: getCSSVariable('--chart-font-color'),
-          font: {
-            size: 18,
-            family: getComputedStyle(document.body).getPropertyValue('font-family').trim(),
-          },
         },
       },
-      cutout: '70%', // Adjust the cutout size as needed
+      cutout: '70%',
     });
 
     const createChart = () => {
@@ -118,12 +107,10 @@ export default defineComponent({
 
     const updateChartTranslations = () => {
       if (chartInstance.value) {
-        // Update chart title
         if (chartInstance.value.options.plugins?.title) {
           chartInstance.value.options.plugins.title.text = t('macronutrientDistribution');
         }
 
-        // Update tooltip callbacks
         if (chartInstance.value.options.plugins?.tooltip?.callbacks) {
           chartInstance.value.options.plugins.tooltip.callbacks.label = (tooltipItem: TooltipItem<'doughnut'>) => {
             const index = tooltipItem.dataIndex!;
@@ -154,16 +141,13 @@ export default defineComponent({
       }
     });
 
-    // Watch for changes in props to update the chart
     watch(
       () => [props.labels, props.data, props.grams, props.backgroundColors],
       () => {
         updateChart();
-      },
-      { deep: true }
+      }
     );
 
-    // Watch for locale changes to update translations
     watch(
       () => locale.value,
       () => {

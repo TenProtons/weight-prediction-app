@@ -141,7 +141,7 @@ export default defineComponent({
       }
 
       // Prepare data for Doughnut Chart
-      macronutrientLabels.value = [t('protein'), t('fat'), t('carbohydrates')];
+      macronutrientLabels.value = [t('protein'), t('fats'), t('carbohydrates')];
       macronutrientCalories.value = [proteinCalories, fatCalories, carbCalories];
       macronutrientGrams.value = [proteinGrams, fatGrams, carbGrams];
       macronutrientColors.value = [macroColors.protein, macroColors.fat, macroColors.carbs];
