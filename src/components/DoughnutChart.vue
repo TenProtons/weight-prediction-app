@@ -204,7 +204,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .doughnut-chart-container {
   position: relative;
-  height: 400px;
+  height: 350px;
   width: 100%;
   background-color: var(--background-color);
   color: var(--text-color);
