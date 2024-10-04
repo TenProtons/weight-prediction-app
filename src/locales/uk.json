@@ -42,5 +42,10 @@
   "cm": "см",
   "years": "роки",
   "darkMode": "Темна",
-  "lightMode": "Світла"
+  "lightMode": "Світла",
+
+  "macronutrientDistribution": "Розподіл поживних речовин",
+  "protein": "Білки",
+  "fats": "Жири",
+  "carbohydrates": "Вуглеводи"
 }

@@ -5,9 +5,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onBeforeUnmount, ref, shallowRef, watch, PropType } from 'vue';
-import { useI18n } from 'vue-i18n';
 import Chart, { ChartOptions, DefaultDataPoint } from 'chart.js/auto';
+import { defineComponent, onBeforeUnmount, onMounted, PropType, ref, shallowRef, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   name: 'WeightChart',
