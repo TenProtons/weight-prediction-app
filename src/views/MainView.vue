@@ -1,6 +1,6 @@
 <template>
   <div class="main-view layout">
-    <h1>{{ t('appTitle') }}</h1>
+    <h1 class="main-view__title">{{ t('appTitle') }}</h1>
     <div v-if="weightData.length">
       <div class="charts-wrapper">
         <WeightChart :weight-data="weightData" />
@@ -13,7 +13,10 @@
           :adjusted-caloric-intake="adjustedCaloricIntake"
         />
       </div>
-      <p :key="warningKey" class="main-view__calculated-info" :class="{ warning: isWarning }">{{ hintMessage }}</p>
+      <div class="main-view__info-wrapper">
+        <p :key="warningKey" class="main-view__calculated-info" :class="{ warning: isWarning }">{{ hintMessage }}</p>
+        <CalorieAccuracyInfo :adjusted-caloric-intake="adjustedCaloricIntake" />
+      </div>
     </div>
     <UserInputForm :initial-user-data="userData" @calculate="handleCalculate" />
   </div>
@@ -23,6 +26,7 @@
 import DoughnutChart from '@/components/DoughnutChart.vue';
 import UserInputForm from '@/components/UserInputForm.vue';
 import WeightChart from '@/components/WeightChart.vue';
+import CalorieAccuracyInfo from '@/components/CalorieAccuracyInfo.vue';
 import { defaultUserData } from '@/constants';
 import { UserData } from '@/interfaces/UserData';
 import { loadData, saveData } from '@/services/storage';
@@ -36,6 +40,7 @@ export default defineComponent({
     UserInputForm,
     WeightChart,
     DoughnutChart,
+    CalorieAccuracyInfo,
   },
   setup() {
     const { t, locale } = useI18n();
@@ -165,9 +170,20 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .main-view {
-  &__calculated-info {
+  &__title {
+    color: var(--text-color);
+    text-align: center;
+  }
+
+  &__info-wrapper {
+    display: flex;
+    gap: var(--16);
     margin-block: var(--24);
-    padding: var(--4);
+  }
+
+  &__calculated-info {
+    padding: var(--8) var(--12);
+    color: var(--text-color);
     border: var(--calculated-info-border);
     border-radius: var(--border-radius-4);
   }

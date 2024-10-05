@@ -2,12 +2,12 @@
   <div :class="['app', theme]">
     <div class="top-bar">
       <div class="language-switcher">
-        <button @click="changeLanguage">
+        <button class="regular-button" @click="changeLanguage">
           {{ locale === 'en' ? 'Українська' : 'English' }}
         </button>
       </div>
       <div class="theme-switcher">
-        <button @click="toggleTheme">
+        <button class="regular-button" @click="toggleTheme">
           {{ theme === 'dark-mode' ? t('lightMode') : t('darkMode') }}
         </button>
       </div>
@@ -17,7 +17,7 @@
       <router-link to="/">{{ t('main') }}</router-link> |
       <router-link to="/info">{{ t('info') }}</router-link>
     </nav>
-    <span class="version">By Maksym Bondarenko v1.1</span>
+    <span class="version">By Maksym Bondarenko v1.2</span>
   </div>
 </template>
 
@@ -80,9 +80,6 @@ export default defineComponent({
   flex-direction: column;
   flex: 1;
   padding: 0 var(--20) var(--20) var(--20);
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  text-align: center;
-  color: var(--text-color);
   background-color: var(--background-color);
   transition: background-color 0.3s, color 0.3s;
 }
@@ -94,7 +91,11 @@ export default defineComponent({
 }
 
 nav {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
   padding: var(--24);
+  color: var(--text-color);
 
   a {
     font-weight: bold;

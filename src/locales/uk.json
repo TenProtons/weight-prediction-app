@@ -3,6 +3,7 @@
   "info": "Інфо",
   "appTitle": "Додаток для прогнозування ваги",
   "calculate": "Розрахувати",
+  "calculateAccuracy": "Точність розрахунку",
   "currentWeight": "Поточна вага",
   "targetWeight": "Бажана вага",
   "height": "Зріст",
@@ -19,7 +20,7 @@
   "currentCalorieIntake": "Поточне споживання калорій",
   "timeFrame": "Часовий проміжок",
   "calorieIntake": "Денне споживання калорій",
-  "adjustCalorieHint": "Вам потрібно {action} щоденне споживання з {currentCalories} ккал до {adjustedCalories} ккал, щоб досягти бажаної ваги.",
+  "adjustCalorieHint": "Вам потрібно {action} щоденне споживання з {currentCalories} ккал до ≈ {adjustedCalories} ккал, щоб досягти бажаної ваги.",
   "increase": "збільшити",
   "decrease": "зменшити",
   "warningMessage": "⚠️ Попередження: Розраховане вами споживання калорій {consumptionLevel} і може бути шкідливим. Будь ласка, розгляньте можливість змінити цільову вагу або збільшити часовий проміжок.",
@@ -47,5 +48,10 @@
   "macronutrientDistribution": "Розподіл поживних речовин",
   "protein": "Білки",
   "fats": "Жири",
-  "carbohydrates": "Вуглеводи"
+  "carbohydrates": "Вуглеводи",
+
+  "calculateAccuracyTooltip": {
+    "title": "Формула Міффліна-Сан-Жеора",
+    "description": "Для розраунку добової потреби в калоріях використовується формула Міффліна-Сан-Жеора. Вона оцінює вашу добову потребу в калоріях з похибкою у 10%. 10% похибка означає, що фактична кількість калорій {adjustedCaloricIntake} ккал, яку потребує ваше тіло, може коливатися від {lowerLimit} до {upperLimit} ккал на день."
+  }
 }

@@ -3,6 +3,7 @@
   "info": "Info",
   "appTitle": "Weight Prediction App",
   "calculate": "Calculate",
+  "calculateAccuracy": "Calculate Accuracy",
   "currentWeight": "Current Weight",
   "targetWeight": "Target Weight",
   "height": "Height",
@@ -19,7 +20,7 @@
   "currentCalorieIntake": "Current Calorie Intake",
   "timeFrame": "Time Frame",
   "calorieIntake": "Daily Calorie Intake",
-  "adjustCalorieHint": "You need to {action} your daily intake from {currentCalories} kcal to {adjustedCalories} kcal to reach your desired weight.",
+  "adjustCalorieHint": "You need to {action} your daily intake from {currentCalories} kcal to ≈ {adjustedCalories} kcal to reach your desired weight.",
   "increase": "increase",
   "decrease": "decrease",
   "warningMessage": "⚠️ Warning: Your calculated caloric intake is {consumptionLevel} and may be harmful. Please consider adjusting your target weight or increasing your time frame.",
@@ -47,5 +48,10 @@
   "macronutrientDistribution": "Macronutrient Distribution",
   "protein": "Protein",
   "fats": "Fats",
-  "carbohydrates": "Carbohydrates"
+  "carbohydrates": "Carbohydrates",
+
+  "calculateAccuracyTooltip": {
+    "title": "The Mifflin-St. George formula",
+    "description": "The Mifflin-St. George formula is used to calculate the daily calorie requirement. It estimates your daily calorie needs with a 10% margin of error. A 10% margin of error means that the actual {adjustedCaloricIntake} kcal your body needs can range from {lowerLimit} to {upperLimit} kcal per day."
+  }
 }
