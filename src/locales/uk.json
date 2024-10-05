@@ -19,7 +19,7 @@
   "currentCalorieIntake": "Поточне споживання калорій",
   "timeFrame": "Часовий проміжок",
   "calorieIntake": "Денне споживання калорій",
-  "adjustCalorieHint": "Вам потрібно {action} щоденне споживання з {currentCalories} ккал до {adjustedCalories} ккал, щоб досягти бажаної ваги.",
+  "adjustCalorieHint": "Вам потрібно {action} щоденне споживання з {currentCalories} ккал до ≈ {adjustedCalories} ккал, щоб досягти бажаної ваги.",
   "increase": "збільшити",
   "decrease": "зменшити",
   "warningMessage": "⚠️ Попередження: Розраховане вами споживання калорій {consumptionLevel} і може бути шкідливим. Будь ласка, розгляньте можливість змінити цільову вагу або збільшити часовий проміжок.",
