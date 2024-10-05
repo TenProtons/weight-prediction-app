@@ -13,8 +13,10 @@
           :adjusted-caloric-intake="adjustedCaloricIntake"
         />
       </div>
-      <p :key="warningKey" class="main-view__calculated-info" :class="{ warning: isWarning }">{{ hintMessage }}</p>
-      <CalorieAccuracyInfo />
+      <div class="main-view__info-wrapper">
+        <p :key="warningKey" class="main-view__calculated-info" :class="{ warning: isWarning }">{{ hintMessage }}</p>
+        <CalorieAccuracyInfo />
+      </div>
     </div>
     <UserInputForm :initial-user-data="userData" @calculate="handleCalculate" />
   </div>
@@ -168,8 +170,13 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .main-view {
-  &__calculated-info {
+  &__info-wrapper {
+    display: flex;
+    gap: var(--16);
     margin-block: var(--24);
+  }
+
+  &__calculated-info {
     padding: var(--4);
     border: var(--calculated-info-border);
     border-radius: var(--border-radius-4);

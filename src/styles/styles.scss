@@ -131,6 +131,10 @@ select {
   }
 }
 
+p {
+  margin: 0;
+}
+
 .error {
   margin: var(--8) 0 0 0;
   color: var(--error-color);
