@@ -54,10 +54,9 @@ export default defineComponent({
           callbacks: {
             label: (tooltipItem: TooltipItem<'doughnut'>) => {
               const index = tooltipItem.dataIndex!;
-              const label = props.labels[index];
               const grams = props.grams[index];
               const calories = props.data[index];
-              return `${label}: ${grams}g - ${calories} kcal`;
+              return `${grams}g - ${calories} kcal`;
             },
           },
         },
@@ -97,6 +96,7 @@ export default defineComponent({
 
     const updateChart = () => {
       if (chartInstance.value) {
+        // chartInstance.value.data.labels - titles in tooltips
         chartInstance.value.data.labels = props.labels;
         chartInstance.value.data.datasets[0].data = props.data;
         chartInstance.value.data.datasets[0].backgroundColor = props.backgroundColors.map((color) =>
@@ -115,10 +115,9 @@ export default defineComponent({
         if (chartInstance.value.options.plugins?.tooltip?.callbacks) {
           chartInstance.value.options.plugins.tooltip.callbacks.label = (tooltipItem: TooltipItem<'doughnut'>) => {
             const index = tooltipItem.dataIndex!;
-            const label = props.labels[index];
             const grams = props.grams[index];
             const calories = props.data[index];
-            return `${label}: ${grams}g - ${calories} kcal`;
+            return `${grams}g - ${calories} kcal`;
           };
         }
 
