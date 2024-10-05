@@ -1,7 +1,7 @@
 <template>
   <div class="calorie-accuracy-info">
     <button class="calorie-accuracy-info__button regular-button" @click="isPopupVisible = true">?</button>
-    <PopupComponent :show="isPopupVisible" @close="isPopupVisible = false">
+    <PopupComponent :show="isPopupVisible" :header-text="t('calculateAccuracy')" @close="isPopupVisible = false">
       <p>This is the content inside the popup.</p>
     </PopupComponent>
   </div>
@@ -10,6 +10,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import PopupComponent from './PopupComponent.vue';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   name: 'CalorieAccuracyInfo',
@@ -17,10 +18,12 @@ export default defineComponent({
     PopupComponent,
   },
   setup() {
+    const { t } = useI18n();
     const isPopupVisible = ref(false);
 
     return {
       isPopupVisible,
+      t,
     };
   },
 });

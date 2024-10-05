@@ -3,6 +3,7 @@
   "info": "Info",
   "appTitle": "Weight Prediction App",
   "calculate": "Calculate",
+  "calculateAccuracy": "Calculate Accuracy",
   "currentWeight": "Current Weight",
   "targetWeight": "Target Weight",
   "height": "Height",

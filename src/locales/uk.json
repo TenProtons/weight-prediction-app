@@ -3,6 +3,7 @@
   "info": "Інфо",
   "appTitle": "Додаток для прогнозування ваги",
   "calculate": "Розрахувати",
+  "calculateAccuracy": "Точність розрахунку",
   "currentWeight": "Поточна вага",
   "targetWeight": "Бажана вага",
   "height": "Зріст",

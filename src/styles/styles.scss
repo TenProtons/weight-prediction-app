@@ -18,6 +18,7 @@
   --chart-font-color: #2c3e50; 
   --chart-tooltip-bg: #ffffff; 
   --calculated-info-border: 2px solid #5ec3f6;
+  --regular-border-color: #ccc;
 
   /* Macronutrient colors */
   --protein-color: #ff6384;     /* Red */
@@ -123,7 +124,7 @@ select {
   padding: var(--8);
   background-color: var(--input-background);
   color: var(--input-text-color);
-  border: 1px solid #ccc;
+  border: 1px solid var(--regular-border-color);
   border-radius: var(--border-radius-2);
 
   &:focus {

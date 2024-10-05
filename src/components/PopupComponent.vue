@@ -1,7 +1,10 @@
 <template>
   <div v-if="show" class="popup-overlay" @click.self="closePopup">
     <div class="popup">
-      <button class="close-button" @click="closePopup">&times;</button>
+      <div class="popup__popup-header">
+        <span>{{ headerText }}</span>
+        <button class="close-button" @click="closePopup">&times;</button>
+      </div>
       <div class="popup-content">
         <slot></slot>
       </div>
@@ -18,6 +21,12 @@ export default defineComponent({
     show: {
       type: Boolean,
       required: true,
+      default: false,
+    },
+    headerText: {
+      type: String,
+      required: false,
+      default: '',
     },
   },
   emits: ['close'],
@@ -48,20 +57,28 @@ export default defineComponent({
 }
 
 .popup {
-  position: relative;
   max-height: 40vh;
   width: 90%;
   max-width: 500px;
-  padding: var(--20);
   overflow-y: auto;
   border-radius: var(--border-radius-8);
   background-color: var(--background-color);
+
+  &__popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--8) var(--12);
+    border-bottom: 1px solid var(--regular-border-color);
+  }
 }
 
 .close-button {
-  position: absolute;
-  top: var(--10);
-  right: var(--10);
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   background: transparent;
   color: var(--text-color);
   border: none;
@@ -70,6 +87,8 @@ export default defineComponent({
 }
 
 .popup-content {
+  padding: var(--12) var(--20);
+
   p {
     color: var(--text-color);
   }
