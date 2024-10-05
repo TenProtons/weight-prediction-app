@@ -14,6 +14,7 @@
         />
       </div>
       <p :key="warningKey" class="main-view__calculated-info" :class="{ warning: isWarning }">{{ hintMessage }}</p>
+      <CalorieAccuracyInfo />
     </div>
     <UserInputForm :initial-user-data="userData" @calculate="handleCalculate" />
   </div>
@@ -23,6 +24,7 @@
 import DoughnutChart from '@/components/DoughnutChart.vue';
 import UserInputForm from '@/components/UserInputForm.vue';
 import WeightChart from '@/components/WeightChart.vue';
+import CalorieAccuracyInfo from '@/components/CalorieAccuracyInfo.vue';
 import { defaultUserData } from '@/constants';
 import { UserData } from '@/interfaces/UserData';
 import { loadData, saveData } from '@/services/storage';
@@ -36,6 +38,7 @@ export default defineComponent({
     UserInputForm,
     WeightChart,
     DoughnutChart,
+    CalorieAccuracyInfo,
   },
   setup() {
     const { t, locale } = useI18n();
