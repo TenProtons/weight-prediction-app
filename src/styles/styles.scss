@@ -77,14 +77,13 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--background-color);
-  color: var(--text-color);
 }
 
 #app {
   display: flex;
   flex-direction: column;
   height: 100dvh;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
 }
 
 .layout {
@@ -132,8 +131,19 @@ select {
   }
 }
 
-p {
+h1, h2, h3, h4, h5, p {
   margin: 0;
+}
+
+.tooltip-title {
+  margin-bottom: var(--12);
+  color: var(--text-color);
+}
+
+.tooltip-description {
+  font-size: 0.9rem;
+  line-height: 1.15rem;
+  color: var(--text-color);
 }
 
 .error {

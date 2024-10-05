@@ -69,6 +69,7 @@ export default defineComponent({
     justify-content: space-between;
     align-items: center;
     padding: var(--8) var(--12);
+    color: var(--text-color);
     border-bottom: 1px solid var(--regular-border-color);
   }
 }
@@ -87,10 +88,8 @@ export default defineComponent({
 }
 
 .popup-content {
+  display: flex;
+  flex-direction: column;
   padding: var(--12) var(--20);
-
-  p {
-    color: var(--text-color);
-  }
 }
 </style>

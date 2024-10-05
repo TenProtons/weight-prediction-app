@@ -48,5 +48,10 @@
   "macronutrientDistribution": "Macronutrient Distribution",
   "protein": "Protein",
   "fats": "Fats",
-  "carbohydrates": "Carbohydrates"
+  "carbohydrates": "Carbohydrates",
+
+  "calculateAccuracyTooltip": {
+    "title": "The Mifflin-St. George formula",
+    "description": "The Mifflin-St. George formula is used to calculate the daily calorie requirement. It estimates your daily calorie needs with a 10% margin of error. A 10% margin of error means that the actual {adjustedCaloricIntake} kcal your body needs can range from {lowerLimit} to {upperLimit} kcal per day."
+  }
 }

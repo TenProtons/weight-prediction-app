@@ -1,6 +1,6 @@
 <template>
   <div class="main-view layout">
-    <h1>{{ t('appTitle') }}</h1>
+    <h1 class="main-view__title">{{ t('appTitle') }}</h1>
     <div v-if="weightData.length">
       <div class="charts-wrapper">
         <WeightChart :weight-data="weightData" />
@@ -15,7 +15,7 @@
       </div>
       <div class="main-view__info-wrapper">
         <p :key="warningKey" class="main-view__calculated-info" :class="{ warning: isWarning }">{{ hintMessage }}</p>
-        <CalorieAccuracyInfo />
+        <CalorieAccuracyInfo :adjusted-caloric-intake="adjustedCaloricIntake" />
       </div>
     </div>
     <UserInputForm :initial-user-data="userData" @calculate="handleCalculate" />
@@ -170,6 +170,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .main-view {
+  &__title {
+    color: var(--text-color);
+    text-align: center;
+  }
+
   &__info-wrapper {
     display: flex;
     gap: var(--16);
@@ -177,7 +182,8 @@ export default defineComponent({
   }
 
   &__calculated-info {
-    padding: var(--4);
+    padding: var(--8) var(--12);
+    color: var(--text-color);
     border: var(--calculated-info-border);
     border-radius: var(--border-radius-4);
   }

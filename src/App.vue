@@ -80,9 +80,6 @@ export default defineComponent({
   flex-direction: column;
   flex: 1;
   padding: 0 var(--20) var(--20) var(--20);
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  text-align: center;
-  color: var(--text-color);
   background-color: var(--background-color);
   transition: background-color 0.3s, color 0.3s;
 }
@@ -94,7 +91,11 @@ export default defineComponent({
 }
 
 nav {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
   padding: var(--24);
+  color: var(--text-color);
 
   a {
     font-weight: bold;

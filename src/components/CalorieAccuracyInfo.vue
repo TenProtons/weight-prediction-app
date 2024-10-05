@@ -2,13 +2,16 @@
   <div class="calorie-accuracy-info">
     <button class="calorie-accuracy-info__button regular-button" @click="isPopupVisible = true">?</button>
     <PopupComponent :show="isPopupVisible" :header-text="t('calculateAccuracy')" @close="isPopupVisible = false">
-      <p>This is the content inside the popup.</p>
+      <h4 class="tooltip-title">{{ t('calculateAccuracyTooltip.title') }}</h4>
+      <span class="tooltip-description">
+        {{ t('calculateAccuracyTooltip.description', { adjustedCaloricIntake, lowerLimit, upperLimit }) }}
+      </span>
     </PopupComponent>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import PopupComponent from './PopupComponent.vue';
 import { useI18n } from 'vue-i18n';
 
@@ -17,12 +20,28 @@ export default defineComponent({
   components: {
     PopupComponent,
   },
-  setup() {
+  props: {
+    adjustedCaloricIntake: {
+      type: Number,
+      required: true,
+    },
+  },
+  setup(props) {
     const { t } = useI18n();
     const isPopupVisible = ref(false);
 
+    const lowerLimit = computed(() => {
+      return Math.round(props.adjustedCaloricIntake * 0.9);
+    });
+
+    const upperLimit = computed(() => {
+      return Math.round(props.adjustedCaloricIntake * 1.1);
+    });
+
     return {
       isPopupVisible,
+      lowerLimit,
+      upperLimit,
       t,
     };
   },
