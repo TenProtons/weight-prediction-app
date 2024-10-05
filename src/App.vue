@@ -79,7 +79,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding-bottom: var(--16);
+  padding: 0 var(--20) var(--20) var(--20);
   font-family: Avenir, Helvetica, Arial, sans-serif;
   text-align: center;
   color: var(--text-color);
@@ -90,7 +90,7 @@ export default defineComponent({
 .top-bar {
   display: flex;
   justify-content: space-between;
-  padding: var(--20);
+  padding-block: var(--20);
 }
 
 nav {
@@ -109,7 +109,6 @@ nav {
 .version {
   display: block;
   max-width: 800px;
-  padding-inline: var(--20);
   text-align: left;
   font-size: 0.7em;
   color: var(--text-color);

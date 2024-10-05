@@ -1,5 +1,5 @@
 <template>
-  <div class="main-view">
+  <div class="main-view layout">
     <h1>{{ t('appTitle') }}</h1>
     <div v-if="weightData.length">
       <div class="charts-wrapper">
@@ -165,14 +165,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .main-view {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  width: 100%;
-  max-width: 725px;
-  margin: 0 auto;
-  padding: 0 var(--20) var(--20) var(--20);
-
   &__calculated-info {
     margin-block: var(--24);
     padding: var(--4);
