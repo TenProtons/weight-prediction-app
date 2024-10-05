@@ -95,7 +95,7 @@ body {
   margin: 0 auto;
 }
 
-button {
+.regular-button {
   padding: var(--8) var(--16);
   background-color: var(--button-background);
   color: var(--button-text-color);
@@ -105,6 +105,16 @@ button {
 
   &:focus {
     outline: 2px solid var(--active-link-color);
+  }
+
+  &:disabled {
+    background-color: var(--button-background-disabled);
+    color: var(--button-text-color-disabled);
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
+    background-color: var(--button-background-hover);
   }
 }
 

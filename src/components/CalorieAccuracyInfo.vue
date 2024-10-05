@@ -1,6 +1,6 @@
 <template>
   <div class="calorie-accuracy-info">
-    <button @click="isPopupVisible = true">?</button>
+    <button class="regular-button" @click="isPopupVisible = true">?</button>
     <PopupComponent :show="isPopupVisible" @close="isPopupVisible = false">
       <p>This is the content inside the popup.</p>
     </PopupComponent>

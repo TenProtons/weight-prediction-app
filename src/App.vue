@@ -2,12 +2,12 @@
   <div :class="['app', theme]">
     <div class="top-bar">
       <div class="language-switcher">
-        <button @click="changeLanguage">
+        <button class="regular-button" @click="changeLanguage">
           {{ locale === 'en' ? 'Українська' : 'English' }}
         </button>
       </div>
       <div class="theme-switcher">
-        <button @click="toggleTheme">
+        <button class="regular-button" @click="toggleTheme">
           {{ theme === 'dark-mode' ? t('lightMode') : t('darkMode') }}
         </button>
       </div>

@@ -63,6 +63,7 @@ export default defineComponent({
   top: var(--10);
   right: var(--10);
   background: transparent;
+  color: var(--text-color);
   border: none;
   font-size: 1.5em;
   cursor: pointer;
