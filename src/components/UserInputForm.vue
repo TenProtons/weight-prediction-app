@@ -4,10 +4,10 @@
       v-model="formData.weight"
       class="form-container__input"
       type="number"
-      :min="40"
-      :max="250"
+      :min="weightMin"
+      :max="weightMax"
       :maxlength="3"
-      :label="`${t('currentWeight')} (${t('kg')})`"
+      :label="`${t('currentWeight')} (${weightUnit})`"
       :error="validationErrors.weight"
       required
     />
@@ -16,10 +16,10 @@
       v-model="formData.targetWeight"
       class="form-container__input"
       type="number"
-      :min="40"
-      :max="250"
+      :min="weightMin"
+      :max="weightMax"
       :maxlength="3"
-      :label="`${t('targetWeight')} (${t('kg')})`"
+      :label="`${t('targetWeight')} (${weightUnit})`"
       :error="validationErrors.targetWeight || validationErrors.weightDifference"
       required
     />
@@ -49,7 +49,7 @@
       class="form-container__input"
       type="number"
       :maxlength="3"
-      :label="`${t('height')} (${t('cm')})`"
+      :label="`${t('height')} (${heightUnit})`"
       :error="validationErrors.height"
       required
     />
@@ -104,6 +104,10 @@ export default defineComponent({
       type: Object as () => UserData | null,
       default: null,
     },
+    unitSystem: {
+      type: String as () => 'metric' | 'imperial',
+      default: 'metric',
+    },
   },
   emits: ['calculate'],
   setup(props, { emit }) {
@@ -126,6 +130,105 @@ export default defineComponent({
       { value: 'active', label: t('active') },
       { value: 'veryActive', label: t('veryActive') },
     ]);
+
+    // Computed properties for units and ranges
+    const weightUnit = computed(() => (props.unitSystem === 'metric' ? t('kg') : t('lbs')));
+    const heightUnit = computed(() => (props.unitSystem === 'metric' ? t('cm') : t('inches')));
+    const weightMin = computed(() => (props.unitSystem === 'metric' ? 40 : 88)); // 40 kg ~ 88 lbs
+    const weightMax = computed(() => (props.unitSystem === 'metric' ? 250 : 550)); // 250 kg ~ 550 lbs
+    const heightMin = computed(() => (props.unitSystem === 'metric' ? 100 : 39)); // 100 cm ~ 39 inches
+    const heightMax = computed(() => (props.unitSystem === 'metric' ? 250 : 98)); // 250 cm ~ 98 inches
+
+    // Conversion functions
+    const toMetricWeight = (value: number) => (props.unitSystem === 'imperial' ? value / 2.20462 : value);
+    const toMetricHeight = (value: number) => (props.unitSystem === 'imperial' ? value * 2.54 : value);
+
+    const validateForm = () => {
+      validateWeight();
+      validateTargetWeight();
+      validateWeightDifference();
+      validateTimeFrame();
+      validateCurrentCalorieIntake();
+      validateHeight();
+      validateAge();
+    };
+
+    // Adjusted validation functions
+    const validateWeight = () => {
+      const min = weightMin.value;
+      const max = weightMax.value;
+      if (formData.value.weight < min || formData.value.weight > max) {
+        validationErrors.value.weight = t('invalidWeight');
+      } else {
+        delete validationErrors.value.weight;
+      }
+    };
+
+    const validateTargetWeight = () => {
+      if (formData.value.targetWeight < 40 || formData.value.targetWeight > 250) {
+        validationErrors.value.targetWeight = t('invalidTargetWeight');
+      } else {
+        if (validationErrors.value.targetWeight === t('invalidTargetWeight')) {
+          delete validationErrors.value.targetWeight;
+        }
+      }
+    };
+
+    const validateWeightDifference = () => {
+      const weightDiff = Math.abs(formData.value.weight - formData.value.targetWeight);
+      if (weightDiff > 80) {
+        validationErrors.value.weightDifference = t('invalidWeightDifference');
+      } else {
+        if (validationErrors.value.weightDifference === t('invalidWeightDifference')) {
+          delete validationErrors.value.weightDifference;
+        }
+      }
+    };
+
+    const validateTimeFrame = () => {
+      if (formData.value.timeFrame < 14 || formData.value.timeFrame > 365) {
+        validationErrors.value.timeFrame = t('invalidTimeFrame');
+      } else {
+        delete validationErrors.value.timeFrame;
+      }
+    };
+
+    const validateCurrentCalorieIntake = () => {
+      if (formData.value.currentCalorieIntake < 800 || formData.value.currentCalorieIntake > 8000) {
+        validationErrors.value.currentCalorieIntake = t('invalidCalorieIntake');
+      } else {
+        delete validationErrors.value.currentCalorieIntake;
+      }
+    };
+
+    const validateHeight = () => {
+      const min = heightMin.value;
+      const max = heightMax.value;
+      if (formData.value.height < min || formData.value.height > max) {
+        validationErrors.value.height = t('invalidHeight');
+      } else {
+        delete validationErrors.value.height;
+      }
+    };
+
+    const validateAge = () => {
+      if (formData.value.age < 10 || formData.value.age > 120) {
+        validationErrors.value.age = t('invalidAge');
+      } else {
+        delete validationErrors.value.age;
+      }
+    };
+
+    const onSubmit = () => {
+      validateForm();
+      if (isFormValid.value) {
+        const convertedData = { ...formData.value };
+        convertedData.weight = toMetricWeight(convertedData.weight);
+        convertedData.targetWeight = toMetricWeight(convertedData.targetWeight);
+        convertedData.height = toMetricHeight(convertedData.height);
+        emit('calculate', convertedData);
+      }
+    };
 
     watch(
       () => props.initialUserData,
@@ -183,84 +286,6 @@ export default defineComponent({
       }
     );
 
-    const validateForm = () => {
-      validateWeight();
-      validateTargetWeight();
-      validateWeightDifference();
-      validateTimeFrame();
-      validateCurrentCalorieIntake();
-      validateHeight();
-      validateAge();
-    };
-
-    const validateWeight = () => {
-      if (formData.value.weight < 40 || formData.value.weight > 250) {
-        validationErrors.value.weight = t('invalidWeight');
-      } else {
-        delete validationErrors.value.weight;
-      }
-    };
-
-    const validateTargetWeight = () => {
-      if (formData.value.targetWeight < 40 || formData.value.targetWeight > 250) {
-        validationErrors.value.targetWeight = t('invalidTargetWeight');
-      } else {
-        if (validationErrors.value.targetWeight === t('invalidTargetWeight')) {
-          delete validationErrors.value.targetWeight;
-        }
-      }
-    };
-
-    const validateWeightDifference = () => {
-      const weightDiff = Math.abs(formData.value.weight - formData.value.targetWeight);
-      if (weightDiff > 80) {
-        validationErrors.value.weightDifference = t('invalidWeightDifference');
-      } else {
-        if (validationErrors.value.weightDifference === t('invalidWeightDifference')) {
-          delete validationErrors.value.weightDifference;
-        }
-      }
-    };
-
-    const validateTimeFrame = () => {
-      if (formData.value.timeFrame < 14 || formData.value.timeFrame > 365) {
-        validationErrors.value.timeFrame = t('invalidTimeFrame');
-      } else {
-        delete validationErrors.value.timeFrame;
-      }
-    };
-
-    const validateCurrentCalorieIntake = () => {
-      if (formData.value.currentCalorieIntake < 800 || formData.value.currentCalorieIntake > 8000) {
-        validationErrors.value.currentCalorieIntake = t('invalidCalorieIntake');
-      } else {
-        delete validationErrors.value.currentCalorieIntake;
-      }
-    };
-
-    const validateHeight = () => {
-      if (formData.value.height < 100 || formData.value.height > 250) {
-        validationErrors.value.height = t('invalidHeight');
-      } else {
-        delete validationErrors.value.height;
-      }
-    };
-
-    const validateAge = () => {
-      if (formData.value.age < 10 || formData.value.age > 120) {
-        validationErrors.value.age = t('invalidAge');
-      } else {
-        delete validationErrors.value.age;
-      }
-    };
-
-    const onSubmit = () => {
-      validateForm();
-      if (isFormValid.value) {
-        emit('calculate', { ...formData.value });
-      }
-    };
-
     return {
       t,
       formData,
@@ -269,6 +294,12 @@ export default defineComponent({
       isFormValid,
       genderOptions,
       activityLevelOptions,
+      weightUnit,
+      heightUnit,
+      weightMin,
+      weightMax,
+      heightMin,
+      heightMax,
     };
   },
 });

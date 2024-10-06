@@ -18,7 +18,13 @@
         <CalorieAccuracyInfo :adjusted-caloric-intake="adjustedCaloricIntake" />
       </div>
     </div>
-    <UserInputForm :initial-user-data="userData" @calculate="handleCalculate" />
+
+    <div class="unit-switcher">
+      <label> <input v-model="unitSystem" type="radio" value="metric" /> {{ t('metric') }} </label>
+      <label> <input v-model="unitSystem" type="radio" value="imperial" /> {{ t('imperial') }} </label>
+    </div>
+
+    <UserInputForm :initial-user-data="userData" :unit-system="unitSystem" @calculate="handleCalculate" />
   </div>
 </template>
 
@@ -44,6 +50,7 @@ export default defineComponent({
   },
   setup() {
     const { t, locale } = useI18n();
+    const unitSystem = ref<'metric' | 'imperial'>('metric');
     const weightData = ref<Array<{ day: number; weight: number }>>([]);
     const userData = ref<UserData | null>(null);
     const hintMessage = ref('');
@@ -138,7 +145,12 @@ export default defineComponent({
     });
 
     onMounted(() => {
+      const savedUnitSystem = loadData('unitSystem');
       const savedUserData = loadData('userData');
+
+      if (savedUnitSystem) {
+        unitSystem.value = savedUnitSystem;
+      }
 
       if (savedUserData) {
         userData.value = savedUserData;
@@ -154,6 +166,7 @@ export default defineComponent({
       hintMessage,
       handleCalculate,
       t,
+      unitSystem,
       userData,
       isWarning,
       warningKey,
@@ -186,6 +199,12 @@ export default defineComponent({
     color: var(--text-color);
     border: var(--calculated-info-border);
     border-radius: var(--border-radius-4);
+  }
+
+  .unit-switcher {
+    margin: var(--16) 0;
+    display: flex;
+    gap: var(--16);
   }
 }
 
