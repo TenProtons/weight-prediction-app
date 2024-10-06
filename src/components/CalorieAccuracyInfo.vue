@@ -3,9 +3,7 @@
     <button class="calorie-accuracy-info__button regular-button" @click="isPopupVisible = true">?</button>
     <PopupComponent :show="isPopupVisible" :header-text="t('calculateAccuracy')" @close="isPopupVisible = false">
       <h4 class="tooltip-title">{{ t('calculateAccuracyTooltip.title') }}</h4>
-      <span class="tooltip-description">
-        {{ t('calculateAccuracyTooltip.description', { adjustedCaloricIntake, lowerLimit, upperLimit }) }}
-      </span>
+      <span class="tooltip-description" v-html="formattedDescription"></span>
     </PopupComponent>
   </div>
 </template>
@@ -38,11 +36,20 @@ export default defineComponent({
       return Math.round(props.adjustedCaloricIntake * 1.1);
     });
 
+    const formattedDescription = computed(() =>
+      t('calculateAccuracyTooltip.description', {
+        adjustedCaloricIntake: props.adjustedCaloricIntake,
+        lowerLimit: lowerLimit.value,
+        upperLimit: upperLimit.value,
+      })
+    );
+
     return {
       isPopupVisible,
       lowerLimit,
       upperLimit,
       t,
+      formattedDescription,
     };
   },
 });
