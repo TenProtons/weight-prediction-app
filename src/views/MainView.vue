@@ -76,12 +76,25 @@ export default defineComponent({
       carbs: 4,
     };
 
+    // Conversion functions
+    const toMetricWeight = (value: number) => value / 2.20462;
+    const toMetricHeight = (value: number) => value * 2.54;
+
     const handleCalculate = (inputUserData: UserData) => {
       saveData('userData', inputUserData);
+      saveData('unitSystem', unitSystem.value);
       userData.value = inputUserData;
 
+      const metricUserData = { ...inputUserData };
+
+      if (unitSystem.value === 'imperial') {
+        metricUserData.weight = toMetricWeight(metricUserData.weight);
+        metricUserData.targetWeight = toMetricWeight(metricUserData.targetWeight);
+        metricUserData.height = toMetricHeight(metricUserData.height);
+      }
+
       // Calculate the calorie adjustment
-      const calorieAdjustment = Math.round(calculateCalorieAdjustment(inputUserData));
+      const calorieAdjustment = Math.round(calculateCalorieAdjustment(metricUserData));
 
       // Calculate the adjusted caloric intake
       adjustedCaloricIntake.value = Math.round(inputUserData.currentCalorieIntake + calorieAdjustment);

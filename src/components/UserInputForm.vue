@@ -112,7 +112,6 @@ export default defineComponent({
   emits: ['calculate'],
   setup(props, { emit }) {
     const { t } = useI18n();
-
     const formData = ref<UserData>({} as UserData);
     const validationErrors = ref<Record<string, string>>({});
     const isFormValid = computed(() => {
@@ -122,7 +121,6 @@ export default defineComponent({
       { value: 'male', label: t('male') },
       { value: 'female', label: t('female') },
     ]);
-
     const activityLevelOptions = computed(() => [
       { value: 'sedentary', label: t('sedentary') },
       { value: 'light', label: t('light') },
@@ -138,10 +136,6 @@ export default defineComponent({
     const weightMax = computed(() => (props.unitSystem === 'metric' ? 250 : 550)); // 250 kg ~ 550 lbs
     const heightMin = computed(() => (props.unitSystem === 'metric' ? 100 : 39)); // 100 cm ~ 39 inches
     const heightMax = computed(() => (props.unitSystem === 'metric' ? 250 : 98)); // 250 cm ~ 98 inches
-
-    // Conversion functions
-    const toMetricWeight = (value: number) => (props.unitSystem === 'imperial' ? value / 2.20462 : value);
-    const toMetricHeight = (value: number) => (props.unitSystem === 'imperial' ? value * 2.54 : value);
 
     const validateForm = () => {
       validateWeight();
@@ -223,11 +217,7 @@ export default defineComponent({
     const onSubmit = () => {
       validateForm();
       if (isFormValid.value) {
-        const convertedData = { ...formData.value };
-        convertedData.weight = toMetricWeight(convertedData.weight);
-        convertedData.targetWeight = toMetricWeight(convertedData.targetWeight);
-        convertedData.height = toMetricHeight(convertedData.height);
-        emit('calculate', convertedData);
+        emit('calculate', { ...formData.value });
       }
     };
 
