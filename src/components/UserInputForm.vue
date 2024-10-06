@@ -20,7 +20,7 @@
       :max="weightMax"
       :maxlength="3"
       :label="`${t('targetWeight')} (${weightUnit})`"
-      :error="validationErrors.targetWeight || validationErrors.weightDifference"
+      :error="validationErrors.targetWeight"
       required
     />
 
@@ -146,41 +146,38 @@ export default defineComponent({
     const validateForm = () => {
       validateWeight();
       validateTargetWeight();
-      validateWeightDifference();
       validateTimeFrame();
       validateCurrentCalorieIntake();
       validateHeight();
       validateAge();
     };
 
-    // Adjusted validation functions
     const validateWeight = () => {
       const min = weightMin.value;
       const max = weightMax.value;
       if (formData.value.weight < min || formData.value.weight > max) {
-        validationErrors.value.weight = t('invalidWeight');
+        validationErrors.value.weight = t('invalidWeight', {
+          weightMin: min,
+          weightMax: max,
+          weightUnit: weightUnit.value,
+        });
       } else {
         delete validationErrors.value.weight;
       }
     };
 
     const validateTargetWeight = () => {
-      if (formData.value.targetWeight < 40 || formData.value.targetWeight > 250) {
-        validationErrors.value.targetWeight = t('invalidTargetWeight');
+      const min = weightMin.value;
+      const max = weightMax.value;
+      if (formData.value.targetWeight < min || formData.value.targetWeight > max) {
+        validationErrors.value.targetWeight = t('invalidTargetWeight', {
+          weightMin: min,
+          weightMax: max,
+          weightUnit: weightUnit.value,
+        });
       } else {
-        if (validationErrors.value.targetWeight === t('invalidTargetWeight')) {
+        if (validationErrors.value.targetWeight) {
           delete validationErrors.value.targetWeight;
-        }
-      }
-    };
-
-    const validateWeightDifference = () => {
-      const weightDiff = Math.abs(formData.value.weight - formData.value.targetWeight);
-      if (weightDiff > 80) {
-        validationErrors.value.weightDifference = t('invalidWeightDifference');
-      } else {
-        if (validationErrors.value.weightDifference === t('invalidWeightDifference')) {
-          delete validationErrors.value.weightDifference;
         }
       }
     };
@@ -205,7 +202,11 @@ export default defineComponent({
       const min = heightMin.value;
       const max = heightMax.value;
       if (formData.value.height < min || formData.value.height > max) {
-        validationErrors.value.height = t('invalidHeight');
+        validationErrors.value.height = t('invalidHeight', {
+          heightMin: min,
+          heightMax: max,
+          heightUnit: heightUnit.value,
+        });
       } else {
         delete validationErrors.value.height;
       }
@@ -246,7 +247,6 @@ export default defineComponent({
       () => formData.value.weight,
       () => {
         validateWeight();
-        validateWeightDifference();
       }
     );
 
@@ -254,7 +254,6 @@ export default defineComponent({
       () => formData.value.targetWeight,
       () => {
         validateTargetWeight();
-        validateWeightDifference();
       }
     );
 
