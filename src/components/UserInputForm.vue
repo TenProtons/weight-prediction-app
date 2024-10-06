@@ -7,7 +7,7 @@
       :min="40"
       :max="250"
       :maxlength="3"
-      :label="currentWeightLabel"
+      :label="`${t('currentWeight')} (${t('kg')})`"
       :error="validationErrors.weight"
       required
     />
@@ -19,7 +19,7 @@
       :min="40"
       :max="250"
       :maxlength="3"
-      :label="targetWeightLabel"
+      :label="`${t('targetWeight')} (${t('kg')})`"
       :error="validationErrors.targetWeight || validationErrors.weightDifference"
       required
     />
@@ -29,7 +29,7 @@
       class="form-container__input"
       type="number"
       :maxlength="3"
-      :label="timeFrameLabel"
+      :label="`${t('timeFrame')} (${t('days')})`"
       :error="validationErrors.timeFrame"
       required
     />
@@ -39,7 +39,7 @@
       class="form-container__input"
       type="number"
       :maxlength="5"
-      :label="calorieIntakeLabel"
+      :label="`${t('calorieIntake')} (${t('kcal')})`"
       :error="validationErrors.currentCalorieIntake"
       required
     />
@@ -49,7 +49,7 @@
       class="form-container__input"
       type="number"
       :maxlength="3"
-      :label="heightLabel"
+      :label="`${t('height')} (${t('cm')})`"
       :error="validationErrors.height"
       required
     />
@@ -59,7 +59,7 @@
       class="form-container__input"
       type="number"
       :maxlength="3"
-      :label="ageLabel"
+      :label="`${t('age')} (${t('years')})`"
       :error="validationErrors.age"
       required
     />
@@ -114,12 +114,6 @@ export default defineComponent({
     const isFormValid = computed(() => {
       return Object.keys(validationErrors.value).length === 0;
     });
-    const currentWeightLabel = computed(() => `${t('currentWeight')} (${t('kg')})`);
-    const targetWeightLabel = computed(() => `${t('targetWeight')} (${t('kg')})`);
-    const timeFrameLabel = computed(() => `${t('timeFrame')} (${t('days')})`);
-    const calorieIntakeLabel = computed(() => `${t('calorieIntake')} (${t('kcal')})`);
-    const heightLabel = computed(() => `${t('height')} (${t('cm')})`);
-    const ageLabel = computed(() => `${t('age')} (${t('years')})`);
     const genderOptions = computed(() => [
       { value: 'male', label: t('male') },
       { value: 'female', label: t('female') },
@@ -275,12 +269,6 @@ export default defineComponent({
       isFormValid,
       genderOptions,
       activityLevelOptions,
-      currentWeightLabel,
-      targetWeightLabel,
-      timeFrameLabel,
-      calorieIntakeLabel,
-      heightLabel,
-      ageLabel,
     };
   },
 });
