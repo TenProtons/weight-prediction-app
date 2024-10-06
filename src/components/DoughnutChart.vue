@@ -56,7 +56,7 @@ export default defineComponent({
               const index = tooltipItem.dataIndex!;
               const grams = props.grams[index];
               const calories = props.data[index];
-              return `${grams}g - ${calories} kcal`;
+              return `${grams}g = ${calories} kcal`;
             },
           },
         },
@@ -117,7 +117,7 @@ export default defineComponent({
             const index = tooltipItem.dataIndex!;
             const grams = props.grams[index];
             const calories = props.data[index];
-            return `${grams}g - ${calories} kcal`;
+            return `${grams}g = ${calories} kcal`;
           };
         }
 
