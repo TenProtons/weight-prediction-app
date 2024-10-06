@@ -19,25 +19,28 @@
       </div>
     </div>
 
-    <div class="unit-switcher">
-      <label> <input v-model="unitSystem" type="radio" value="metric" /> {{ t('metric') }} </label>
-      <label> <input v-model="unitSystem" type="radio" value="imperial" /> {{ t('imperial') }} </label>
-    </div>
+    <SelectField
+      v-model="unitSystem"
+      class="main-view__unit-switcher"
+      :label="t('unitSystem')"
+      :options="unitSystemOptions"
+    />
 
     <UserInputForm :initial-user-data="userData" :unit-system="unitSystem" @calculate="handleCalculate" />
   </div>
 </template>
 
 <script lang="ts">
+import CalorieAccuracyInfo from '@/components/CalorieAccuracyInfo.vue';
 import DoughnutChart from '@/components/DoughnutChart.vue';
+import SelectField from '@/components/SelectField.vue';
 import UserInputForm from '@/components/UserInputForm.vue';
 import WeightChart from '@/components/WeightChart.vue';
-import CalorieAccuracyInfo from '@/components/CalorieAccuracyInfo.vue';
 import { defaultUserData } from '@/constants';
 import { UserData } from '@/interfaces/UserData';
 import { loadData, saveData } from '@/services/storage';
 import { calculateCalorieAdjustment, predictWeightOverTime } from '@/utils/calculator';
-import { defineComponent, onMounted, ref, watch } from 'vue';
+import { computed, defineComponent, onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
@@ -47,6 +50,7 @@ export default defineComponent({
     WeightChart,
     DoughnutChart,
     CalorieAccuracyInfo,
+    SelectField,
   },
   setup() {
     const { t, locale } = useI18n();
@@ -56,6 +60,11 @@ export default defineComponent({
     const hintMessage = ref('');
     const isWarning = ref(false);
     const warningKey = ref(0);
+
+    const unitSystemOptions = computed(() => [
+      { value: 'metric', label: t('metric') },
+      { value: 'imperial', label: t('imperial') },
+    ]);
 
     // Reactive variables for charts
     const macronutrientLabels = ref<string[]>([]);
@@ -177,6 +186,7 @@ export default defineComponent({
     return {
       weightData,
       hintMessage,
+      unitSystemOptions,
       handleCalculate,
       t,
       unitSystem,
@@ -214,10 +224,8 @@ export default defineComponent({
     border-radius: var(--border-radius-4);
   }
 
-  .unit-switcher {
-    margin: var(--16) 0;
-    display: flex;
-    gap: var(--16);
+  &__unit-switcher {
+    margin-bottom: var(--16);
   }
 }
 

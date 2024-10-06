@@ -134,6 +134,13 @@ select {
   }
 }
 
+label {
+  margin-bottom: var(--6);
+  color: var(--text-color);
+  font-size: 0.9em;
+  text-align: start;
+}
+
 h1, h2, h3, h4, h5, p {
   margin: 0;
 }

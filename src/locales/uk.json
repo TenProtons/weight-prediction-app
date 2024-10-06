@@ -42,12 +42,12 @@
   "cm": "см",
   "metric": "Метрична",
   "imperial": "Імперська",
+  "unitSystem": "Система одиниць вимірювання",
   "lbs": "фунти",
   "inches": "дюйми",
   "years": "роки",
   "darkMode": "Темна",
   "lightMode": "Світла",
-
   "macronutrientDistribution": "Розподіл поживних речовин",
   "protein": "Білки",
   "fats": "Жири",

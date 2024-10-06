@@ -64,11 +64,5 @@ export default defineComponent({
 .select-field {
   display: flex;
   flex-direction: column;
-
-  label {
-    margin-bottom: var(--6);
-    font-size: 0.9em;
-    text-align: start;
-  }
 }
 </style>

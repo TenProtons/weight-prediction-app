@@ -98,12 +98,6 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
 
-  label {
-    margin-bottom: var(--6);
-    font-size: 0.9em;
-    text-align: start;
-  }
-
   /* Hide spinners in WebKit browsers (Chrome, Safari, Edge, Opera) */
   input[type='number']::-webkit-inner-spin-button,
   input[type='number']::-webkit-outer-spin-button {
