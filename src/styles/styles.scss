@@ -6,6 +6,7 @@
   --error-color: red;
   --error-background-color: rgba(255, 0, 0, 0.3);
   --active-link-color: #42b983;
+  --scrollbar-color: #d3dbe5;
   --button-background: #f0f0f0;
   --button-text-color: #2c3e50;
   --input-background: #ffffff;
@@ -45,6 +46,7 @@
   --error-color: rgb(255 136 136);
   --error-background-color: rgba(255, 42, 42, 0.45);
   --active-link-color: #42b983;
+  --scrollbar-color: #8f9db0;
   --button-background: #3e4a59;
   --button-text-color: #ffffff;
   --input-background: #3e4a59;
@@ -72,6 +74,7 @@
 /* Global styles */
 * {
   box-sizing: border-box;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 body {
@@ -152,7 +155,32 @@ h1, h2, h3, h4, h5, p {
   font-size: 0.8em;
 }
 
-/* Ensure transitions apply to all elements */
+/* Global Scrollbar Styles */
+
+/* For WebKit browsers */
+*::-webkit-scrollbar {
+  width: 3px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--input-background);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-color);
+  border-radius: var(--border-radius-4);
+}
+
+/* For Firefox */
 * {
-  transition: background-color 0.1s, color 0.1s;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-color) var(--input-background);
+}
+
+/* For Edge and IE (limited support) */
+@supports (-ms-overflow-style: none) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-color) var(--input-background);
+  }
 }

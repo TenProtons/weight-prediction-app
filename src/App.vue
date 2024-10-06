@@ -81,7 +81,6 @@ export default defineComponent({
   flex: 1;
   padding: 0 var(--20) var(--20) var(--20);
   background-color: var(--background-color);
-  transition: background-color 0.3s, color 0.3s;
 }
 
 .top-bar {
