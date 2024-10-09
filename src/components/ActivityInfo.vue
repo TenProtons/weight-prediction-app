@@ -1,8 +1,6 @@
 <template>
-  <div class="calorie-accuracy-info">
-    <button class="calorie-accuracy-info__button regular-button tooltip-button" @click="isPopupVisible = true">
-      ?
-    </button>
+  <div class="activity-info">
+    <button class="activity-info__button regular-button tooltip-button" @click="isPopupVisible = true">?</button>
     <PopupComponent :show="isPopupVisible" :header-text="t('activityTooltip.header')" @close="isPopupVisible = false">
       <ul>
         <li class="tooltip-list-item" v-html="t('activityTooltip.sedentary')"></li>
@@ -25,7 +23,7 @@ export default defineComponent({
   components: {
     PopupComponent,
   },
-  setup(props) {
+  setup() {
     const { t } = useI18n();
     const isPopupVisible = ref(false);
 
@@ -38,7 +36,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.calorie-accuracy-info {
+.activity-info {
   display: flex;
 
   ul {
