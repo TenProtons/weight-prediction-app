@@ -1,7 +1,11 @@
 <template>
   <div class="calorie-accuracy-info">
     <button class="calorie-accuracy-info__button regular-button" @click="isPopupVisible = true">?</button>
-    <PopupComponent :show="isPopupVisible" :header-text="t('calculateAccuracy')" @close="isPopupVisible = false">
+    <PopupComponent
+      :show="isPopupVisible"
+      :header-text="t('calculateAccuracyTooltip.header')"
+      @close="isPopupVisible = false"
+    >
       <h4 class="tooltip-title">{{ t('calculateAccuracyTooltip.title') }}</h4>
       <span class="tooltip-description" v-html="formattedDescription"></span>
     </PopupComponent>
