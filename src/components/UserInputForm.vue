@@ -1,8 +1,8 @@
 <template>
-  <form class="form-container" @submit.prevent="onSubmit">
+  <form class="user-input-form" @submit.prevent="onSubmit">
     <InputField
       v-model="formData.weight"
-      class="form-container__input"
+      class="user-input-form__input"
       type="number"
       :min="weightMin"
       :max="weightMax"
@@ -14,7 +14,7 @@
 
     <InputField
       v-model="formData.targetWeight"
-      class="form-container__input"
+      class="user-input-form__input"
       type="number"
       :min="weightMin"
       :max="weightMax"
@@ -26,7 +26,7 @@
 
     <InputField
       v-model="formData.timeFrame"
-      class="form-container__input"
+      class="user-input-form__input"
       type="number"
       :maxlength="3"
       :label="`${t('timeFrame')} (${t('days')})`"
@@ -36,7 +36,7 @@
 
     <InputField
       v-model="formData.currentCalorieIntake"
-      class="form-container__input"
+      class="user-input-form__input"
       type="number"
       :maxlength="5"
       :label="`${t('calorieIntake')} (${t('kcal')})`"
@@ -46,7 +46,7 @@
 
     <InputField
       v-model="formData.height"
-      class="form-container__input"
+      class="user-input-form__input"
       type="number"
       :maxlength="3"
       :label="`${t('height')} (${heightUnit})`"
@@ -56,7 +56,7 @@
 
     <InputField
       v-model="formData.age"
-      class="form-container__input"
+      class="user-input-form__input"
       type="number"
       :maxlength="3"
       :label="`${t('age')} (${t('years')})`"
@@ -66,21 +66,24 @@
 
     <SelectField
       v-model="formData.gender"
-      class="form-container__select"
+      class="user-input-form__select"
       :label="t('gender')"
       :options="genderOptions"
       required
     />
 
-    <SelectField
-      v-model="formData.activityLevel"
-      class="form-container__select"
-      :label="t('activityLevel')"
-      :options="activityLevelOptions"
-      required
-    />
+    <div class="user-input-form__activity-wrapper">
+      <SelectField
+        v-model="formData.activityLevel"
+        class="user-input-form__select"
+        :label="t('activityLevel')"
+        :options="activityLevelOptions"
+        required
+      />
+      <ActivityInfo class="user-input-form__activity-tooltip" />
+    </div>
 
-    <button class="form-container__submit-button regular-button" type="submit" :disabled="!isFormValid">
+    <button class="user-input-form__submit-button regular-button" type="submit" :disabled="!isFormValid">
       {{ t('calculate') }}
     </button>
   </form>
@@ -92,12 +95,14 @@ import { defineComponent, ref, watch, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import InputField from '@/components/InputField.vue';
 import SelectField from '@/components/SelectField.vue';
+import ActivityInfo from '@/components/ActivityInfo.vue';
 
 export default defineComponent({
   name: 'UserInputForm',
   components: {
     InputField,
     SelectField,
+    ActivityInfo,
   },
   props: {
     initialUserData: {
@@ -295,12 +300,25 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.form-container {
+.user-input-form {
   display: flex;
   flex-direction: column;
   gap: var(--20);
   background-color: var(--background-color);
   color: var(--text-color);
+
+  &__select {
+    flex: 1;
+  }
+
+  &__activity-wrapper {
+    display: flex;
+    gap: var(--16);
+  }
+
+  &__activity-tooltip {
+    margin-top: auto;
+  }
 
   &__submit-button {
     margin: var(--16) auto 0;
