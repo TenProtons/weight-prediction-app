@@ -57,10 +57,11 @@ export default defineComponent({
 }
 
 .popup {
+  display: flex;
+  flex-direction: column;
   max-height: 40vh;
   width: 90%;
   max-width: 500px;
-  overflow-y: auto;
   border-radius: var(--border-radius-8);
   background-color: var(--background-color);
 
@@ -91,5 +92,6 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   padding: var(--12) var(--20);
+  overflow-y: auto;
 }
 </style>

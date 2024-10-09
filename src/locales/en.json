@@ -60,6 +60,10 @@
 
   "activityTooltip": {
     "header": "Types of activities",
-    "description": ""
+    "sedentary": "<b>Sedentary:</b> Office or desk job, watching TV or using a computer for most of the day",
+    "light": "<b>Light:</b> Light exercise or sports 1 to 3 days per week, light household chores",
+    "moderate": "<b>Moderate:</b> Moderate exercise or sports 3 to 5 days per week",
+    "active": "<b>Active:</b> Hard exercise or sports 6 to 7 days per week, physically demanding jobs like construction or farming",
+    "veryActive": "<b>Very Active:</b> Very hard exercise/sports and a physically demanding job or training twice a day"
   }
 }

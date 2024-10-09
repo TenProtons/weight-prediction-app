@@ -150,10 +150,23 @@ h1, h2, h3, h4, h5, p {
   color: var(--text-color);
 }
 
-.tooltip-description {
+.tooltip-description,
+.tooltip-list-item {
   font-size: 0.9rem;
   line-height: 1.15rem;
   color: var(--text-color);
+}
+
+.tooltip-button {
+  display: flex;
+  height: 32px;
+  width: 32px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: large;
+  font-weight: bold;
+  color: var(--button-text-color);
 }
 
 .error {

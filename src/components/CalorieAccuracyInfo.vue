@@ -1,6 +1,8 @@
 <template>
   <div class="calorie-accuracy-info">
-    <button class="calorie-accuracy-info__button regular-button" @click="isPopupVisible = true">?</button>
+    <button class="calorie-accuracy-info__button regular-button tooltip-button" @click="isPopupVisible = true">
+      ?
+    </button>
     <PopupComponent
       :show="isPopupVisible"
       :header-text="t('calculateAccuracyTooltip.header')"
@@ -62,17 +64,5 @@ export default defineComponent({
 <style lang="scss" scoped>
 .calorie-accuracy-info {
   display: flex;
-
-  &__button {
-    display: flex;
-    height: 32px;
-    width: 32px;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    font-size: large;
-    font-weight: bold;
-    color: var(--button-text-color);
-  }
 }
 </style>
