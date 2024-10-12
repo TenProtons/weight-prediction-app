@@ -31,7 +31,7 @@
     />
 
     <SliderComponent
-      v-model="formData.currentCalorieIntake"
+      v-model.number="formData.currentCalorieIntake"
       :min="800"
       :max="8000"
       :step="50"
@@ -41,7 +41,7 @@
     />
 
     <SliderComponent
-      v-model="formData.height"
+      v-model.number="formData.height"
       :min="heightMin"
       :max="heightMax"
       :step="heightStep"
@@ -51,7 +51,7 @@
     />
 
     <SliderComponent
-      v-model="formData.age"
+      v-model.number="formData.age"
       :min="10"
       :max="120"
       :step="1"
