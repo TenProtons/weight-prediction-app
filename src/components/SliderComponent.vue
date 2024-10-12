@@ -2,12 +2,22 @@
   <div class="slider-component">
     <label :for="id">{{ label }}</label>
     <div class="slider-component__wrapper">
-      <input :id="id" v-model="internalValue" type="range" :min="min" :max="max" :step="step" @input="updateValue" />
-      <button v-if="isManualAdjust" class="adjust-button" :disabled="internalValue <= min" @click="decreaseValue">
+      <input :id="id" v-model="internalValue" type="range" :min="min" :max="max" :step="step" @input="onInput" />
+      <button
+        v-if="isManualAdjust"
+        class="adjust-button"
+        :disabled="internalValue <= min"
+        @click.prevent="decreaseValue"
+      >
         &minus;
       </button>
       <span class="value-display">{{ displayValue }}</span>
-      <button v-if="isManualAdjust" class="adjust-button" :disabled="internalValue >= max" @click="increaseValue">
+      <button
+        v-if="isManualAdjust"
+        class="adjust-button"
+        :disabled="internalValue >= max"
+        @click.prevent="increaseValue"
+      >
         &plus;
       </button>
     </div>
@@ -53,22 +63,31 @@ export default defineComponent({
       default: '',
     },
   },
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'calculate'],
   setup(props, { emit }) {
     const internalValue = ref(props.modelValue);
+    let debounceTimeout: ReturnType<typeof setTimeout>;
 
-    const updateValue = () => {
-      emit('update:modelValue', internalValue.value);
-    };
-
-    const decreaseValue = () => {
-      internalValue.value = Math.max(props.min, internalValue.value - props.step);
-      updateValue();
+    const onInput = () => {
+      debouncedEmit();
     };
 
     const increaseValue = () => {
       internalValue.value = Math.min(props.max, internalValue.value + props.step);
-      updateValue();
+      debouncedEmit();
+    };
+
+    const decreaseValue = () => {
+      internalValue.value = Math.max(props.min, internalValue.value - props.step);
+      debouncedEmit();
+    };
+
+    const debouncedEmit = () => {
+      clearTimeout(debounceTimeout);
+      debounceTimeout = setTimeout(() => {
+        emit('update:modelValue', internalValue.value);
+        emit('calculate');
+      }, 300);
     };
 
     watch(
@@ -82,10 +101,10 @@ export default defineComponent({
 
     return {
       internalValue,
-      updateValue,
       decreaseValue,
       increaseValue,
       displayValue,
+      onInput,
     };
   },
 });

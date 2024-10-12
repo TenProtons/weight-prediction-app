@@ -6,8 +6,8 @@
       :max="weightMax"
       :step="weightStep"
       :label="`${t('currentWeight')} (${weightUnit})`"
-      :unit="weightUnit"
       is-manual-adjust
+      @calculate="onSubmit"
     />
 
     <SliderComponent
@@ -16,8 +16,8 @@
       :max="weightMax"
       :step="weightStep"
       :label="`${t('targetWeight')} (${weightUnit})`"
-      :unit="weightUnit"
       is-manual-adjust
+      @calculate="onSubmit"
     />
 
     <SliderComponent
@@ -26,8 +26,8 @@
       :max="365"
       :step="1"
       :label="`${t('timeFrame')} (${t('days')})`"
-      :unit="t('daysUnit')"
       is-manual-adjust
+      @calculate="onSubmit"
     />
 
     <SliderComponent
@@ -36,8 +36,8 @@
       :max="8000"
       :step="50"
       :label="`${t('calorieIntake')} (${t('kcal')})`"
-      :unit="t('kcal')"
       is-manual-adjust
+      @calculate="onSubmit"
     />
 
     <SliderComponent
@@ -46,8 +46,8 @@
       :max="heightMax"
       :step="heightStep"
       :label="`${t('height')} (${heightUnit})`"
-      :unit="heightUnit"
       is-manual-adjust
+      @calculate="onSubmit"
     />
 
     <SliderComponent
@@ -56,8 +56,8 @@
       :max="120"
       :step="1"
       :label="`${t('age')} (${t('years')})`"
-      :unit="t('yearsUnit')"
       is-manual-adjust
+      @calculate="onSubmit"
     />
 
     <SelectField
@@ -114,7 +114,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const { t } = useI18n();
     const formData = ref<UserData>({} as UserData);
-    const isFormValid = ref(true); // Since sliders limit input, validation errors are not needed
+    const isFormValid = ref(true);
     const genderOptions = computed(() => [
       { value: 'male', label: t('male') },
       { value: 'female', label: t('female') },
