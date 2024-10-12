@@ -1,7 +1,7 @@
 <template>
   <div class="slider-component">
     <label :for="id">{{ label }}</label>
-    <div class="slider-wrapper">
+    <div class="slider-component__wrapper">
       <input :id="id" v-model="internalValue" type="range" :min="min" :max="max" :step="step" @input="updateValue" />
       <button v-if="isManualAdjust" class="adjust-button" :disabled="internalValue <= min" @click="decreaseValue">
         &minus;
@@ -103,10 +103,38 @@ export default defineComponent({
     color: var(--text-color);
   }
 
-  .slider-wrapper {
+  &__wrapper {
     display: flex;
     align-items: center;
     gap: var(--8);
+
+    .value-display {
+      min-width: 60px;
+      text-align: center;
+      font-weight: 700;
+      color: var(--slider-value-color);
+    }
+
+    .adjust-button {
+      background-color: var(--button-background);
+      color: var(--button-text-color);
+      border: none;
+      border-radius: var(--border-radius-2);
+      width: var(--24);
+      height: var(--24);
+      font-size: 1.2em;
+      cursor: pointer;
+
+      &:disabled {
+        background-color: var(--button-background-disabled);
+        color: var(--button-text-color-disabled);
+        cursor: not-allowed;
+      }
+
+      &:not(:disabled):hover {
+        background-color: var(--button-background-hover);
+      }
+    }
 
     input[type='range'] {
       flex: 1;
@@ -144,33 +172,6 @@ export default defineComponent({
       background: var(--active-link-color);
       border-radius: 50%;
       cursor: pointer;
-    }
-
-    .value-display {
-      min-width: 60px;
-      text-align: center;
-      color: var(--text-color);
-    }
-
-    .adjust-button {
-      background-color: var(--button-background);
-      color: var(--button-text-color);
-      border: none;
-      border-radius: var(--border-radius-2);
-      width: var(--24);
-      height: var(--24);
-      font-size: 1.2em;
-      cursor: pointer;
-
-      &:disabled {
-        background-color: var(--button-background-disabled);
-        color: var(--button-text-color-disabled);
-        cursor: not-allowed;
-      }
-
-      &:not(:disabled):hover {
-        background-color: var(--button-background-hover);
-      }
     }
   }
 }
