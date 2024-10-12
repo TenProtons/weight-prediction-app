@@ -1,7 +1,7 @@
 <template>
   <form class="user-input-form" @submit.prevent="onSubmit">
     <SliderComponent
-      v-model="formData.weight"
+      v-model.number="formData.weight"
       :min="weightMin"
       :max="weightMax"
       :step="weightStep"
@@ -11,7 +11,7 @@
     />
 
     <SliderComponent
-      v-model="formData.targetWeight"
+      v-model.number="formData.targetWeight"
       :min="weightMin"
       :max="weightMax"
       :step="weightStep"

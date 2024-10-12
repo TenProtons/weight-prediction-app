@@ -138,7 +138,7 @@ export default defineComponent({
     const updateChart = () => {
       if (chartInstance.value) {
         const labels = props.weightData.map((data) => data.day);
-        const dataPoints = props.weightData.map((data) => parseFloat(data.weight.toFixed(2)));
+        const dataPoints = props.weightData.map((data) => Number(data.weight.toFixed(2)));
 
         chartInstance.value.data.labels = labels;
         chartInstance.value.data.datasets[0].data = dataPoints;
