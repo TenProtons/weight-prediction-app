@@ -1,67 +1,63 @@
 <template>
   <form class="user-input-form" @submit.prevent="onSubmit">
-    <InputField
+    <SliderComponent
       v-model="formData.weight"
-      class="user-input-form__input"
-      type="number"
       :min="weightMin"
       :max="weightMax"
-      :maxlength="3"
+      :step="weightStep"
       :label="`${t('currentWeight')} (${weightUnit})`"
-      :error="validationErrors.weight"
-      required
+      :unit="weightUnit"
+      is-manual-adjust
     />
 
-    <InputField
+    <SliderComponent
       v-model="formData.targetWeight"
-      class="user-input-form__input"
-      type="number"
       :min="weightMin"
       :max="weightMax"
-      :maxlength="3"
+      :step="weightStep"
       :label="`${t('targetWeight')} (${weightUnit})`"
-      :error="validationErrors.targetWeight"
-      required
+      :unit="weightUnit"
+      is-manual-adjust
     />
 
-    <InputField
+    <SliderComponent
       v-model="formData.timeFrame"
-      class="user-input-form__input"
-      type="number"
-      :maxlength="3"
+      :min="14"
+      :max="365"
+      :step="1"
       :label="`${t('timeFrame')} (${t('days')})`"
-      :error="validationErrors.timeFrame"
-      required
+      :unit="t('daysUnit')"
+      is-manual-adjust
     />
 
-    <InputField
+    <SliderComponent
       v-model="formData.currentCalorieIntake"
-      class="user-input-form__input"
-      type="number"
-      :maxlength="5"
+      :min="800"
+      :max="8000"
+      :step="50"
       :label="`${t('calorieIntake')} (${t('kcal')})`"
-      :error="validationErrors.currentCalorieIntake"
-      required
+      :unit="t('kcal')"
+      is-manual-adjust
     />
 
-    <InputField
+    <SliderComponent
       v-model="formData.height"
-      class="user-input-form__input"
-      type="number"
-      :maxlength="3"
+      :min="heightMin"
+      :max="heightMax"
+      :step="heightStep"
       :label="`${t('height')} (${heightUnit})`"
-      :error="validationErrors.height"
-      required
+      :unit="heightUnit"
+      is-manual-adjust
     />
 
-    <InputField
+    <SliderComponent
       v-model="formData.age"
-      class="user-input-form__input"
-      type="number"
-      :maxlength="3"
+      :min="10"
+      :max="120"
+      :step="1"
       :label="`${t('age')} (${t('years')})`"
-      :error="validationErrors.age"
-      required
+      :unit="t('yearsUnit')"
+      is-manual-adjust
     />
 
     <SelectField
@@ -90,17 +86,17 @@
 </template>
 
 <script lang="ts">
-import { UserData } from '@/interfaces/UserData';
-import { defineComponent, ref, watch, computed } from 'vue';
-import { useI18n } from 'vue-i18n';
-import InputField from '@/components/InputField.vue';
-import SelectField from '@/components/SelectField.vue';
 import ActivityInfo from '@/components/ActivityInfo.vue';
+import SelectField from '@/components/SelectField.vue';
+import SliderComponent from '@/components/SliderComponent.vue';
+import { UserData } from '@/interfaces/UserData';
+import { computed, defineComponent, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   name: 'UserInputForm',
   components: {
-    InputField,
+    SliderComponent,
     SelectField,
     ActivityInfo,
   },
@@ -118,10 +114,7 @@ export default defineComponent({
   setup(props, { emit }) {
     const { t } = useI18n();
     const formData = ref<UserData>({} as UserData);
-    const validationErrors = ref<Record<string, string>>({});
-    const isFormValid = computed(() => {
-      return Object.keys(validationErrors.value).length === 0;
-    });
+    const isFormValid = ref(true); // Since sliders limit input, validation errors are not needed
     const genderOptions = computed(() => [
       { value: 'male', label: t('male') },
       { value: 'female', label: t('female') },
@@ -142,88 +135,12 @@ export default defineComponent({
     const heightMin = computed(() => (props.unitSystem === 'metric' ? 100 : 39)); // 100 cm ~ 39 inches
     const heightMax = computed(() => (props.unitSystem === 'metric' ? 250 : 98)); // 250 cm ~ 98 inches
 
-    const validateForm = () => {
-      validateWeight();
-      validateTargetWeight();
-      validateTimeFrame();
-      validateCurrentCalorieIntake();
-      validateHeight();
-      validateAge();
-    };
-
-    const validateWeight = () => {
-      const min = weightMin.value;
-      const max = weightMax.value;
-      if (formData.value.weight < min || formData.value.weight > max) {
-        validationErrors.value.weight = t('invalidWeight', {
-          weightMin: min,
-          weightMax: max,
-          weightUnit: weightUnit.value,
-        });
-      } else {
-        delete validationErrors.value.weight;
-      }
-    };
-
-    const validateTargetWeight = () => {
-      const min = weightMin.value;
-      const max = weightMax.value;
-      if (formData.value.targetWeight < min || formData.value.targetWeight > max) {
-        validationErrors.value.targetWeight = t('invalidTargetWeight', {
-          weightMin: min,
-          weightMax: max,
-          weightUnit: weightUnit.value,
-        });
-      } else {
-        if (validationErrors.value.targetWeight) {
-          delete validationErrors.value.targetWeight;
-        }
-      }
-    };
-
-    const validateTimeFrame = () => {
-      if (formData.value.timeFrame < 14 || formData.value.timeFrame > 365) {
-        validationErrors.value.timeFrame = t('invalidTimeFrame');
-      } else {
-        delete validationErrors.value.timeFrame;
-      }
-    };
-
-    const validateCurrentCalorieIntake = () => {
-      if (formData.value.currentCalorieIntake < 800 || formData.value.currentCalorieIntake > 8000) {
-        validationErrors.value.currentCalorieIntake = t('invalidCalorieIntake');
-      } else {
-        delete validationErrors.value.currentCalorieIntake;
-      }
-    };
-
-    const validateHeight = () => {
-      const min = heightMin.value;
-      const max = heightMax.value;
-      if (formData.value.height < min || formData.value.height > max) {
-        validationErrors.value.height = t('invalidHeight', {
-          heightMin: min,
-          heightMax: max,
-          heightUnit: heightUnit.value,
-        });
-      } else {
-        delete validationErrors.value.height;
-      }
-    };
-
-    const validateAge = () => {
-      if (formData.value.age < 10 || formData.value.age > 120) {
-        validationErrors.value.age = t('invalidAge');
-      } else {
-        delete validationErrors.value.age;
-      }
-    };
+    // Steps for sliders
+    const weightStep = computed(() => (props.unitSystem === 'metric' ? 0.5 : 1));
+    const heightStep = computed(() => (props.unitSystem === 'metric' ? 1 : 0.5));
 
     const onSubmit = () => {
-      validateForm();
-      if (isFormValid.value) {
-        emit('calculate', { ...formData.value });
-      }
+      emit('calculate', { ...formData.value });
     };
 
     watch(
@@ -231,59 +148,14 @@ export default defineComponent({
       (newVal) => {
         if (newVal) {
           formData.value = { ...newVal };
-          validateForm();
         }
       },
       { immediate: true }
     );
 
-    // Watchers for each field
-    watch(
-      () => formData.value.weight,
-      () => {
-        validateWeight();
-      }
-    );
-
-    watch(
-      () => formData.value.targetWeight,
-      () => {
-        validateTargetWeight();
-      }
-    );
-
-    watch(
-      () => formData.value.timeFrame,
-      () => {
-        validateTimeFrame();
-      }
-    );
-
-    watch(
-      () => formData.value.currentCalorieIntake,
-      () => {
-        validateCurrentCalorieIntake();
-      }
-    );
-
-    watch(
-      () => formData.value.height,
-      () => {
-        validateHeight();
-      }
-    );
-
-    watch(
-      () => formData.value.age,
-      () => {
-        validateAge();
-      }
-    );
-
     return {
       t,
       formData,
-      validationErrors,
       onSubmit,
       isFormValid,
       genderOptions,
@@ -294,6 +166,8 @@ export default defineComponent({
       weightMax,
       heightMin,
       heightMax,
+      weightStep,
+      heightStep,
     };
   },
 });

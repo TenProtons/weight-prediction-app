@@ -2,10 +2,10 @@
   <div class="slider-component">
     <label :for="id">{{ label }}</label>
     <div class="slider-wrapper">
+      <input :id="id" v-model="internalValue" type="range" :min="min" :max="max" :step="step" @input="updateValue" />
       <button v-if="isManualAdjust" class="adjust-button" :disabled="internalValue <= min" @click="decreaseValue">
         &minus;
       </button>
-      <input :id="id" v-model="internalValue" type="range" :min="min" :max="max" :step="step" @input="updateValue" />
       <span class="value-display">{{ displayValue }}</span>
       <button v-if="isManualAdjust" class="adjust-button" :disabled="internalValue >= max" @click="increaseValue">
         &plus;
@@ -78,7 +78,7 @@ export default defineComponent({
       }
     );
 
-    const displayValue = computed(() => `${internalValue.value} ${props.unit}`);
+    const displayValue = computed(() => internalValue.value);
 
     return {
       internalValue,
@@ -112,7 +112,6 @@ export default defineComponent({
       flex: 1;
       -webkit-appearance: none;
       background: transparent;
-      margin: 0 var(--8);
     }
 
     /* Custom Slider Track */
