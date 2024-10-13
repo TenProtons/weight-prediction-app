@@ -1,6 +1,10 @@
 <template>
   <div class="doughnut-chart-container">
     <canvas ref="doughnutCanvas"></canvas>
+    <div class="doughnut-chart-container__calories">
+      <span class="number">{{ adjustedCaloricIntake }}</span>
+      <span class="units">{{ `${t('kcal')}/${t('daySmall')}` }}</span>
+    </div>
   </div>
 </template>
 
@@ -56,7 +60,7 @@ export default defineComponent({
               const index = tooltipItem.dataIndex!;
               const grams = props.grams[index];
               const calories = props.data[index];
-              return `${grams}g = ${calories} kcal`;
+              return `${grams} ${t('gramm')} = ${calories} ${t('kcal')}`;
             },
           },
         },
@@ -117,7 +121,7 @@ export default defineComponent({
             const index = tooltipItem.dataIndex!;
             const grams = props.grams[index];
             const calories = props.data[index];
-            return `${grams}g = ${calories} kcal`;
+            return `${grams} ${t('gramm')} = ${calories} ${t('kcal')}`;
           };
         }
 
@@ -195,6 +199,7 @@ export default defineComponent({
 
     return {
       doughnutCanvas,
+      t,
     };
   },
 });
@@ -207,5 +212,28 @@ export default defineComponent({
   width: 100%;
   background-color: var(--background-color);
   color: var(--text-color);
+
+  &__calories {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -15%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .number,
+    .units {
+      font-weight: 700;
+    }
+
+    .number {
+      font-size: 2rem;
+    }
+
+    .units {
+      font-size: 1.3rem;
+    }
+  }
 }
 </style>
