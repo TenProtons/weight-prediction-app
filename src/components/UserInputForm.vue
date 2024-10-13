@@ -69,6 +69,7 @@
       :label="t('gender')"
       :options="genderOptions"
       required
+      @calculate="onSubmit"
     />
 
     <div class="user-input-form__activity-wrapper">
@@ -78,13 +79,10 @@
         :label="t('activityLevel')"
         :options="activityLevelOptions"
         required
+        @calculate="onSubmit"
       />
       <ActivityInfo class="user-input-form__activity-tooltip" />
     </div>
-
-    <button class="user-input-form__submit-button regular-button" type="submit" :disabled="!isFormValid">
-      {{ t('calculate') }}
-    </button>
   </form>
 </template>
 
@@ -125,7 +123,6 @@ export default defineComponent({
   setup(props, { emit }) {
     const { t } = useI18n();
     const formData = ref<UserData>({} as UserData);
-    const isFormValid = ref(true);
     const genderOptions = computed(() => [
       { value: 'male', label: t('male') },
       { value: 'female', label: t('female') },
@@ -168,7 +165,6 @@ export default defineComponent({
       t,
       formData,
       onSubmit,
-      isFormValid,
       genderOptions,
       activityLevelOptions,
       weightUnit,
@@ -203,11 +199,6 @@ export default defineComponent({
 
   &__activity-tooltip {
     margin-top: auto;
-  }
-
-  &__submit-button {
-    margin: var(--16) auto 0;
-    max-width: 200px;
   }
 }
 </style>

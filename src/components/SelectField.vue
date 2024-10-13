@@ -35,7 +35,7 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: ['update:modelValue'],
+  emits: ['update:modelValue', 'calculate'],
   setup(props, { emit }) {
     const selectValue = computed({
       get() {
@@ -43,6 +43,7 @@ export default defineComponent({
       },
       set(value) {
         emit('update:modelValue', value);
+        emit('calculate');
       },
     });
 

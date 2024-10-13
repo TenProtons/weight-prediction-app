@@ -168,12 +168,9 @@ export default defineComponent({
     watch(
       () => unitSystem.value,
       (newUnitSystem, oldUnitSystem) => {
-        console.log('userData BEFORE', userData.value);
-
         if (newUnitSystem !== oldUnitSystem && userData.value) {
           handleCalculate(userData.value);
         }
-        console.log('userData AFTER', userData.value);
       }
     );
 
