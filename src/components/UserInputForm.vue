@@ -34,16 +34,6 @@
     />
 
     <SliderComponent
-      v-model.number="formData.timeFrame"
-      :min="14"
-      :max="365"
-      :step="1"
-      :label="`${t('timeFrame')} (${t('days')})`"
-      is-manual-adjust
-      @calculate="onSubmit"
-    />
-
-    <SliderComponent
       v-model.number="formData.currentCalorieIntake"
       :min="800"
       :max="8000"
@@ -59,6 +49,16 @@
       :max="120"
       :step="1"
       :label="`${t('age')} (${t('years')})`"
+      is-manual-adjust
+      @calculate="onSubmit"
+    />
+
+    <SliderComponent
+      v-model.number="formData.timeFrame"
+      :min="14"
+      :max="365"
+      :step="1"
+      :label="`${t('timeFrame')} (${t('days')})`"
       is-manual-adjust
       @calculate="onSubmit"
     />
