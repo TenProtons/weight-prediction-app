@@ -2,15 +2,7 @@
   <div class="slider-component">
     <label :for="id">{{ label }}</label>
     <div class="slider-component__wrapper">
-      <input
-        :id="id"
-        v-model="internalValue"
-        type="range"
-        :min="min * coefficient"
-        :max="max * coefficient"
-        :step="step * coefficient"
-        @input="onInput"
-      />
+      <input :id="id" v-model="internalValue" type="range" :min="min" :max="max" :step="step" @input="onInput" />
       <button
         v-if="isManualAdjust"
         class="adjust-button"
@@ -117,7 +109,7 @@ export default defineComponent({
       }
     );
 
-    const displayValue = computed(() => internalValue.value * props.coefficient);
+    const displayValue = computed(() => (internalValue.value * props.coefficient).toFixed(1));
 
     return {
       internalValue,

@@ -92,7 +92,7 @@ export default defineComponent({
     };
 
     const weightCoefficient = computed(() => (unitSystem.value === 'metric' ? 1 : IMPERIAL_WEIGHT_COEFFICIENT));
-    const heightCoefficient = computed(() => (unitSystem.value === 'metric' ? 1 : IMPERIAL_HEIGHT_COEFFICIENT));
+    const heightCoefficient = computed(() => (unitSystem.value === 'metric' ? 1 : 1 / IMPERIAL_HEIGHT_COEFFICIENT));
 
     const handleCalculate = (inputUserData: UserData) => {
       saveData('userData', inputUserData);
