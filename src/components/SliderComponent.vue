@@ -70,18 +70,11 @@ export default defineComponent({
   emits: ['update:modelValue', 'calculate'],
   setup(props, { emit }) {
     const internalValue = ref(props.modelValue);
-    // const displayValue = ref(props.modelValue * props.coefficient);
     let debounceTimeout: ReturnType<typeof setTimeout>;
 
     const onInput = () => {
       debouncedEmit();
     };
-
-    // const onInput = () => {
-    //   const newModelValue = displayValue.value / props.coefficient;
-    //   emit('update:modelValue', newModelValue);
-    //   emit('calculate');
-    // };
 
     const increaseValue = () => {
       internalValue.value = Math.min(props.max, internalValue.value + props.step);
