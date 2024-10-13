@@ -86,8 +86,8 @@ export default defineComponent({
     };
 
     // Conversion functions
-    const toMetricWeight = (value: number) => value / IMPERIAL_WEIGHT_COEFFICIENT;
-    const toMetricHeight = (value: number) => value * IMPERIAL_HEIGHT_COEFFICIENT;
+    const toMetricWeight = (value: number) => Number((value / IMPERIAL_WEIGHT_COEFFICIENT).toFixed(2));
+    const toMetricHeight = (value: number) => Number((value * IMPERIAL_HEIGHT_COEFFICIENT).toFixed(2));
 
     const handleCalculate = (inputUserData: UserData) => {
       saveData('userData', inputUserData);
