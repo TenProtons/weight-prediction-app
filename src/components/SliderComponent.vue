@@ -127,6 +127,10 @@ export default defineComponent({
     display: flex;
     align-items: center;
     gap: var(--8);
+    padding-right: var(--6);
+    padding-block: var(--3);
+    border: 1px solid var(--regular-border-color);
+    border-radius: var(--border-radius-2);
 
     .value-display {
       min-width: 60px;
@@ -136,13 +140,16 @@ export default defineComponent({
     }
 
     .adjust-button {
-      background-color: var(--button-background);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--20);
+      height: var(--20);
+      font-size: 1.2em;
       color: var(--button-text-color);
+      background-color: var(--button-background);
       border: none;
       border-radius: var(--border-radius-2);
-      width: var(--24);
-      height: var(--24);
-      font-size: 1.2em;
       cursor: pointer;
 
       &:disabled {
@@ -158,6 +165,7 @@ export default defineComponent({
 
     input[type='range'] {
       flex: 1;
+      border: none;
       -webkit-appearance: none;
       background: transparent;
     }
@@ -178,12 +186,12 @@ export default defineComponent({
     /* Custom Slider Thumb */
     input[type='range']::-webkit-slider-thumb {
       -webkit-appearance: none;
+      margin-top: calc(-0.5 * (var(--16) - var(--6)));
       width: var(--16);
       height: var(--16);
       background: var(--active-link-color);
       border-radius: 50%;
       cursor: pointer;
-      margin-top: calc(-0.5 * (var(--16) - var(--6)));
     }
 
     input[type='range']::-moz-range-thumb {
