@@ -16,6 +16,14 @@ export default defineComponent({
       type: Array as PropType<Array<{ day: number; weight: number }>>,
       required: true,
     },
+    weightUnit: {
+      type: String,
+      default: '',
+    },
+    weightCoefficient: {
+      type: Number,
+      default: 1,
+    },
   },
   setup(props) {
     const { t, locale } = useI18n();
@@ -78,7 +86,7 @@ export default defineComponent({
                 y: {
                   title: {
                     display: true,
-                    text: `${t('weight')} (${t('kg')})`,
+                    text: `${t('weight')} (${props.weightUnit})`,
                     color: getCSSVariable('--chart-font-color'),
                   },
                   ticks: {
@@ -111,8 +119,8 @@ export default defineComponent({
                       return `${t('day')}: ${day}`;
                     },
                     label: (tooltipItem) => {
-                      const value = tooltipItem.formattedValue;
-                      return `${t('weight')}: ${value} ${t('kg')}`;
+                      const value = tooltipItem.raw as number;
+                      return `${t('weight')}: ${(value * props.weightCoefficient).toFixed(1)} ${props.weightUnit}`;
                     },
                   },
                 },
@@ -219,7 +227,7 @@ export default defineComponent({
             options.scales['x'].title.text = t('day');
           }
           if (options.scales['y'] && options.scales['y'].title) {
-            options.scales['y'].title.text = `${t('weight')} (${t('kg')})`;
+            options.scales['y'].title.text = `${t('weight')} (${props.weightUnit})`;
           }
         }
 

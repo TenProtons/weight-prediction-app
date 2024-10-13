@@ -62,10 +62,6 @@ export default defineComponent({
       type: Number,
       default: 1,
     },
-    unit: {
-      type: String,
-      default: '',
-    },
   },
   emits: ['update:modelValue', 'calculate'],
   setup(props, { emit }) {

@@ -3,7 +3,7 @@
     <h1 class="main-view__title">{{ t('appTitle') }}</h1>
     <div v-if="weightData.length">
       <div class="charts-wrapper">
-        <WeightChart :weight-data="weightData" />
+        <WeightChart :weight-data="weightData" :weight-unit="weightUnit" :weight-coefficient="weightCoefficient" />
 
         <DoughnutChart
           :labels="macronutrientLabels"
@@ -93,6 +93,7 @@ export default defineComponent({
 
     const weightCoefficient = computed(() => (unitSystem.value === 'metric' ? 1 : IMPERIAL_WEIGHT_COEFFICIENT));
     const heightCoefficient = computed(() => (unitSystem.value === 'metric' ? 1 : 1 / IMPERIAL_HEIGHT_COEFFICIENT));
+    const weightUnit = computed(() => (unitSystem.value === 'metric' ? t('kg') : t('lbs')));
 
     const handleCalculate = (inputUserData: UserData) => {
       saveData('userData', inputUserData);
@@ -197,6 +198,7 @@ export default defineComponent({
       unitSystemOptions,
       weightCoefficient,
       heightCoefficient,
+      weightUnit,
       handleCalculate,
       t,
       unitSystem,
