@@ -36,7 +36,7 @@ import DoughnutChart from '@/components/DoughnutChart.vue';
 import SelectField from '@/components/SelectField.vue';
 import UserInputForm from '@/components/UserInputForm.vue';
 import WeightChart from '@/components/WeightChart.vue';
-import { defaultUserData } from '@/constants';
+import { defaultUserData, IMPERIAL_HEIGHT_COEFFICIENT, IMPERIAL_WEIGHT_COEFFICIENT } from '@/constants';
 import { UserData } from '@/interfaces/UserData';
 import { loadData, saveData } from '@/services/storage';
 import { calculateCalorieAdjustment, predictWeightOverTime } from '@/utils/calculator';
@@ -86,8 +86,8 @@ export default defineComponent({
     };
 
     // Conversion functions
-    const toMetricWeight = (value: number) => value / 2.20462;
-    const toMetricHeight = (value: number) => value * 2.54;
+    const toMetricWeight = (value: number) => value / IMPERIAL_WEIGHT_COEFFICIENT;
+    const toMetricHeight = (value: number) => value * IMPERIAL_HEIGHT_COEFFICIENT;
 
     const handleCalculate = (inputUserData: UserData) => {
       saveData('userData', inputUserData);
