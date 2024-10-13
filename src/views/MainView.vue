@@ -26,7 +26,13 @@
       :options="unitSystemOptions"
     />
 
-    <UserInputForm :initial-user-data="userData" :unit-system="unitSystem" @calculate="handleCalculate" />
+    <UserInputForm
+      :initial-user-data="userData"
+      :unit-system="unitSystem"
+      :weight-coefficient="weightCoefficient"
+      :height-coefficient="heightCoefficient"
+      @calculate="handleCalculate"
+    />
   </div>
 </template>
 
@@ -85,9 +91,8 @@ export default defineComponent({
       carbs: 4,
     };
 
-    // Conversion functions
-    const toMetricWeight = (value: number) => Number((value / IMPERIAL_WEIGHT_COEFFICIENT).toFixed(2));
-    const toMetricHeight = (value: number) => Number((value * IMPERIAL_HEIGHT_COEFFICIENT).toFixed(2));
+    const weightCoefficient = computed(() => (unitSystem.value === 'metric' ? 1 : IMPERIAL_WEIGHT_COEFFICIENT));
+    const heightCoefficient = computed(() => (unitSystem.value === 'metric' ? 1 : IMPERIAL_HEIGHT_COEFFICIENT));
 
     const handleCalculate = (inputUserData: UserData) => {
       saveData('userData', inputUserData);
@@ -95,12 +100,6 @@ export default defineComponent({
       userData.value = inputUserData;
 
       const metricUserData = { ...inputUserData };
-
-      if (unitSystem.value === 'imperial') {
-        metricUserData.weight = toMetricWeight(metricUserData.weight);
-        metricUserData.targetWeight = toMetricWeight(metricUserData.targetWeight);
-        metricUserData.height = toMetricHeight(metricUserData.height);
-      }
 
       // Calculate the calorie adjustment
       const calorieAdjustment = Math.round(calculateCalorieAdjustment(metricUserData));
@@ -166,6 +165,18 @@ export default defineComponent({
       }
     });
 
+    watch(
+      () => unitSystem.value,
+      (newUnitSystem, oldUnitSystem) => {
+        console.log('userData BEFORE', userData.value);
+
+        if (newUnitSystem !== oldUnitSystem && userData.value) {
+          handleCalculate(userData.value);
+        }
+        console.log('userData AFTER', userData.value);
+      }
+    );
+
     onMounted(() => {
       const savedUnitSystem = loadData('unitSystem');
       const savedUserData = loadData('userData');
@@ -187,6 +198,8 @@ export default defineComponent({
       weightData,
       hintMessage,
       unitSystemOptions,
+      weightCoefficient,
+      heightCoefficient,
       handleCalculate,
       t,
       unitSystem,

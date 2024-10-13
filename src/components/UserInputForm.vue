@@ -6,6 +6,7 @@
       :max="weightMax"
       :step="weightStep"
       :label="`${t('currentWeight')} (${weightUnit})`"
+      :coefficient="weightCoefficient"
       is-manual-adjust
       @calculate="onSubmit"
     />
@@ -16,12 +17,24 @@
       :max="weightMax"
       :step="weightStep"
       :label="`${t('targetWeight')} (${weightUnit})`"
+      :coefficient="weightCoefficient"
       is-manual-adjust
       @calculate="onSubmit"
     />
 
     <SliderComponent
-      v-model="formData.timeFrame"
+      v-model.number="formData.height"
+      :min="heightMin"
+      :max="heightMax"
+      :step="heightStep"
+      :label="`${t('height')} (${heightUnit})`"
+      :coefficient="heightCoefficient"
+      is-manual-adjust
+      @calculate="onSubmit"
+    />
+
+    <SliderComponent
+      v-model.number="formData.timeFrame"
       :min="14"
       :max="365"
       :step="1"
@@ -36,16 +49,6 @@
       :max="8000"
       :step="50"
       :label="`${t('calorieIntake')} (${t('kcal')})`"
-      is-manual-adjust
-      @calculate="onSubmit"
-    />
-
-    <SliderComponent
-      v-model.number="formData.height"
-      :min="heightMin"
-      :max="heightMax"
-      :step="heightStep"
-      :label="`${t('height')} (${heightUnit})`"
       is-manual-adjust
       @calculate="onSubmit"
     />
@@ -109,6 +112,14 @@ export default defineComponent({
       type: String as () => 'metric' | 'imperial',
       default: 'metric',
     },
+    weightCoefficient: {
+      type: Number,
+      default: 1,
+    },
+    heightCoefficient: {
+      type: Number,
+      default: 1,
+    },
   },
   emits: ['calculate'],
   setup(props, { emit }) {
@@ -130,14 +141,14 @@ export default defineComponent({
     // Computed properties for units and ranges
     const weightUnit = computed(() => (props.unitSystem === 'metric' ? t('kg') : t('lbs')));
     const heightUnit = computed(() => (props.unitSystem === 'metric' ? t('cm') : t('inches')));
-    const weightMin = computed(() => (props.unitSystem === 'metric' ? 40 : 88)); // 40 kg ~ 88 lbs
-    const weightMax = computed(() => (props.unitSystem === 'metric' ? 250 : 550)); // 250 kg ~ 550 lbs
-    const heightMin = computed(() => (props.unitSystem === 'metric' ? 100 : 39)); // 100 cm ~ 39 inches
-    const heightMax = computed(() => (props.unitSystem === 'metric' ? 250 : 98)); // 250 cm ~ 98 inches
 
-    // Steps for sliders
-    const weightStep = computed(() => (props.unitSystem === 'metric' ? 0.5 : 1));
-    const heightStep = computed(() => (props.unitSystem === 'metric' ? 1 : 0.5));
+    const weightMin = 40; // Metric units
+    const weightMax = 250;
+    const weightStep = 0.5;
+
+    const heightMin = 100;
+    const heightMax = 250;
+    const heightStep = 1;
 
     const onSubmit = () => {
       emit('calculate', { ...formData.value });
@@ -150,7 +161,7 @@ export default defineComponent({
           formData.value = { ...newVal };
         }
       },
-      { immediate: true }
+      { immediate: true, deep: true }
     );
 
     return {
@@ -164,9 +175,9 @@ export default defineComponent({
       heightUnit,
       weightMin,
       weightMax,
+      weightStep,
       heightMin,
       heightMax,
-      weightStep,
       heightStep,
     };
   },

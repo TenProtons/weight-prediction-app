@@ -2,7 +2,15 @@
   <div class="slider-component">
     <label :for="id">{{ label }}</label>
     <div class="slider-component__wrapper">
-      <input :id="id" v-model="internalValue" type="range" :min="min" :max="max" :step="step" @input="onInput" />
+      <input
+        :id="id"
+        v-model="internalValue"
+        type="range"
+        :min="min * coefficient"
+        :max="max * coefficient"
+        :step="step * coefficient"
+        @input="onInput"
+      />
       <button
         v-if="isManualAdjust"
         class="adjust-button"
@@ -58,6 +66,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    coefficient: {
+      type: Number,
+      default: 1,
+    },
     unit: {
       type: String,
       default: '',
@@ -66,11 +78,18 @@ export default defineComponent({
   emits: ['update:modelValue', 'calculate'],
   setup(props, { emit }) {
     const internalValue = ref(props.modelValue);
+    // const displayValue = ref(props.modelValue * props.coefficient);
     let debounceTimeout: ReturnType<typeof setTimeout>;
 
     const onInput = () => {
       debouncedEmit();
     };
+
+    // const onInput = () => {
+    //   const newModelValue = displayValue.value / props.coefficient;
+    //   emit('update:modelValue', newModelValue);
+    //   emit('calculate');
+    // };
 
     const increaseValue = () => {
       internalValue.value = Math.min(props.max, internalValue.value + props.step);
@@ -90,6 +109,7 @@ export default defineComponent({
       }, 300);
     };
 
+    // Watch for changes in modelValue
     watch(
       () => props.modelValue,
       (newVal) => {
@@ -97,7 +117,7 @@ export default defineComponent({
       }
     );
 
-    const displayValue = computed(() => internalValue.value);
+    const displayValue = computed(() => internalValue.value * props.coefficient);
 
     return {
       internalValue,
