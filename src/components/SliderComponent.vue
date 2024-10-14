@@ -5,7 +5,7 @@
       <input :id="id" v-model="internalValue" type="range" :min="min" :max="max" :step="step" @input="onInput" />
       <button
         v-if="isManualAdjust"
-        class="adjust-button"
+        class="adjust-button regular-button"
         :disabled="internalValue <= min"
         @click.prevent="decreaseValue"
       >
@@ -14,7 +14,7 @@
       <span class="value-display">{{ displayValue }}</span>
       <button
         v-if="isManualAdjust"
-        class="adjust-button"
+        class="adjust-button regular-button"
         :disabled="internalValue >= max"
         @click.prevent="increaseValue"
       >
@@ -145,6 +145,7 @@ export default defineComponent({
       justify-content: center;
       width: var(--20);
       height: var(--20);
+      padding: 0;
       font-size: 1.2em;
       color: var(--button-text-color);
       background-color: var(--button-background);

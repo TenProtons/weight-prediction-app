@@ -210,8 +210,7 @@ export default defineComponent({
   position: relative;
   height: 350px;
   width: 100%;
-  background-color: var(--background-color);
-  color: var(--text-color);
+  isolation: isolate;
 
   &__calories {
     position: absolute;
@@ -221,9 +220,11 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: -1;
 
     .number,
     .units {
+      color: var(--text-color);
       font-weight: 700;
     }
 
