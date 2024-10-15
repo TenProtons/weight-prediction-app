@@ -3,7 +3,7 @@
     <h1 class="main-view__title">{{ t('appTitle') }}</h1>
     <div v-if="weightData.length">
       <div class="charts-wrapper">
-        <WeightChart :weight-data="weightData" />
+        <WeightChart :weight-data="weightData" :weight-unit="weightUnit" :weight-coefficient="weightCoefficient" />
 
         <DoughnutChart
           :labels="macronutrientLabels"
@@ -26,7 +26,13 @@
       :options="unitSystemOptions"
     />
 
-    <UserInputForm :initial-user-data="userData" :unit-system="unitSystem" @calculate="handleCalculate" />
+    <UserInputForm
+      :initial-user-data="userData"
+      :unit-system="unitSystem"
+      :weight-coefficient="weightCoefficient"
+      :height-coefficient="heightCoefficient"
+      @calculate="handleCalculate"
+    />
   </div>
 </template>
 
@@ -36,7 +42,7 @@ import DoughnutChart from '@/components/DoughnutChart.vue';
 import SelectField from '@/components/SelectField.vue';
 import UserInputForm from '@/components/UserInputForm.vue';
 import WeightChart from '@/components/WeightChart.vue';
-import { defaultUserData } from '@/constants';
+import { defaultUserData, IMPERIAL_HEIGHT_COEFFICIENT, IMPERIAL_WEIGHT_COEFFICIENT } from '@/constants';
 import { UserData } from '@/interfaces/UserData';
 import { loadData, saveData } from '@/services/storage';
 import { calculateCalorieAdjustment, predictWeightOverTime } from '@/utils/calculator';
@@ -85,9 +91,9 @@ export default defineComponent({
       carbs: 4,
     };
 
-    // Conversion functions
-    const toMetricWeight = (value: number) => value / 2.20462;
-    const toMetricHeight = (value: number) => value * 2.54;
+    const weightCoefficient = computed(() => (unitSystem.value === 'metric' ? 1 : IMPERIAL_WEIGHT_COEFFICIENT));
+    const heightCoefficient = computed(() => (unitSystem.value === 'metric' ? 1 : 1 / IMPERIAL_HEIGHT_COEFFICIENT));
+    const weightUnit = computed(() => (unitSystem.value === 'metric' ? t('kg') : t('lbs')));
 
     const handleCalculate = (inputUserData: UserData) => {
       saveData('userData', inputUserData);
@@ -95,12 +101,6 @@ export default defineComponent({
       userData.value = inputUserData;
 
       const metricUserData = { ...inputUserData };
-
-      if (unitSystem.value === 'imperial') {
-        metricUserData.weight = toMetricWeight(metricUserData.weight);
-        metricUserData.targetWeight = toMetricWeight(metricUserData.targetWeight);
-        metricUserData.height = toMetricHeight(metricUserData.height);
-      }
 
       // Calculate the calorie adjustment
       const calorieAdjustment = Math.round(calculateCalorieAdjustment(metricUserData));
@@ -166,6 +166,15 @@ export default defineComponent({
       }
     });
 
+    watch(
+      () => unitSystem.value,
+      (newUnitSystem, oldUnitSystem) => {
+        if (newUnitSystem !== oldUnitSystem && userData.value) {
+          handleCalculate(userData.value);
+        }
+      }
+    );
+
     onMounted(() => {
       const savedUnitSystem = loadData('unitSystem');
       const savedUserData = loadData('userData');
@@ -187,6 +196,9 @@ export default defineComponent({
       weightData,
       hintMessage,
       unitSystemOptions,
+      weightCoefficient,
+      heightCoefficient,
+      weightUnit,
       handleCalculate,
       t,
       unitSystem,

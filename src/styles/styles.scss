@@ -2,6 +2,7 @@
 :root {
   --background-color: #ffffff;
   --text-color: #2c3e50;
+  --slider-value-color: #2c3e50;
   --link-color: #2c3e50;
   --error-color: red;
   --error-background-color: rgba(255, 0, 0, 0.3);
@@ -25,6 +26,7 @@
   --protein-color: #ff6384;     /* Red */
   --fat-color: #ffcd56;         /* Yellow */
   --carb-color: #36a2eb;        /* Blue */
+  --3: 3px;
   --4: 4px;
   --6: 6px;
   --8: 8px;
@@ -42,6 +44,7 @@
 .dark-mode {
   --background-color: #2c3e50;
   --text-color: #ecf0f1;
+  --slider-value-color: #29e590;
   --link-color: #ffffff;
   --error-color: rgb(255 136 136);
   --error-background-color: rgba(255, 42, 42, 0.45);
@@ -106,7 +109,7 @@ body {
   border-radius: var(--border-radius-2);
   cursor: pointer;
 
-  &:focus {
+  &:focus-visible {
     outline: 2px solid var(--active-link-color);
   }
 
@@ -129,7 +132,7 @@ select {
   border: 1px solid var(--regular-border-color);
   border-radius: var(--border-radius-2);
 
-  &:focus {
+  &:focus-visible {
     outline: 2px solid var(--active-link-color);
   }
 }

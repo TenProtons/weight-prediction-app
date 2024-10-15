@@ -16,6 +16,14 @@ export default defineComponent({
       type: Array as PropType<Array<{ day: number; weight: number }>>,
       required: true,
     },
+    weightUnit: {
+      type: String,
+      default: '',
+    },
+    weightCoefficient: {
+      type: Number,
+      default: 1,
+    },
   },
   setup(props) {
     const { t, locale } = useI18n();
@@ -35,7 +43,7 @@ export default defineComponent({
               datasets: [
                 {
                   label: t('predictedWeight'),
-                  data: props.weightData.map((data) => Number(data.weight.toFixed(2))),
+                  data: props.weightData.map((data) => Number(data.weight.toFixed(2)) * props.weightCoefficient),
                   fill: false,
                   borderColor: getCSSVariable('--chart-line-color'),
                   tension: 0.1,
@@ -78,7 +86,7 @@ export default defineComponent({
                 y: {
                   title: {
                     display: true,
-                    text: `${t('weight')} (${t('kg')})`,
+                    text: `${t('weight')} (${props.weightUnit})`,
                     color: getCSSVariable('--chart-font-color'),
                   },
                   ticks: {
@@ -111,8 +119,8 @@ export default defineComponent({
                       return `${t('day')}: ${day}`;
                     },
                     label: (tooltipItem) => {
-                      const value = tooltipItem.formattedValue;
-                      return `${t('weight')}: ${value} ${t('kg')}`;
+                      const value = tooltipItem.raw as number;
+                      return `${t('weight')}: ${value.toFixed(1)} ${props.weightUnit}`;
                     },
                   },
                 },
@@ -138,7 +146,7 @@ export default defineComponent({
     const updateChart = () => {
       if (chartInstance.value) {
         const labels = props.weightData.map((data) => data.day);
-        const dataPoints = props.weightData.map((data) => parseFloat(data.weight.toFixed(2)));
+        const dataPoints = props.weightData.map((data) => Number(data.weight.toFixed(2)) * props.weightCoefficient);
 
         chartInstance.value.data.labels = labels;
         chartInstance.value.data.datasets[0].data = dataPoints;
@@ -219,7 +227,7 @@ export default defineComponent({
             options.scales['x'].title.text = t('day');
           }
           if (options.scales['y'] && options.scales['y'].title) {
-            options.scales['y'].title.text = `${t('weight')} (${t('kg')})`;
+            options.scales['y'].title.text = `${t('weight')} (${props.weightUnit})`;
           }
         }
 
@@ -256,6 +264,14 @@ export default defineComponent({
     watch(
       () => props.weightData,
       () => {
+        updateChart();
+      }
+    );
+
+    watch(
+      () => [props.weightUnit, props.weightCoefficient],
+      () => {
+        updateChartTranslations();
         updateChart();
       }
     );
