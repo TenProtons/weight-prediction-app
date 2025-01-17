@@ -1,2 +1,0 @@
-"use strict";(self["webpackChunkweight_prediction_app"]=self["webpackChunkweight_prediction_app"]||[]).push([[391],{2489:function(e,i,n){n.r(i),n.d(i,{default:function(){return l}});var t=n(6768);const a={class:"info-view layout"};function o(e,i){return(0,t.uX)(),(0,t.CE)("div",a,i[0]||(i[0]=[(0,t.Lk)("h1",{class:"info-view__title"},"Help information will soon be available on this page.",-1)]))}var c=n(1241);const r={},s=(0,c.A)(r,[["render",o],["__scopeId","data-v-254c01a8"]]);var l=s}}]);
-//# sourceMappingURL=info.0048ec47.js.map
