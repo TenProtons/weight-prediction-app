@@ -57,7 +57,7 @@
   "calculateAccuracyTooltip": {
     "header": "Calculate Accuracy",
     "title": "The Mifflin-St. George formula",
-    "description": "The Mifflin-St. George formula is used to calculate the daily calorie requirement. It estimates your daily calorie needs with a 10% margin of error. A 10% margin of error means that the actual <b>{adjustedCaloricIntake}</b> kcal your body needs can range from <b>{lowerLimit}</b> to <b>{upperLimit}</b> kcal per day."
+    "description": "The Mifflin-St. George formula is used to calculate the daily calorie requirement. It estimates your daily calorie needs with a 10% margin of error. A 10% margin of error means that the calculated <b>{adjustedCaloricIntake}</b> kcal your body needs can range from <b>{lowerLimit}</b> to <b>{upperLimit}</b> kcal per day."
   },
 
   "activityTooltip": {
